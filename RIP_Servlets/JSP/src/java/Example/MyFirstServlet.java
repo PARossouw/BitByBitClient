@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
+
 package Example;
 
 import jakarta.servlet.RequestDispatcher;
@@ -65,14 +62,7 @@ public class MyFirstServlet extends HttpServlet {
                         request.getParameter("surname"),
                         request.getParameter("email"),
                         request.getParameter("password"));
-//                <%String message = (String) request.getAttribute("message");
-//                if(message != null)
-//                {
-//                    %>
-//                           <h2> <%= message ></h2>
-//                            <%}%>
-//                }
-                
+
                 people.add(p);
                 message1 = "You have successfuly registered";
                 request.setAttribute("message1", message1);
@@ -80,21 +70,6 @@ public class MyFirstServlet extends HttpServlet {
                     rd1.forward(request, response);
                 }
                 
-                
-//                boolean personAdded = true;
-//
-//                if (personAdded == true) {
-//                    String message = "You have been successfully Registered";
-//                    request.setAttribute("message", message);
-//                    RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
-//                    rd.forward(request, response);
-//
-//                }else{
-//                    String message = "You have been unsuccessfully registered";
-//                    request.setAttribute("message", message);
-//                    RequestDispatcher rd = request.getRequestDispatcher("register.jsp");
-//                    rd.forward(request, response);
-//                }
                 break;
             case "login":
                 String email = request.getParameter("email");

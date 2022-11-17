@@ -24,7 +24,7 @@ body{
 }
 
 .nav_logo{
-    width: 50px;
+    width: 30px;
     height: 30px;
     /*border-style: solid;*/
 }
@@ -149,3 +149,21 @@ body{
     box-shadow: 0px 0px 15px 5px lightgrey; 
 
 }
+
+.btn {
+  border: none;
+  background-color: inherit;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+/* On mouse-over */
+.btn:hover {background: #eee;}
+
+.success {color: green;}
+.info {color: dodgerblue;}
+.warning {color: orange;}
+.danger {color: red;}
+.default {color: black;}
