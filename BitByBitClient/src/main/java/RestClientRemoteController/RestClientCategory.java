@@ -14,8 +14,9 @@ import jakarta.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.json.simple.JSONObject;
 
-public class RestClientCategory {
+    public class RestClientCategory {
     private String url;
     private Client restClient;
     private WebTarget webTarget;
@@ -38,14 +39,22 @@ public class RestClientCategory {
         return allCategories;
     }
 
+    //public String addCategoriesToStory(Story story, List<Category> categories) throws JsonProcessingException {
     public String addCategoriesToStory(Story story, List<Category> categories) throws JsonProcessingException {
         String uri = url + "/addToStory";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
+        
+        JSONObject jsonObject = new JSONObject();
         Map<Story, List> categoriesToAdd = new HashMap();
         categoriesToAdd.put(story, categories);
+        
+        jsonObject.put("story", story);
+        jsonObject.put("categories", categories);
+        
         Response response = null;
-        response = webTarget.request().post(Entity.json(toJsonString(categoriesToAdd)));
+        //response = webTarget.request().post(Entity.json(toJsonString(categoriesToAdd)));
+        response = webTarget.request().post(Entity.json(toJsonString(jsonObject)));
         return response.readEntity(String.class);
     }
 
