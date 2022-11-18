@@ -18,7 +18,7 @@ import org.json.simple.JSONObject;
 @WebServlet(name = "Category", urlPatterns = {"/Category"})
 public class CategoryServlet extends HttpServlet {
 
-    private List<User> categories;
+    private List<Category> categories;
     private static RestClientCategory restClientCategory;
 
     public CategoryServlet() {
@@ -45,7 +45,7 @@ public class CategoryServlet extends HttpServlet {
                 Story story = new Story();
                 story.setStoryID(1);
                 
-                List<Category> categories = new ArrayList<>();
+                this.categories = new ArrayList<>();
                 categories.add(new Category("love and death"));
                 
 //                JSONObject jsonObject = new JSONObject();

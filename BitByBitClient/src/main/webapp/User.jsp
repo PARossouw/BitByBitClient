@@ -56,9 +56,8 @@
 
 
             <h5 style="color:black">Readers Options</h5>
-                <a href=dailystory.html>
-                    <button class="button1">My Likes</button>
-                </a>
+            <form action="UserServlet" method="get">
+                <input class="button1" name="submit" type="submit" value="Likes">
 
                 <a href=viewstory.html>
                     <button class="button2">My Categories</button>
@@ -67,6 +66,19 @@
                 <a href=viewstory.html>
                     <button class="button2">Become a Writer</button>
                 </a>
+            </form>
+            <%
+                String responseMessage = (String) request.getAttribute("likes");
+            %>
+            <%
+                if(responseMessage != null) {
+            %>
+                <div>
+                    <h3 style="color:black"><%=responseMessage%></h3>
+                </div>
+            <%
+                }
+            %>
 
                 <%-- 
 Writers Functionality. 
