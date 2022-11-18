@@ -49,7 +49,7 @@
                 <form action="UserServlet" method="post">
                     <h3 style="color:black">Login</h3>
                     <%
-                        String responseMessage = (String) request.getAttribute("response");
+                        String responseMessage = (String) request.getAttribute("message");
                     %>
                     <%
                         if(responseMessage != null) {

@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "UserServlet", urlPatterns = {"/UserServlet"})
 public class UserServlet extends HttpServlet {
-    
+
     private static RestClientUser restClientUser;
 
     public UserServlet() {
@@ -58,26 +58,49 @@ public class UserServlet extends HttpServlet {
 //        processRequest(request, response);
         switch (request.getParameter("submit")) {
             case "Login":
-                String usernameOrEmail = (String) request.getAttribute("UsernameOrEmail");
-                String password = (String) request.getAttribute("Password");
-                User user = new User();
-                if (usernameOrEmail.contains("@"))
-                    user.setEmail(usernameOrEmail);
-                else
-                    user.setUsername(usernameOrEmail);
-                user.setPassword(password);
-                user = restClientUser.login(user);
-                //message = restClientCategory.addCategoriesToStory(story, categories);
-                if (user == null) {
-                    String failed = "Login failed";
-                    request.setAttribute("response", failed);
-                    RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
-                    rd.forward(request, response);
-                } else {
-                    request.setAttribute("user", user);
+
+                User user2 = new User();
+
+                String usernameOrEmail = (String) request.getParameter("UsernameOrEmail");
+                String password = (String) request.getParameter("Password");
+
+                user2.setUsername("amet");
+                user2.setPassword("password");
+                user2 = restClientUser.login(user2);
+
+                if (usernameOrEmail.equals(user2.getUsername()) && password.equals(user2.getPassword())) {
+                    String msg = "Successfuly logged in";
+                    request.setAttribute("message", msg);
                     RequestDispatcher rd = request.getRequestDispatcher("index.html");
                     rd.forward(request, response);
+
+                } else {
+                    String msg2 = "login failed";
+                    request.setAttribute("message", msg2);
+                    RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
+                    rd.forward(request, response);
+
                 }
+
+//              User user = new User();
+//                if (usernameOrEmail.contains("@")) {
+//                    user.setEmail(usernameOrEmail);
+//                } else {
+//                    user.setUsername(usernameOrEmail);
+//                }
+//                user.setPassword(password);
+//                user = restClientUser.login(user);
+//                //message = restClientCategory.addCategoriesToStory(story, categories);
+//                if (user == null) {
+//                    String failed = "Login failed";
+//                    request.setAttribute("response", failed);
+//                    RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
+//                    rd.forward(request, response);
+//                } else {
+//                    request.setAttribute("user", user);
+//                    RequestDispatcher rd = request.getRequestDispatcher("index.html");
+//                    rd.forward(request, response);
+//                }
                 break;
             default:
                 throw new AssertionError();
