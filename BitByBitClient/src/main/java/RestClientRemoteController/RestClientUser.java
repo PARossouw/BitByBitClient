@@ -1,8 +1,6 @@
 package RestClientRemoteController;
 
 import Category.Model.Category;
-
-
 import User.Model.Editor;
 import User.Model.Reader;
 import User.Model.User;
