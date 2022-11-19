@@ -26,7 +26,7 @@ public class RestClientUser {
     private ObjectMapper mapper;
 
     public RestClientUser(String url) {
-        this.url = url + "/RIP/User";
+        this.url = url + "/User";
         this.mapper = new ObjectMapper();
     }
 
