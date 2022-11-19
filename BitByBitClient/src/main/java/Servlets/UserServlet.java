@@ -64,8 +64,8 @@ public class UserServlet extends HttpServlet {
                 String usernameOrEmail = (String) request.getParameter("UsernameOrEmail");
                 String password = (String) request.getParameter("Password");
 
-                user2.setUsername("amet");
-                user2.setPassword("password");
+                user2.setUsername(usernameOrEmail);
+                user2.setPassword(password);
                 user2 = restClientUser.login(user2);
 
                 if (usernameOrEmail.equals(user2.getUsername()) && password.equals(user2.getPassword())) {
