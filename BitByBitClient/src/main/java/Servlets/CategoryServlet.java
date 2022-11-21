@@ -3,7 +3,7 @@ package Servlets;
 import Category.Model.Category;
 import RestClientRemoteController.RestClientCategory;
 import Story.Model.Story;
-import User.Model.User;
+import User.Model.Reader;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import org.json.simple.JSONObject;
 
 @WebServlet(name = "Category", urlPatterns = {"/Category"})
 public class CategoryServlet extends HttpServlet {
@@ -29,7 +28,13 @@ public class CategoryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
-        
+        switch (request.getParameter("submit")) {
+            case "":
+                
+                break;
+            default:
+                throw new AssertionError();
+        }
     }
 
     @Override
@@ -39,23 +44,23 @@ public class CategoryServlet extends HttpServlet {
         
         switch(request.getParameter("submit")){
             
-            case "addCategoriesToStory"     :
-                
+            case "addCategoriesToStory":
                 String message = null;
                 Story story = new Story();
                 story.setStoryID(1);
-                
                 this.categories = new ArrayList<>();
                 categories.add(new Category("love and death"));
-                
 //                JSONObject jsonObject = new JSONObject();
 //                jsonObject.put("story", story);
 //                jsonObject.put("categories", categories);
-                
                 message = restClientCategory.addCategoriesToStory(story, categories);
-                
                 break;
-            
+                
+            case "getPreferredCategories":
+                Reader reader = new Reader();
+                reader.setUserID(Integer.SIZE);
+                restClientCategory.getPreferredCategories(reader);
+                break;
         }
     }
 
