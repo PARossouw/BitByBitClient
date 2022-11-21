@@ -65,7 +65,9 @@
                     <input type="password" class="form" name="Password" placeholder="Password">
                     <br></br>
                     <input class="button1" name="submit" type="submit" value="Login">
+                    
                 </form>
+                    
                 <form action="UserServlet" method="post">
 
                     <%
