@@ -14,6 +14,7 @@ import jakarta.annotation.ManagedBean;
 import jakarta.servlet.RequestDispatcher;
 
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 
 @WebServlet(name = "StoryServlet", urlPatterns = {"/StoryServlet"})
 @ManagedBean
