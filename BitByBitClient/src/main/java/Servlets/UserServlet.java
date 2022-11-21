@@ -56,7 +56,7 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        processRequest(request, response);
-        switch (request.getParameter("submit")) {
+            switch (request.getParameter("submit")) {
             case "Login":
 
                 User user2 = new User();
