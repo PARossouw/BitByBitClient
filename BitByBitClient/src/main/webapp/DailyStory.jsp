@@ -1,6 +1,12 @@
-<!DOCTYPE html> 
-<html>
+<%-- 
+    Document   : DailyStory
+    Created on : 20 Nov 2022, 08:57:37
+    Author     : ametr
+--%>
 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
     <head>
         <title>Readers Are Innovators</title>
         <link rel="stylesheet" href="normalized.css">
@@ -40,10 +46,15 @@
                
             </nav>
             <div class="h_div">
+                
+                
+
+                
+                
                 <b><h1 style="color:black"><span class="bolded">Story of the day</span></h1></b>
               
-                <h3 style="color:black">The tales of No Nut August</h3>
-                <h5 style="color:black">Written by : Micheal Costa</h5>
+                <h3 style="color:black">The tails of No Nut November</h3>
+                <h5 style="color:black">Written by : Yourself</h5>
                 <h5 style="color:black">Rating 3.5/5</h5>
                 
 
@@ -67,8 +78,4 @@
 
         </section>
     </body>
-
 </html>
-
-
-

@@ -13,7 +13,7 @@
         <title>Login</title>
         <link rel="stylesheet" href="normalized.css">
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-        <link rel="stylesheet" href="dailystory.css">
+        <link rel="stylesheet" href="registerlogin.css">
     </head>
 
     <body>
@@ -38,9 +38,39 @@
                     <li>                       
                         <button type="button">Contact Us</button>
                     </li>
-                    <li>
+
+
+                   <%
+                    String userLoggedInHeader = (String) session.getAttribute("user");
+                %>
+                <%
+                    if(userLoggedInHeader != null) {
+                %>
+               <li>
+                        <button type="button">Profile</button>
+               </li>
+                <%
+                    }
+else 
+{
+   %>
+               <li>
                         <button type="button">Login/Register</button>
-                    </li>
+               </li>
+                <%
+
+}
+
+
+                %>
+                    
+
+
+
+
+
+
+
                 </ul>
 
             </nav>
@@ -55,7 +85,7 @@
                         if(responseMessage != null) {
                     %>
                     <div>
-                        <h3 style="color:black"><%=responseMessage%></h3>
+                        <h3 style="color:red"><%=responseMessage%></h3>
                     </div>
                     <%
                         }
@@ -65,17 +95,57 @@
                     <input type="password" class="form" name="Password" placeholder="Password">
                     <br></br>
                     <input class="button1" name="submit" type="submit" value="Login">
+
                 </form>
+
                 <form action="UserServlet" method="post">
+
+                    <%
+                        String responseMessageRegister = (String) request.getAttribute("messageRegister");
+                    %>
+                    <%
+                        if(responseMessageRegister != null) {
+                    %>
+                    <div>
+                        <h3 style="color:red"><%=responseMessageRegister%></h3>
+                    </div>
+                    <%
+                        }
+                    %>
+
                     <h3 style="color:black">Register</h3>
-                    <input type="text" class="form" placeholder="Username">
+                    <input type="text" class="form" name ="Username" placeholder="Username">
 
-                    <input type="text" class="form" placeholder="Password">
+                    <input type="text" class="form" name ="Email" placeholder="Email">
 
-                    <input type="text" class="form" placeholder="Confirm Password">
+                    <input type="text" class="form" name ="PhoneNumber" placeholder="Phone Number">
+                    <br></br>
+
+                    <input type="text" class="form" name ="Password" placeholder="Password">
+
+                    <input type="text" class="form" name ="ConfirmPassword" placeholder="Confirm Password">
+
+                    <br></br>
 
                     <input class="button1" name="submit" type="submit" value="Register">
                 </form>
+
+
+
+                <%
+                    String userLoggedIn = (String) session.getAttribute("user");
+                %>
+                <%
+                    if(userLoggedIn != null) {
+                %>
+                <div>
+                    <h3 style="color:red"><%=userLoggedIn%></h3>
+                </div>
+                <%
+                    }
+                %>
+
+
 
             </div>
         </section>
