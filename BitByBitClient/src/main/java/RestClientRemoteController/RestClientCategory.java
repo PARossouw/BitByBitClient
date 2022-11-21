@@ -2,6 +2,7 @@ package RestClientRemoteController;
 
 import Category.Model.Category;
 import Story.Model.Story;
+import User.Model.Reader;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,7 +24,7 @@ import org.json.simple.JSONObject;
     private ObjectMapper mapper;
 
     public RestClientCategory(String url) {
-        this.url = url + "/RIP/Category";
+        this.url = url + "/Category";
         this.mapper = new ObjectMapper();
     }
 
@@ -39,7 +40,6 @@ import org.json.simple.JSONObject;
         return allCategories;
     }
 
-    //public String addCategoriesToStory(Story story, List<Category> categories) throws JsonProcessingException {
     public String addCategoriesToStory(Story story, List<Category> categories) throws JsonProcessingException {
         String uri = url + "/addToStory";
         restClient = ClientBuilder.newClient();
@@ -68,6 +68,18 @@ import org.json.simple.JSONObject;
                 webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<List<Category>>() {
         });
         return topCategories;
+    }
+    
+    public List<Category> getPreferredCategories(Reader reader) throws JsonProcessingException{
+        String uri = url + "/preferredCategories";
+        restClient = ClientBuilder.newClient();
+        webTarget = restClient.target(uri);
+        
+        List<Category> preferredCategories = null;
+        preferredCategories = mapper.readValue(
+                webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<List<Category>>() {
+        });
+        return preferredCategories;
     }
     
     private String toJsonString(Object o) throws JsonProcessingException {
