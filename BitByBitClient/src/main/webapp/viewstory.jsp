@@ -47,6 +47,11 @@ import Story
 
             </nav>
             <div class="h_div">
+                
+ 
+                    
+                
+                
 
                 <%
                             Story story = (Story) request.getAttribute("story");

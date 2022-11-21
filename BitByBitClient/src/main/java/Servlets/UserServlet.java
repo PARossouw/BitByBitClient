@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet(name = "UserServlet", urlPatterns = {"/UserServlet"})
 public class UserServlet extends HttpServlet {
@@ -41,6 +42,7 @@ public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        processRequest(request, response);
 
+
         switch (request.getParameter("submit")) {
             case "Likes":
                 String likes = "This is my likes";
@@ -56,6 +58,7 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        processRequest(request, response);
+HttpSession session = request.getSession();
             switch (request.getParameter("submit")) {
             case "Login":
 
@@ -79,6 +82,8 @@ public class UserServlet extends HttpServlet {
                 userFeedback = restClientUser.login(userCheck);
 
                 if (userFeedback != null) {
+                    session = request.getSession(true);
+                    session.setAttribute("user", userFeedback.getUsername()); // setting the session object. 
                     String msg = "Successfuly logged in";
                     request.setAttribute("message", msg);
                     RequestDispatcher rd = request.getRequestDispatcher("index.html");

@@ -12,7 +12,8 @@ import RestClientRemoteController.RestClientStory;
 import User_Interactions.Comment.Model.Comment;
 import jakarta.annotation.ManagedBean;
 import jakarta.servlet.RequestDispatcher;
-import java.util.List;
+
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet(name = "StoryServlet", urlPatterns = {"/StoryServlet"})
 @ManagedBean
@@ -47,6 +48,10 @@ public class StoryServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+
+        HttpSession session = request.getSession();
+
+
         Calendar cal = Calendar.getInstance();
 
         switch (request.getParameter("submit")) {
@@ -61,6 +66,10 @@ public class StoryServlet extends HttpServlet {
                 Comment comment = new Comment();
                 comment.setCommentBody("Mock comment body");
                 request.setAttribute("comment", comment);
+
+                
+                
+                session.getAttribute("user");
 
                 RequestDispatcher rd = request.getRequestDispatcher("viewstory.jsp");
                 rd.forward(request, response);

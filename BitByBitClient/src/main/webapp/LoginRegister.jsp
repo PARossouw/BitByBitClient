@@ -38,9 +38,39 @@
                     <li>                       
                         <button type="button">Contact Us</button>
                     </li>
-                    <li>
+
+
+                   <%
+                    String userLoggedInHeader = (String) session.getAttribute("user");
+                %>
+                <%
+                    if(userLoggedInHeader != null) {
+                %>
+               <li>
+                        <button type="button">Profile</button>
+               </li>
+                <%
+                    }
+else 
+{
+   %>
+               <li>
                         <button type="button">Login/Register</button>
-                    </li>
+               </li>
+                <%
+
+}
+
+
+                %>
+                    
+
+
+
+
+
+
+
                 </ul>
 
             </nav>
@@ -65,9 +95,9 @@
                     <input type="password" class="form" name="Password" placeholder="Password">
                     <br></br>
                     <input class="button1" name="submit" type="submit" value="Login">
-                    
+
                 </form>
-                    
+
                 <form action="UserServlet" method="post">
 
                     <%
@@ -85,9 +115,9 @@
 
                     <h3 style="color:black">Register</h3>
                     <input type="text" class="form" name ="Username" placeholder="Username">
-                    
+
                     <input type="text" class="form" name ="Email" placeholder="Email">
-                    
+
                     <input type="text" class="form" name ="PhoneNumber" placeholder="Phone Number">
                     <br></br>
 
@@ -96,9 +126,26 @@
                     <input type="text" class="form" name ="ConfirmPassword" placeholder="Confirm Password">
 
                     <br></br>
-                    
+
                     <input class="button1" name="submit" type="submit" value="Register">
                 </form>
+
+
+
+                <%
+                    String userLoggedIn = (String) session.getAttribute("user");
+                %>
+                <%
+                    if(userLoggedIn != null) {
+                %>
+                <div>
+                    <h3 style="color:red"><%=userLoggedIn%></h3>
+                </div>
+                <%
+                    }
+                %>
+
+
 
             </div>
         </section>
