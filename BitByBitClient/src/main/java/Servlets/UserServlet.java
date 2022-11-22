@@ -11,6 +11,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "UserServlet", urlPatterns = {"/UserServlet"})
 public class UserServlet extends HttpServlet {
@@ -86,7 +88,7 @@ HttpSession session = request.getSession();
                     session.setAttribute("user", userFeedback.getUsername()); // setting the session object. 
                     String msg = "Successfuly logged in";
                     request.setAttribute("message", msg);
-                    RequestDispatcher rd = request.getRequestDispatcher("index.html");
+                    RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
                     rd.forward(request, response);
 
                 } else {
@@ -100,6 +102,11 @@ HttpSession session = request.getSession();
             case "Register":
 
                 Boolean sendToDatabase = true;
+                
+                ArrayList <String> categoryList = new ArrayList<>();
+                categoryList.add("Horror");
+                categoryList.add("Comedy");
+                categoryList.add("Fiction");
 
                 String usernameRegister = (String) request.getParameter("Username");
                 String emailRegister = (String) request.getParameter("Email");
@@ -109,9 +116,12 @@ HttpSession session = request.getSession();
 
                 String specialCharactersString = "!@#$%&*()'+,-./:;<=>?[]^_`{|}";
 
-                if (usernameRegister.isEmpty() || emailRegister.isEmpty() || phoneRegister.isEmpty() || passwordRegister.isEmpty() || passwordConfirm.isEmpty()) {
+                if (usernameRegister.isEmpty() || emailRegister.isEmpty() || passwordRegister.isEmpty() || passwordConfirm.isEmpty()) {
                     String msg = "Unsuccessful registration. Please ensure that all fields are filled in.";
                     request.setAttribute("messageRegister", msg);
+                    
+                    
+                    
                     RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
                     rd.forward(request, response);
                     sendToDatabase = false;
@@ -169,7 +179,9 @@ HttpSession session = request.getSession();
                     }
 
                     request.setAttribute("messageRegister", msg2);
-                    RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
+                    request.setAttribute("categoryList", categoryList);
+                    
+                    RequestDispatcher rd = request.getRequestDispatcher("prefferedCategories.jsp");
                     rd.forward(request, response);
                 }
                 break;
