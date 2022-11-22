@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class CategoryServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+        HttpSession session = request.getSession(false);
         response.setContentType("text/html;charset=UTF-8");
         
         switch(request.getParameter("submit")){
@@ -56,11 +57,6 @@ public class CategoryServlet extends HttpServlet {
                 message = restClientCategory.addCategoriesToStory(story, categories);
                 break;
                 
-            case "getPreferredCategories":
-                Reader reader = new Reader();
-                reader.setUserID(Integer.SIZE);
-                restClientCategory.getPreferredCategories(reader);
-                break;
         }
     }
 
