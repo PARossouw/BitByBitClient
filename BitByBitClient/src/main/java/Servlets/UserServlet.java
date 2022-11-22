@@ -1,6 +1,9 @@
 package Servlets;
 
+import Category.Model.Category;
+import RestClientRemoteController.RestClientCategory;
 import RestClientRemoteController.RestClientUser;
+import User.Model.Reader;
 import User.Model.User;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -18,9 +21,11 @@ import java.util.List;
 public class UserServlet extends HttpServlet {
 
     private static RestClientUser restClientUser;
+    private static RestClientCategory restClientCategory;
 
     public UserServlet() {
         this.restClientUser = new RestClientUser("http://localhost:8080/RIP/RIP");
+        this.restClientCategory = new RestClientCategory("http://localhost:8080/RIP/RIP");
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -102,10 +107,12 @@ public class UserServlet extends HttpServlet {
 
                 Boolean sendToDatabase = true;
 
-                ArrayList<String> categoryList = new ArrayList<>();
-                categoryList.add("Horror");
-                categoryList.add("Comedy");
-                categoryList.add("Fiction");
+                List<Category> categoryList = new ArrayList<>();
+                categoryList = restClientCategory.displayAllCategories();
+                
+                //categoryList.add("Horror");
+                //categoryList.add("Comedy");
+                //categoryList.add("Fiction");
 
                 String usernameRegister = (String) request.getParameter("Username");
                 String emailRegister = (String) request.getParameter("Email");
@@ -154,12 +161,9 @@ public class UserServlet extends HttpServlet {
                             msg2 = "Invalid Phone Number. Please try again";
                             sendToDatabase = false;
                         }
-
                     }
-
                     // Sending data to the database 
                     if (sendToDatabase) {
-
                         User userCheck2 = new User();
                         User userFeedback2 = new User();
 
@@ -170,9 +174,7 @@ public class UserServlet extends HttpServlet {
                         userCheck2.setPassword(passwordRegister);
 
                         msg2 = restClientUser.registerUser(userCheck2);
-
                     }
-
                     request.setAttribute("messageRegister", msg2);
                     request.setAttribute("categoryList", categoryList);
 
@@ -182,28 +184,45 @@ public class UserServlet extends HttpServlet {
                 break;
 
             case "submitCategories":
-                List<String> myList = new ArrayList<>();
-                
-                List<Integer> categoryCheckedList = new ArrayList<>();
+                List<Category> myList = new ArrayList<>();
+                myList = restClientCategory.displayAllCategories();
+
+                List<String> userPrefferedCategories =  new ArrayList<>();
+                List<Category> prefferedCategories = new ArrayList<>();
                 
                 String[] checkedBoxes = request.getParameterValues("category");
 
-                
-
-                
-                
-                for (int i = 0; i < checkedBoxes.length; i++) {
-                  //  allCheckedBoxes += (String) checkedBoxes[i] + "\n";
-                    
-                    categoryCheckedList.add(Integer.parseInt( (String) checkedBoxes[i]));
+                if(checkedBoxes.length > 0)
+                {
+                for (int i = 0; i < checkedBoxes.length; i++) 
+                {
+                    String chosenName = myList.get(Integer.parseInt( (String) checkedBoxes[i])).getName();
+                    Category category = new Category();
+                    category.setName(chosenName);
+                    prefferedCategories.add(category);
                 }
+                
+                }
+                String chosenCategories = "";
 
-//                request.setAttribute("checked", myList.get(ctage));
-//
-//                RequestDispatcher rd3 = request.getRequestDispatcher("prefferedCategories.jsp");
-//
-//                rd3.forward(request, response);
+                // For Testing purposes <<
+                for(int i = 0 ; i < prefferedCategories.size() ; i++)
+                {
+                    chosenCategories += prefferedCategories.get(i).getName() +"\n";  
+                }
+                
+                request.setAttribute("checked", chosenCategories);
+                RequestDispatcher rd3 = request.getRequestDispatcher("prefferedCategories.jsp");
+                rd3.forward(request, response);
+                 // >>>>>
 
+                
+                Reader reader = new Reader();
+                reader.setUsername((String) session.getAttribute("user"));
+                reader.setUserID(Integer.parseInt((String) session.getAttribute("userID")));
+                reader.setRoleID(Integer.parseInt((String) session.getAttribute("roleID")));
+                
+                restClientUser.addPreferredCategoriesToUser(reader, prefferedCategories);                
                 break;
 
             default:
@@ -211,7 +230,6 @@ public class UserServlet extends HttpServlet {
         }
 
     }
-
     @Override
     public String getServletInfo() {
         return "Short description";
