@@ -183,33 +183,26 @@ public class UserServlet extends HttpServlet {
 
             case "submitCategories":
                 List<String> myList = new ArrayList<>();
-                myList.add("Horror");
-                myList.add("Comedy");
-                myList.add("Fiction");
                 
                 List<Integer> categoryCheckedList = new ArrayList<>();
                 
                 String[] checkedBoxes = request.getParameterValues("category");
 
-                String allCheckedBoxes = "";
+                
 
-                int userChecked = 0 ; 
+                
                 
                 for (int i = 0; i < checkedBoxes.length; i++) {
                   //  allCheckedBoxes += (String) checkedBoxes[i] + "\n";
                     
                     categoryCheckedList.add(Integer.parseInt( (String) checkedBoxes[i]));
                 }
-                
-                
-                
-                
 
-                request.setAttribute("checked", myList.get(categoryCheckedList.get(0)));
-
-                RequestDispatcher rd3 = request.getRequestDispatcher("prefferedCategories.jsp");
-
-                rd3.forward(request, response);
+//                request.setAttribute("checked", myList.get(ctage));
+//
+//                RequestDispatcher rd3 = request.getRequestDispatcher("prefferedCategories.jsp");
+//
+//                rd3.forward(request, response);
 
                 break;
 
