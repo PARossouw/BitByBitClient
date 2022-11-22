@@ -5,6 +5,8 @@
 --%>
 
 <%@page import="java.util.ArrayList"%>
+<%@page import="Category.Model.Category;"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
@@ -69,8 +71,8 @@
 
 
                     </tr>
-                    <%ArrayList<String> std = 
-                        (ArrayList<String>)request.getAttribute("categoryList");
+                    <%List<Category> std = 
+                        (ArrayList<Category>)request.getAttribute("categoryList");
                         
                          if(std != null)
                          {
@@ -82,11 +84,11 @@
                         <td>
 
                             <%
-                                String variableName = "s"+i;
+                                String variableName = ""+i;
                             %>
 
                             <input type="checkbox" value ="<%=variableName%>" name ="category" >
-                            <label for="vehicle3" style="color:black"><%=std.get(i) + " "+variableName%></label><br>
+                            <label for="vehicle3" style="color:black"><%=std.get(i).getName() + " "+variableName%></label><br>
 
                         </td>
 
