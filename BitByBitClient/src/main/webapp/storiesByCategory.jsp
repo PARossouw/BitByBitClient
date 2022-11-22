@@ -2,6 +2,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Story.Model.Story;"%>
+<%@page import="Category.Model.Category;" %>
 <%@page import="java.util.List"%>
 <!DOCTYPE html>
 <html>
@@ -61,7 +62,7 @@
                         <label for="Categories">Select the categories you wish to search by. You may control-click (Windows) or command-click (Mac) to select more than one</label>
 
                         <%
-                            List<String> categories = (List<String>) request.getAttribute("categories");
+                            ArrayList<Category> categories = (ArrayList<Category>) request.getAttribute("categories");
                             if(categories != null && categories.size()>0){
                         %>
                         <select multiple size = "<%categories.size();%>" name="Categories" id="Categories">
@@ -69,7 +70,7 @@
                                 for(int i = 0; i < categories.size(); i++){
                             %>
 
-                            <option value="<%=i%>"><%=categories.get(i)%></option>
+                            <option value="<%=i%>"><%=categories.get(i).getName()%></option>
                             <%
                                     }//end for
                                 }//end if
@@ -87,23 +88,25 @@
                     </div>
                     <%
                         List<Story> stories = (List<Story>) request.getAttribute("stories");
-                        if(stories != null && stories.size()>0){
-                            for(Story story : stories){
                     %>
                     <section class="main_content">
 
                         <div class="story_list">
+                            <%
+                        if(stories != null && stories.size()>0){
+                            for(Story story : stories){
+                            %>
 
                             <div>
-                                <img src=<%=story.getImagePath%>>
-                                <h3 style="color:black"><%=story.getTitle%></h3>
-                                <h5 style="color:black">Written by : <%=story.getWriter%></h5>
-                                <h5 style="color:black">Views : <%=story.getViews%></h5>
-                                <h5 style="color:black">Likes : <%=story.getLikes%></h5>
-                                <h5 style="color:black">Rating : <%=story.getAvgRating%></h5>
+                                <img src=<%=story.getImagePath()%>>
+                                <h3 style="color:black"><%=story.getTitle()%></h3>
+                                <h5 style="color:black">Written by : <%=story.getWriter()%></h5>
+                                <h5 style="color:black">Views : <%=story.getViews()%></h5>
+                                <h5 style="color:black">Likes : <%=story.getLikes()%></h5>
+                                <h5 style="color:black">Rating : <%=story.getAvgRating()%></h5>
                                 <li></li>
-                                <p><%=story.getDescription%></p>
-                                
+                                <p><%=story.getDescription()%></p>
+
                                 <a href=dailystory.html>
                                     <button class="button1">Like</button>
                                 </a>
