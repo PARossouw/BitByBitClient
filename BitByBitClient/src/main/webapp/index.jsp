@@ -20,9 +20,12 @@
                         </a>
                     </li>
                     <li>
-                        <a href="story.jsp">
-                            <button type="button">Categories</button>
-                        </a>
+                        <form action="index" method="get">
+                            <a href="storiesByCategories.jsp">
+                                <input class="button1" name="submit" type="submit" value="View stories by categories">
+                            </a>
+                        </form>
+
                     </li>
                     <li>
                         <button type="button">Refer a Friend</button>
