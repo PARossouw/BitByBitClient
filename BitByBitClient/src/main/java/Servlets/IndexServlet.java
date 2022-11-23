@@ -11,12 +11,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name="index", urlPatterns={"/index"})
-public class index extends HttpServlet {
+public class IndexServlet extends HttpServlet {
 
     private static RestClientCategory restClientCategory;
+
+    public IndexServlet() {
+        restClientCategory = new RestClientCategory("http://localhost:8080/RIP/RIP");
+    }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -40,7 +45,8 @@ public class index extends HttpServlet {
         
         switch (request.getParameter("submit")) {
             case "View stories by categories":
-                List<Category> categories = restClientCategory.displayAllCategories();
+                List<Category> categories = new ArrayList<>();
+                categories = restClientCategory.displayAllCategories();
                 request.setAttribute("categories", categories);
                 RequestDispatcher rd = request.getRequestDispatcher("storiesByCategory.jsp");
                 rd.forward(request, response);
