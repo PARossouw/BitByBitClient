@@ -68,6 +68,17 @@ body{
     border-radius: 3px;
 }
 
+.h_div .button3{
+    background-color: green;
+    color:white;
+    border:none;
+    outline: none;
+    width:11%;
+    padding: 3.5px;
+    margin-left: 5px;
+    border-radius: 3px;
+}
+
 .browse li{
     list-style-type: none;
     padding: 15px;

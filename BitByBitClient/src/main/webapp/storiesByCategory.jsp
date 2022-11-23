@@ -3,7 +3,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Story.Model.Story;"%>
 <%@page import="Category.Model.Category;" %>
-<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -55,80 +55,79 @@
         <section class="main_content">
 
             <div>
-                <input type="text" class="form" placeholder="Search for a category">
 
-                <form action="CategoryServlet" method="get">
+                <form action="StoryServlet" method="post">
                     <div>
-                        <label for="Categories">Select the categories you wish to search by. You may control-click (Windows) or command-click (Mac) to select more than one</label>
+                        <label for="Categories">Select the categories you wish to search by.</label>
 
                         <%
                             ArrayList<Category> categories = (ArrayList<Category>) request.getAttribute("categories");
                             if(categories != null && categories.size()>0){
                         %>
-                        <select multiple size = "<%categories.size();%>" name="Categories" id="Categories">
-                            <%
-                                for(int i = 0; i < categories.size(); i++){
-                            %>
+                        <table>
+                            <tr>
+                                <%
+                                    for(int i = 0; i < categories.size(); i++){
+                                        if(i % 7 == 0){
+                                %>
+                            </tr>
 
-                            <option value="<%=i%>"><%=categories.get(i).getName()%></option>
+                            <tr>
+                                <%
+                                    }//end if
+                                %>
+                                <td>
+                                    <input type="checkbox" name="category" value="<%=i%>">
+                                    <label for="category" style="color:black"><%=categories.get(i).getName() + " "+i%></label>
+                                </td>
+                            </tr>
+
                             <%
                                     }//end for
                                 }//end if
                             %>
-                        </select>
-
-
-                        <h3 style="color:black">Search</h3>
-
-                        <input type="text" class="form" placeholder="search">
+                        </table>
 
                         <input class="button1" name="submit" type="submit" value="Search">
-                        </form>
+
 
                     </div>
+                </form>
+                <%
+                    ArrayList<Story> stories = (ArrayList<Story>) request.getAttribute("stories");
+                %>
+
+                <li></li>
+                <div class="story_list">
                     <%
-                        List<Story> stories = (List<Story>) request.getAttribute("stories");
+                if(stories != null && stories.size()>0){
+                    for(Story story : stories){
                     %>
-                    <section class="main_content">
 
-                        <div class="story_list">
-                            <%
-                        if(stories != null && stories.size()>0){
-                            for(Story story : stories){
-                            %>
+                    <div>
+                        <img src=<%=story.getImagePath()%>>
+                        <h3 style="color:black"><%=story.getTitle()%></h3>
+                        <h5 style="color:black">Written by : <%=story.getWriter()%></h5>
+                        <h5 style="color:black">Views : <%=story.getViews()%></h5>
+                        <h5 style="color:black">Likes : <%=story.getLikes()%></h5>
+                        <h5 style="color:black">Rating : <%=story.getAvgRating()%></h5>
+                        <li></li>
+                        <p><%=story.getDescription()%></p>
 
-                            <div>
-                                <img src=<%=story.getImagePath()%>>
-                                <h3 style="color:black"><%=story.getTitle()%></h3>
-                                <h5 style="color:black">Written by : <%=story.getWriter()%></h5>
-                                <h5 style="color:black">Views : <%=story.getViews()%></h5>
-                                <h5 style="color:black">Likes : <%=story.getLikes()%></h5>
-                                <h5 style="color:black">Rating : <%=story.getAvgRating()%></h5>
-                                <li></li>
-                                <p><%=story.getDescription()%></p>
+                        <a href=viewStory.jsp>
+                            <button class="button1">Read now</button>
+                        </a>
 
-                                <a href=dailystory.html>
-                                    <button class="button1">Like</button>
-                                </a>
+                    </div>
 
-                                <a href=viewstory.html>
-                                    <button class="button2">Comment</button>
-                                </a>
-
-
-                                <a href=viewstory.html>
-                                    <button class="button2">Rate</button>
-                                </a>
-                            </div>
-
-                        </div>
-                        <%
-                    }
-                }
-                        %>
+                </div>
+                <%
+            }
+        }
+                %>
 
 
 
-                    </section>
-                    </body>
-                    </html>
+        </section>
+    </body>
+</html>

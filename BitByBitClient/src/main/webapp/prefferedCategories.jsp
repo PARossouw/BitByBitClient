@@ -1,13 +1,9 @@
-<%-- 
-    Document   : prefferedCategories
-    Created on : 21 Nov 2022, 21:11:00
-    Author     : tarunsing
---%>
-
 <%@page import="java.util.ArrayList"%>
+<%@page import="Category.Model.Category;"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
- 
+
 <html>
 
     <head>
@@ -39,8 +35,8 @@
                     <li>                       
                         <button type="button">Contact Us</button>
                     </li>
-                    
-                      <li>                       
+
+                    <li>                       
                         <button type="button">Login/Register</button>
                     </li>
 
@@ -48,42 +44,81 @@
 
             </nav>
             
+            <%
+          String responseMessageRegister = (String) request.getAttribute("checked");
+            %>
+            <%
+                if(responseMessageRegister != null) {
+            %>
+            <div>
+                <h3 style="color:red"><%=responseMessageRegister%></h3>
+            </div>
+            <%
+                }
+            %>
             
-                    <h1>Displaying Category List</h1>
-      <table border ="1" width="500" align="center">
-         <tr bgcolor="00FF7F">
-        
-          
-         </tr>
-        <%-- Fetching the attributes of the request object
-             which was previously set by the servlet 
-              "StudentServlet.java"
-        --%> 
-        <%ArrayList<String> std = 
-            (ArrayList<String>)request.getAttribute("categoryList");
-        for(String s:std){%>
-        <%-- Arranging data in tabular form
-        --%>
-            <tr>
-                <td>
-                
-                <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
-<label for="vehicle3" style="color:black"><%=s%></label><br>
-                
-                </td>
-                
-                
-            </tr>
-            <%}%>
-        </table> 
-        <hr/>
-        
-            
+
+            <form action="UserServlet" method="post">
+                <h1 style="color:black">Displaying Category List</h1>
+                <table border ="1" width="500" align="center">
+                    <tr bgcolor="00FF7F">
+
+
+                    </tr>
+                    <%List<Category> std = 
+                        (ArrayList<Category>)request.getAttribute("categoryList");
+                        
+                         if(std != null)
+                         {
+                        
+                        
+                    for(int i = 0; i<std.size() ; i++){%>
+
+                    <tr>
+                        <td>
+
+                            <%
+                                String variableName = ""+i;
+                            %>
+
+                            <input type="checkbox" value ="<%=variableName%>" name ="category" >
+                            <label for="vehicle3" style="color:black"><%=std.get(i).getName() + " "+variableName%></label><br>
+
+                        </td>
+
+
+                    </tr>
+                    <%}}%>
+
+
+
+
+                </table> 
+                <hr/>
+                <input class="button1" name="submit" type="submit" value="submitCategories">
+
+
+            </form>
+
+
+            <%
+                   String responseMessage = (String) request.getAttribute("categoryStuff");
+            %>
+            <%
+                if(responseMessage != null) {
+            %>
+            <div>
+                <h3 style="color:red"><%=responseMessage%></h3>
+            </div>
+            <%
+                }
+            %>
+
 
         </section>
-        
 
-        
+
+
 
         <section class="main_content">
             <div class="side_nav">
