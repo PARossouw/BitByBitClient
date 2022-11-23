@@ -20,8 +20,8 @@
                         </a>
                     </li>
                     <li>
-                        <form action="index" method="get">
-                            <a href="storiesByCategories.jsp">
+                        <form action="CategoryServlet" method="get">
+                            <a>
                                 <input class="button1" name="submit" type="submit" value="View stories by categories">
                             </a>
                         </form>
