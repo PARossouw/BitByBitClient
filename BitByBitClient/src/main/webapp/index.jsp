@@ -1,6 +1,5 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html>
-
     <head>
         <title>Readers Are Innovators</title>
         <link rel="stylesheet" href="normalized.css">
@@ -14,13 +13,11 @@
                 <ul class="clearfix">
                     <li class="nav_logo">
                         <img src="images/open-book.png" class="logo_img" alt="Netflix Logo">
-
                     </li>
                     <li>
-                        <a href=index.html>
+                        <a href=index.jsp>
                             <button class="button3">Home</button>
                         </a>
-
                     </li>
                     <li>
                         <form action="CategoryServlet" method="get">
@@ -30,10 +27,11 @@
                         </form>
 
                     </li>
-                    <li>                       
+                    <li>
                         <button type="button">Refer a Friend</button>
                     </li>
-                    <li>                       
+                    <li>
+                        <a href="User.jsp">
                         <button type="button">Contact Us</button>
                     </li>
                     <li>
@@ -42,9 +40,11 @@
                         </a>
                     </li>
                     <li>
-                        <a>
-                            <button type="button">View Profile</button>
-                        </a>
+                        <form action="StoryServlet" method="get">
+                            <a>
+                                <input class="button1" name="submit" type="submit" value="Review Story">
+                            </a>
+                        </form>
                     </li>
                 </ul>
 
@@ -62,25 +62,7 @@
                         <button class="button2">View All Stories</button>
                     </a>
                 </form>
-
-
-
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </section>
 
         <section class="main_content">
