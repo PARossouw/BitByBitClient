@@ -72,6 +72,7 @@ public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        processRequest(request, response);
         HttpSession session = request.getSession(false);
+        User loggedInUser = null;
         switch (request.getParameter("submit")) {
             case "Login":
 
@@ -93,9 +94,7 @@ public class UserServlet extends HttpServlet {
 
                 if (userFeedback != null) {
                     session = request.getSession(true);
-                    session.setAttribute("user", userFeedback.getUsername()); // setting the session object. 
-                    session.setAttribute("userID", userFeedback.getUserID());
-                    session.setAttribute("roleID", userFeedback.getRoleID());
+                    session.setAttribute("user", userFeedback); // setting the session object. 
 
                     String msg = "Successfuly logged in";
                     request.setAttribute("message", msg);
@@ -107,6 +106,8 @@ public class UserServlet extends HttpServlet {
                     request.setAttribute("message", msg2);
                     RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
                     rd.forward(request, response);
+                    
+                    loggedInUser = (User) session.getAttribute("user");
                 }
                 break;
 
@@ -231,7 +232,6 @@ public class UserServlet extends HttpServlet {
                 break;
     
             case "getPreferredCategories":
-                User loggedInUser = (User) session.getAttribute("user");
                 List<Category> preferredCategories;
                 
                 switch (loggedInUser.getRoleID()) {
