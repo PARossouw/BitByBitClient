@@ -42,9 +42,11 @@
                         </a>
                     </li>
                     <li>
-                        <a>
-                            <button type="button">View Profile</button>
-                        </a>
+                        <form action="StoryServlet" method="get">
+                            <a>
+                                <input class="button1" name="submit" type="submit" value="Review Story">
+                            </a>
+                        </form>
                     </li>
                 </ul>
 

@@ -14,6 +14,7 @@ import jakarta.annotation.ManagedBean;
 import jakarta.servlet.RequestDispatcher;
 
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "StoryServlet", urlPatterns = {"/StoryServlet"})
@@ -21,10 +22,11 @@ import java.util.List;
 public class StoryServlet extends HttpServlet {
 
     public static RestClientStory restClientStory;
+    private Story storyToReview;
+    List<Story> storyReviewList = new ArrayList<>();
 
     public StoryServlet() {
         this.restClientStory = new RestClientStory("http://localhost:8080/RIP/RIP");
-
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,12 +39,37 @@ public class StoryServlet extends HttpServlet {
         
         switch (request.getParameter("submit")) {
 
-            case ("getFiveStoriesForStoryOfTheDay"):
+            case ("Review Story"):
                 
-                List<Story> storyList = restClientStory.getFiveStoriesForStoryOfTheDay();
-
+                storyReviewList = restClientStory.storyReview();
+                this.storyToReview = storyReviewList.get(0);
+                
+                request.setAttribute("storyReview", this.storyToReview);
+                RequestDispatcher rdisp = request.getRequestDispatcher("Editor.jsp");
+                
+                rdisp.forward(request, response);
+                
                 break;
 
+        case ("Next Story"):
+            
+            
+            for (int i = 0; i < storyReviewList.size(); i++) {
+                
+                if(this.storyToReview == storyReviewList.get(i)){
+                    this.storyToReview = storyReviewList.get(i+1);
+                    break;
+                }
+                
+            }
+                
+                
+                request.setAttribute("storyReview", this.storyToReview);
+                rdisp = request.getRequestDispatcher("Editor.jsp");
+                
+                rdisp.forward(request, response);
+                
+                break;
         }
     }
 
@@ -86,7 +113,19 @@ public class StoryServlet extends HttpServlet {
 
             case ("getFiveStoriesForStoryOfTheDay"):
                 
-                List<Story> storyList = restClientStory.getFiveStoriesForStoryOfTheDay();
+                //List<Story> storyList = restClientStory.getFiveStoriesForStoryOfTheDay();
+
+                break;
+            case ("Approve"):
+                
+//                restClientStory.
+                break;
+            case ("Reject"):
+                
+
+                break;
+            case ("Next Story"):
+                
 
                 break;
 
