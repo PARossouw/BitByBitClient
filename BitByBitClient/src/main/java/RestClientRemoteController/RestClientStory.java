@@ -2,6 +2,7 @@ package RestClientRemoteController;
 
 import Category.Model.Category;
 import Story.Model.Story;
+import User.Model.Reader;
 import User.Model.Writer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -107,6 +108,16 @@ public class RestClientStory {
         
         return stories;
         
+    }
+    
+    public List<Story> viewLikedStories(Reader reader) throws JsonProcessingException {
+        String uri = url + "/viewLikedStories/{reader}";
+        restClient = ClientBuilder.newClient();
+        webTarget = restClient.target(uri).resolveTemplate("reader", reader);
+        List<Story> stories = null;
+        stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
+        
+        return stories;
     }
 
     private String toJsonString(Object o) throws JsonProcessingException {

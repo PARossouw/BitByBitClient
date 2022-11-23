@@ -2,9 +2,14 @@ package Servlets;
 
 import Category.Model.Category;
 import RestClientRemoteController.RestClientCategory;
+import RestClientRemoteController.RestClientStory;
 import RestClientRemoteController.RestClientUser;
+import Story.Model.Story;
+import User.Model.AdminEditor;
+import User.Model.Editor;
 import User.Model.Reader;
 import User.Model.User;
+import User.Model.Writer;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,10 +27,12 @@ public class UserServlet extends HttpServlet {
 
     private static RestClientUser restClientUser;
     private static RestClientCategory restClientCategory;
+    private static RestClientStory restClientStory;
 
     public UserServlet() {
         this.restClientUser = new RestClientUser("http://localhost:8080/RIP/RIP");
         this.restClientCategory = new RestClientCategory("http://localhost:8080/RIP/RIP");
+        this.restClientStory = new RestClientStory("http://localhost:8080/RIP/RIP");
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -64,7 +71,7 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        processRequest(request, response);
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         switch (request.getParameter("submit")) {
             case "Login":
 
@@ -109,7 +116,7 @@ public class UserServlet extends HttpServlet {
 
                 List<Category> categoryList = new ArrayList<>();
                 categoryList = restClientCategory.displayAllCategories();
-                
+            
                 //categoryList.add("Horror");
                 //categoryList.add("Comedy");
                 //categoryList.add("Fiction");
@@ -141,10 +148,9 @@ public class UserServlet extends HttpServlet {
 
                     // Checks for a special String.
                     String inputString = usernameRegister;
-                    String specialCharactersStringCheck = "!@#$%&*()'+,-./:;<=>?[]^_`{|}";
                     for (int i = 0; i < inputString.length(); i++) {
-                        char ch = inputString.charAt(i);
-                        if (specialCharactersStringCheck.contains(Character.toString(ch))) {
+                        char ch = specialCharactersString.charAt(i);
+                        if (inputString.contains(Character.toString(ch))) {
                             msg2 = "Invalid Username. Special Characters are not permitted. Please try again";
                             sendToDatabase = false;
                             break;
@@ -168,7 +174,6 @@ public class UserServlet extends HttpServlet {
                         User userFeedback2 = new User();
 
                         userCheck2.setUsername(usernameRegister);
-
                         userCheck2.setEmail(emailRegister);
                         userCheck2.setPhoneNumber(phoneRegister);
                         userCheck2.setPassword(passwordRegister);
@@ -223,6 +228,42 @@ public class UserServlet extends HttpServlet {
                 reader.setRoleID(Integer.parseInt((String) session.getAttribute("roleID")));
                 
                 restClientUser.addPreferredCategoriesToUser(reader, prefferedCategories);                
+                break;
+    
+            case "getPreferredCategories":
+                User loggedInUser = (User) session.getAttribute("user");
+                List<Category> preferredCategories;
+                
+                switch (loggedInUser.getRoleID()) {
+                case 1:
+                    loggedInUser = new Reader();
+                    preferredCategories = restClientCategory.getPreferredCategories((Reader) loggedInUser);
+                    break;
+                case 2:
+                    loggedInUser = new Writer();
+                    preferredCategories = restClientCategory.getPreferredCategories((Writer) loggedInUser);
+                    break;
+                default:
+                    loggedInUser = new AdminEditor();
+                    preferredCategories = restClientCategory.getPreferredCategories((Reader) loggedInUser);
+                    break;
+            }
+                
+                request.setAttribute("preferredCategories", preferredCategories);
+                request.setAttribute("user", loggedInUser);
+                RequestDispatcher rd = request.getRequestDispatcher("User.jsp");
+                rd.forward(request, response);
+                
+                break;
+
+
+            case "viewLikedStories":
+                Reader reader2 = (Reader) session.getAttribute("user");
+                List<Story> likedStories = restClientStory.viewLikedStories(reader2);
+                
+                request.setAttribute("likedStories", likedStories);
+                RequestDispatcher rd2 = request.getRequestDispatcher("User.jsp");
+                rd2.forward(request, response);
                 break;
 
             default:
