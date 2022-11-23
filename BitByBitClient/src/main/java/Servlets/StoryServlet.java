@@ -1,5 +1,6 @@
 package Servlets;
 
+import Category.Model.Category;
 import Story.Model.Story;
 import jakarta.servlet.http.HttpServlet;
 import java.io.IOException;
@@ -12,7 +13,7 @@ import RestClientRemoteController.RestClientStory;
 import User_Interactions.Comment.Model.Comment;
 import jakarta.annotation.ManagedBean;
 import jakarta.servlet.RequestDispatcher;
-
+import RestClientRemoteController.RestClientCategory;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +23,16 @@ import java.util.List;
 public class StoryServlet extends HttpServlet {
 
     public static RestClientStory restClientStory;
+
+    public static RestClientCategory restClientCategory;
+    
     private Story storyToReview;
     List<Story> storyReviewList = new ArrayList<>();
-
+    
     public StoryServlet() {
         this.restClientStory = new RestClientStory("http://localhost:8080/RIP/RIP");
-    }
+        this.restClientCategory = new RestClientCategory("http://localhost:8080/RIP/RIP");
+}
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -110,6 +115,26 @@ public class StoryServlet extends HttpServlet {
                         //Story story = restClientStory.retrieveStory(s);
 
                 break;
+            case ("viewStoriesByCategory"):
+                List<Category> allCategories = new ArrayList<>();
+                allCategories = restClientCategory.displayAllCategories();
+
+                List<Category> searchByCategories = new ArrayList<>();
+                
+                String[] checkedBoxes = request.getParameterValues("category");
+
+                if(checkedBoxes.length > 0){
+                    for (int i = 0; i < checkedBoxes.length; i++) 
+                    {
+                        searchByCategories.add(allCategories.get(Integer.parseInt( (String) checkedBoxes[i])));
+                    }
+                        List<Story> retrievedStories = new ArrayList<>();
+                        retrievedStories = restClientStory.searchStoriesByCategories(searchByCategories);
+                        request.setAttribute("stories", retrievedStories);
+                        RequestDispatcher rd2 = request.getRequestDispatcher("storiesByCategory.jsp");
+                        rd2.forward(request, response);
+                    }
+                break;
 
             case ("getFiveStoriesForStoryOfTheDay"):
                 
@@ -130,6 +155,7 @@ public class StoryServlet extends HttpServlet {
                 break;
 
         }
+
 
     }
 

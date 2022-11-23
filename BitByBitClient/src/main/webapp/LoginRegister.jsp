@@ -1,8 +1,3 @@
-<%-- 
-    Document   : LoginRegister
-    Created on : 17 Nov 2022, 10:38:52
-    Author     : tarunsing, pieterrossouw
---%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

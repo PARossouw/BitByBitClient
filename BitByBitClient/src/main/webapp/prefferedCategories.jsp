@@ -1,9 +1,3 @@
-<%-- 
-    Document   : prefferedCategories
-    Created on : 21 Nov 2022, 21:11:00
-    Author     : tarunsing
---%>
-
 <%@page import="java.util.ArrayList"%>
 <%@page import="Category.Model.Category;"%>
 <%@page import="java.util.List"%>
