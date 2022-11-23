@@ -3,7 +3,7 @@
     Created on : 17 Nov 2022, 10:38:52
     Author     : tarunsing, pieterrossouw
 --%>
-
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!DOCTYPE html> 
@@ -25,7 +25,7 @@
 
                     </li>
                     <li>
-                        <a href=index.html>
+                        <a href=index.jsp>
                             <button type="button">Home</button>
                         </a>
                     </li>
@@ -64,12 +64,6 @@ else
 
                 %>
                     
-
-
-
-
-
-
 
                 </ul>
 
@@ -129,6 +123,11 @@ else
 
                     <input class="button1" name="submit" type="submit" value="Register">
                 </form>
+                    
+                    
+  
+                    
+                    
 
 
 
