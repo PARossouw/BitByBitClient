@@ -4,6 +4,7 @@ import Category.Model.Category;
 import RestClientRemoteController.RestClientCategory;
 import Story.Model.Story;
 import User.Model.Reader;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -27,10 +28,17 @@ public class CategoryServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+
         switch (request.getParameter("submit")) {
+            case "View stories by categories":
+                List<Category> categories = new ArrayList<>();
+                categories = restClientCategory.displayAllCategories();
+                request.setAttribute("categories", categories);
+                RequestDispatcher rd = request.getRequestDispatcher("storiesByCategory.jsp");
+                rd.forward(request, response);
+                break;
             case "":
-                
+
                 break;
             default:
                 throw new AssertionError();
@@ -39,11 +47,11 @@ public class CategoryServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+
         response.setContentType("text/html;charset=UTF-8");
-        
-        switch(request.getParameter("submit")){
-            
+
+        switch (request.getParameter("submit")) {
+
             case "addCategoriesToStory":
                 String message = null;
                 Story story = new Story();
@@ -55,7 +63,7 @@ public class CategoryServlet extends HttpServlet {
 //                jsonObject.put("categories", categories);
                 message = restClientCategory.addCategoriesToStory(story, categories);
                 break;
-                
+
             case "getPreferredCategories":
                 Reader reader = new Reader();
                 reader.setUserID(Integer.SIZE);
