@@ -94,13 +94,12 @@ public class UserServlet extends HttpServlet {
 
                 if (userFeedback != null) {
                     session = request.getSession(true);
-                    session.setAttribute("user", userFeedback); // setting the session object. 
-                    String msg = "Successfuly logged in";
-                    request.setAttribute("message", msg);
+                    session.setAttribute("user", userFeedback);
+                    loggedInUser = (User) session.getAttribute("user");
+                    request.setAttribute("loggedInUser", loggedInUser);
                     RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
                     rd.forward(request, response);
                     
-                    loggedInUser = (User) session.getAttribute("user");
 
                 } else {
                     String msg2 = "Login failed, please try again.";
