@@ -1,8 +1,6 @@
 
 package RestClientRemoteController;
 
-
-
 import Story.Model.Story;
 import User.Model.Editor;
 import User.Model.Writer;
@@ -14,6 +12,7 @@ import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.Response;
 import java.util.HashMap;
+import org.json.simple.JSONObject;
 
 public class RestClientStory_Transaction {
 
@@ -23,22 +22,30 @@ public class RestClientStory_Transaction {
     private ObjectMapper mapper;
 
     public RestClientStory_Transaction(String url) {
-        this.url = url + "/RIP/StoryTransaction";
+        this.url = url + "/StoryTransaction";
         this.mapper = new ObjectMapper();
     }
     
     
     
-      //@FormParam must be put in the aruguments on the rest controller side
      public String approvePendingStory(Editor editor, Story story) throws JsonProcessingException {
-         String uri = url + "/approve";
+        String uri = url + "/approve";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
-        HashMap<Editor, Story> pendingStories = new HashMap();
-        pendingStories.put(editor, story);
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("editor", editor);
+        jsonObject.put("story", story);
         Response response = null;
-        response = webTarget.request().post(Entity.json(toJsonString(pendingStories)));
+        response = webTarget.request().post(Entity.json(toJsonString(jsonObject)));
+        
+        
+        
         return response.readEntity(String.class);
+        
+
+
+        
         
     }
 
