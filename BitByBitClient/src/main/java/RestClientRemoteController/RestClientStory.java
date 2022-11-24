@@ -87,7 +87,7 @@ public class RestClientStory {
     }
     
     public List<Story> storyReview()throws JsonProcessingException{
-        String uri = url + "/getFiveStoriesForStoryOfTheDay";
+        String uri = url + "/getPendingStories";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
         List<Story> stories = new ArrayList();

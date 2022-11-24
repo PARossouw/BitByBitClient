@@ -33,9 +33,11 @@
                         <button type="button">Contact Us</button>
                 </li>
                 <li>
+                    <form action="StoryServlet" method="get">
                     <a>
-                        <button type="button">View Profile</button>
+                        <input class="button1" name="submit" type="submit" value="Review Story">
                     </a>
+                    </form>
                 </li>
                 <li>
                     <a href=LoginRegister.jsp>
