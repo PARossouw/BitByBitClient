@@ -40,6 +40,9 @@
                         </a>
                     </form>
                 </li>
+                
+                <!-- Don't add new buttons below this line it will break the Login button-->
+                
                 <%
                 User userLoggedIn = (User) session.getAttribute("loggedInUser");
                     
