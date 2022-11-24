@@ -3,11 +3,21 @@
 <!DOCTYPE html>
 <html>
     <%
+        String message = (String) request.getAttribute("message");
         Story story = (Story) request.getAttribute("storyReview");
+        
+        if(message != null){
+        
+    %>
+    <h3 style = "color:green"><%=message%></h3>
+    <%
+        
+    }if(story != null){
     
-        String writer = story.getWriter();
-        String title = story.getTitle();
-        String body = story.getBody();
+    String writer = story.getWriter();
+    String title = story.getTitle();
+    String body = story.getBody();
+        
     
     
     
@@ -28,63 +38,49 @@
             
             <div class="h_div">
 
-                <h3 style="color:black">Jumpman</h3>
-                <h5 style="color:black">Written by : Micheal Jordon</h5>
+            <section class="main_content">
+                <div class="side_nav">
+                </div>
 
+                <div>
+                    <img src=images/title.png>
+                    <h3 style = "color:black"> Writer: <%=writer%></h3>
+                    <p style = "color:black">Title: <%=title%></br> </p>
+                    <p style = "color:black">Story body: <%=body%></br> </p>
 
-
-                <a href=dailystory.html>
-                    <button class="button1">Like</button>
-                </a>
-
-                <a href=viewstory.html>
-                    <button class="button2">Comment</button>
-                </a>
-
-
-                <a href=viewstory.html>
-                    <button class="button2">Rate</button>
-                </a>
-
-
-
-            </div>
-        </section>-->
-
-        <section class="main_content">
-            <div class="side_nav">
-            </div>
-
-            <div>
-                <img src=images/title.png>
-                <h3><%=writer%></h3>
-                <p><%=title%></br> </p>
-                <p><%=body%></br> </p>
-                
-                 <form action="StoryServlet" method="post">
-                            <a>
-                                <input class="button1" name="submit" type="submit" value="Approve">
-                                <input class="button1" name="submit" type="submit" value="Reject">
-                            </a>
-                 </form>
-                 <form action="StoryServlet" method="get">
-                            <a>
-                                <input class="button1" name="submit" type="submit" value="Next Story">
-                            </a>
-                 </form>
-                
-                
-                
-            </div>
+                    <form action="StoryServlet" method="post">
+                        <a>
+                            <input class="button1" name="submit" type="submit" value="Approve">
+                            <input class="button1" name="submit" type="submit" value="Reject">
+                        </a>
+                    </form>
+                    <form action="StoryServlet" method="get">
+                        <a>
+                            <input class="button1" name="submit" type="submit" value="Next Story">
+                        </a>
+                    </form>
 
 
 
 
-        </section>
+                    <%
+
+                    }else{
+                    %>
+                    <h3>No stories to review</h3>
+                    <%     
+                         }
+
+
+                    %>
+                </div>
+
+
+
+
+            </section>
+
     </body>
-
-
-
 
 
 </html>
