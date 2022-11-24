@@ -14,7 +14,7 @@
     </head>
 
 
-    <section class="header" background-img src="images/storyOfTheDay.jpg">
+    <section class="banner" background-img src="images/storyOfTheDay.jpg">
         <nav>
             <ul class="clearfix">
                 <li class="nav_logo">
@@ -39,7 +39,7 @@
                 </li>
             </ul>
         </nav>
-        <div class="h_div">
+        <div class="banner">
             <h3 style="color:black">Welcome to your user homepage</h3>
             <%
                 if(request.getAttribute("user") instanceof Reader) {%>

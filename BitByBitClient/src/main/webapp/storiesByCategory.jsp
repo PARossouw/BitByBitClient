@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="custom.css">
     </head>
     <body>
-        <section class="header" background-img src="images/h_bg1.jpg">
+        <section class="banner" background-img src="images/h_bg1.jpg">
             <nav>
                 <ul class="clearfix">
                     <li class="nav_logo">
