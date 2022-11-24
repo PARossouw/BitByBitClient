@@ -8,10 +8,10 @@
     </head>
 
     <body>
-        <jsp:include page="header.jspf"></jsp:include>
-        <section class="header">
-            <div class="h_div">
-                <h1 style="color:black"><span class="bolded">Welcome to Readers are Innovators</span></h1>
+        <jsp:include page="header.jsp"></jsp:include>
+        <section class="banner">
+            <div>
+                <h1 style="color:black"><span>Welcome to Readers are Innovators</span></h1>
 
                 <p style="color:black">Making reading accessible to all.</br></p>
 

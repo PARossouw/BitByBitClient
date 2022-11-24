@@ -100,7 +100,6 @@ public class UserServlet extends HttpServlet {
                     RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
                     rd.forward(request, response);
                     
-
                 } else {
                     String msg2 = "Login failed, please try again.";
                     request.setAttribute("message", msg2);
