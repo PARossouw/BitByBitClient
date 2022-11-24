@@ -11,11 +11,15 @@
         <jsp:include page="header.jsp"></jsp:include>
         <section class="banner">
             <div>
-                <h1 style="color:black"><span>Welcome to Readers are Innovators</span></h1>
-
-                <p style="color:black">Making reading accessible to all.</br></p>
-
+                <h1>Welcome to Readers are Innovators</h1>
+                <p style="color:black">Making reading accessible to all.</p><br>
                 <form action="StoryServlet" method="post">
+
+
+                    <input class="button1" name="submit" type="submit" value="View Story">
+                    
+             
+                     
 
                     <input class="button1" name="submit" type="submit" value="Story of the Day">
 

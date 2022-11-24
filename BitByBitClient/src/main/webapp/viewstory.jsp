@@ -1,7 +1,3 @@
-<%-- 
-import Story
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Story.Model.Story;"%>
 <%@page import="User_Interactions.Comment.Model.Comment;"%>
@@ -12,11 +8,13 @@ import Story
         <title>View Story</title>
         <link rel="stylesheet" href="normalized.css">
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-        <link rel="stylesheet" href="dailystory.css">
+        <link rel="stylesheet" href="custom.css">
     </head>
 
     <body>
+        <jsp:include page="header.jsp"></jsp:include>
         <section class="banner" background-img src="images/storyOfTheDay.jpg">
+
             <nav>
                 <ul class="clearfix">
                     <li class="nav_logo">
@@ -41,43 +39,64 @@ import Story
                         <button type="button">Contact Us</button>
                     </li>
                     <li>
-                        <button type="button">Login/Register</button>
+                        <button type="button">Profile</button>
                     </li>
                 </ul>
 
             </nav>
+
+
             <div class="banner">
+
                 
  
                     
                 
                 
 
+
                 <%
                             Story story = (Story) request.getAttribute("story");
-                            String storyBody = story.getBody();
-                            String title = story.getTitle();
+                            
+                            String storyBody = "";
+                            String title = "";
+                            String rating = "";
+                           String writer = ""; 
+                            
+                           
+                            if(story != null)
+                            {
+                           storyBody = story.getBody();
+                           title = story.getTitle();
+                           rating = "Rating " + story.getAvgRating();
+                            
+                           writer = story.getWriter();
+                            
                             //include avgrating and views
+                }
+                
+                %>
                             
-                            Comment comment = (Comment) request.getAttribute("comment");
-                            String commentBody = comment.getCommentBody();
-                            
-                            String rating = "Rating " + story.getAvgRating();
-                            
-                            String writer = story.getWriter();
-                            
-                            
-                            
+                           
+                  <%          
+                       Comment comment = (Comment) request.getAttribute("comment");
+                       String commentBody = "";
+                      if(comment != null)
+                      {
+                            commentBody = comment.getCommentBody();
+                  }
+
                 %>
 
                 <h3 style="color:black"><%=title%></h3>
                 <h5 style="color:black">Written by : <%=writer%></h5>
                 <h5 style="color:black"><%=rating%></h5>
 
-
-
-                <a href=dailystory.html>
-                    <button class="button1">Like</button>
+                <%--
+                <a >
+                    
+                    
+                    <input class="button1" name="submit" type="submit" value="submitCategories">
                 </a>
 
                 <a href=viewstory.html>
@@ -88,7 +107,31 @@ import Story
                 <a href=viewstory.html>
                     <button class="button2">Rate</button>
                 </a>
+                --%>
 
+                <form action="StoryServlet" method="post">
+
+                    <input class="button1" name="submit" type="submit" value="Like Story">
+
+
+                    <a href=DailyStory.jsp>
+                        <button class="button2">View All Stories</button>
+                    </a>
+                </form>
+
+                
+                  <%
+          String responseMessageRegister = (String) request.getAttribute("likes");
+            %>
+            <%
+                if(responseMessageRegister != null) {
+            %>
+            <div>
+                <h3 style="color:red"><%=responseMessageRegister%></h3>
+            </div>
+            <%
+                }
+            %>
 
 
             </div>

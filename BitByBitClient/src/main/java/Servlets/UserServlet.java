@@ -82,7 +82,10 @@ public class UserServlet extends HttpServlet {
                 String usernameOrEmail = (String) request.getParameter("UsernameOrEmail");
                 String password = (String) request.getParameter("Password");
 
-                if (usernameOrEmail.contains("@")) {
+
+                if(usernameOrEmail.contains("@") && usernameOrEmail.contains("."))
+                {
+
                     userCheck.setEmail(usernameOrEmail);
                 } else {
                     userCheck.setUsername(usernameOrEmail);
@@ -98,6 +101,7 @@ public class UserServlet extends HttpServlet {
                     loggedInUser = (User) session.getAttribute("user");
                     request.setAttribute("loggedInUser", loggedInUser);
                     RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+
                     rd.forward(request, response);
                     
                 } else {
@@ -217,7 +221,7 @@ public class UserServlet extends HttpServlet {
                 }
                 
                 request.setAttribute("checked", chosenCategories);
-                RequestDispatcher rd3 = request.getRequestDispatcher("prefferedCategories.jsp");
+                RequestDispatcher rd3 = request.getRequestDispatcher("index.jsp");
                 rd3.forward(request, response);
                  // >>>>>
 
