@@ -115,7 +115,7 @@ public class StoryServlet extends HttpServlet {
                         //Story story = restClientStory.retrieveStory(s);
 
                 break;
-            case ("viewStoriesByCategory"):
+            case ("Search"):
                 List<Category> allCategories = new ArrayList<>();
                 allCategories = restClientCategory.displayAllCategories();
 
