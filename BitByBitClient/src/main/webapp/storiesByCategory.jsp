@@ -4,6 +4,7 @@
 <%@page import="Story.Model.Story;"%>
 <%@page import="Category.Model.Category;" %>
 <%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -61,7 +62,7 @@
                         <label for="Categories">Select the categories you wish to search by.</label>
 
                         <%
-                            ArrayList<Category> categories = (ArrayList<Category>) request.getAttribute("categories");
+                            List<Category> categories = (ArrayList<Category>) request.getAttribute("categories");
                             if(categories != null && categories.size()>0){
                         %>
                         <table>
@@ -94,7 +95,7 @@
                     </div>
                 </form>
                 <%
-                    ArrayList<Story> stories = (ArrayList<Story>) request.getAttribute("stories");
+                    List<Story> stories = (ArrayList<Story>) request.getAttribute("stories");
                 %>
 
                 <li></li>
