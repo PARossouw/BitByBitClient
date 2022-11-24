@@ -16,7 +16,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "Category", urlPatterns = {"/Category"})
+@WebServlet(name = "CategoryServlet", urlPatterns = {"/CategoryServlet"})
 public class CategoryServlet extends HttpServlet {
 
     private List<Category> categories;
@@ -31,10 +31,10 @@ public class CategoryServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         switch (request.getParameter("submit")) {
-            case "View stories by categories":
-                List<Category> categories = new ArrayList<>();
-                categories = restClientCategory.displayAllCategories();
-                request.setAttribute("categories", categories);
+            case ("View stories by categories") :
+                List<Category> allCategories = new ArrayList<>();
+                allCategories = restClientCategory.displayAllCategories();
+                request.setAttribute("categories", allCategories);
                 RequestDispatcher rd = request.getRequestDispatcher("storiesByCategory.jsp");
                 rd.forward(request, response);
                 break;
