@@ -7,7 +7,7 @@
         <title>Login</title>
         <link rel="stylesheet" href="normalized.css">
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-        <link rel="stylesheet" href="registerlogin.css">
+        <link rel="stylesheet" href="custom.css">
     </head>
 
     <body>
