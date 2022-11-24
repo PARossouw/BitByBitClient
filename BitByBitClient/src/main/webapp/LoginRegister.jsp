@@ -20,9 +20,19 @@
                     <h3 style="color:black">Login</h3>
                     <%
                         String responseMessage = (String) request.getAttribute("message");
+                        String userLoggedIn = (String) request.getAttribute("user");
+                         session.setAttribute("user", userLoggedIn);
+                        
                     %>
                     <%
                         if(responseMessage != null) {
+                        
+                        session.setAttribute("user", userLoggedIn);
+                        
+
+                        
+
+
                     %>
                     <div>
                         <h3 style="color:red"><%=responseMessage%></h3>
@@ -69,9 +79,6 @@
 
                     <input class="button1" name="submit" type="submit" value="Register">
                 </form>
-                    
-                    
-  
                     
                     
 
