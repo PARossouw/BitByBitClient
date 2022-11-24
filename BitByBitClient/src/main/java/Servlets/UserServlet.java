@@ -72,6 +72,7 @@ public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        processRequest(request, response);
         HttpSession session = request.getSession(false);
+        User loggedInUser = new User();
         switch (request.getParameter("submit")) {
             case "Login":
 
@@ -93,20 +94,19 @@ public class UserServlet extends HttpServlet {
 
                 if (userFeedback != null) {
                     session = request.getSession(true);
-                    session.setAttribute("user", userFeedback.getUsername()); // setting the session object. 
-                    session.setAttribute("userID", userFeedback.getUserID());
-                    session.setAttribute("roleID", userFeedback.getRoleID());
-
-                    String msg = "Successfuly logged in";
-                    request.setAttribute("message", msg);
+                    session.setAttribute("user", userFeedback);
+                    loggedInUser = (User) session.getAttribute("user");
+                    request.setAttribute("loggedInUser", loggedInUser);
                     RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
                     rd.forward(request, response);
-
+                    
                 } else {
                     String msg2 = "Login failed, please try again.";
                     request.setAttribute("message", msg2);
                     RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
                     rd.forward(request, response);
+                    
+                    loggedInUser = (User) session.getAttribute("user");
                 }
                 break;
 
@@ -231,39 +231,44 @@ public class UserServlet extends HttpServlet {
                 break;
     
             case "getPreferredCategories":
-                User loggedInUser = (User) session.getAttribute("user");
                 List<Category> preferredCategories;
-                
+
                 switch (loggedInUser.getRoleID()) {
-                case 1:
-                    loggedInUser = new Reader();
-                    preferredCategories = restClientCategory.getPreferredCategories((Reader) loggedInUser);
-                    break;
-                case 2:
-                    loggedInUser = new Writer();
-                    preferredCategories = restClientCategory.getPreferredCategories((Writer) loggedInUser);
-                    break;
-                default:
-                    loggedInUser = new AdminEditor();
-                    preferredCategories = restClientCategory.getPreferredCategories((Reader) loggedInUser);
-                    break;
-            }
-                
+                    case 1:
+                        preferredCategories = restClientCategory.getPreferredCategories((Reader) loggedInUser);
+                        break;
+                    case 2:
+                        preferredCategories = restClientCategory.getPreferredCategories((Writer) loggedInUser);
+                        break;
+                    default:
+                        preferredCategories = null;
+                }
+
                 request.setAttribute("preferredCategories", preferredCategories);
                 request.setAttribute("user", loggedInUser);
                 RequestDispatcher rd = request.getRequestDispatcher("User.jsp");
                 rd.forward(request, response);
-                
+
                 break;
 
-
             case "viewLikedStories":
-                Reader reader2 = (Reader) session.getAttribute("user");
-                List<Story> likedStories = restClientStory.viewLikedStories(reader2);
+
+                List<Story> likedStories;
+                switch (loggedInUser.getRoleID()) {
+                    case 1:
+                        likedStories = restClientStory.viewLikedStories((Reader) loggedInUser);
+                        break;
+                    case 2:
+                        likedStories = restClientStory.viewLikedStories((Writer) loggedInUser);
+                        break;
+                    default:
+                        likedStories = null;
+                }
                 
                 request.setAttribute("likedStories", likedStories);
                 RequestDispatcher rd2 = request.getRequestDispatcher("User.jsp");
                 rd2.forward(request, response);
+
                 break;
 
             default:

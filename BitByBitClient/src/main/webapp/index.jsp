@@ -8,49 +8,10 @@
     </head>
 
     <body>
-        <section class="header" background-img src="images/h_bg1.jpg">
-            <nav>
-                <ul class="clearfix">
-                    <li class="nav_logo">
-                        <img src="images/open-book.png" class="logo_img" alt="Netflix Logo">
-                    </li>
-                    <li>
-                        <a href=index.jsp>
-                            <button class="button3">Home</button>
-                        </a>
-                    </li>
-                    <li>
-                        <form action="CategoryServlet" method="get">
-                            <a>
-                                <input class="button1" name="submit" type="submit" value="View stories by categories">
-                            </a>
-                        </form>
-
-                    </li>
-                    <li>
-                        <button type="button">Refer a Friend</button>
-                    </li>
-                    <li>
-                        <a href="User.jsp">
-                        <button type="button">Contact Us</button>
-                    </li>
-                    <li>
-                        <a href=LoginRegister.jsp>
-                            <button type="button">Login/Register</button>
-                        </a>
-                    </li>
-                    <li>
-                        <form action="StoryServlet" method="get">
-                            <a>
-                                <input class="button1" name="submit" type="submit" value="Review Story">
-                            </a>
-                        </form>
-                    </li>
-                </ul>
-
-            </nav>
-            <div class="h_div">
-                <h1 style="color:black"><span class="bolded">Welcome to Readers are Innovators</span></h1>
+        <jsp:include page="header.jsp"></jsp:include>
+        <section class="banner">
+            <div>
+                <h1 style="color:black"><span>Welcome to Readers are Innovators</span></h1>
 
                 <p style="color:black">Making reading accessible to all.</br></p>
 
@@ -64,7 +25,6 @@
                 </form>
             </div>
         </section>
-
         <section class="main_content">
             <div class="side_nav">
                 <nav></nav>
