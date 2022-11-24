@@ -19,7 +19,7 @@
                     </a>
                 </li>
                 <li>
-                    <form action="index" method="get">
+                    <form action="CategoryServlet" method="get">
                         <a href="storiesByCategories.jsp">
                             <input class="button1" name="submit" type="submit" value="View stories by categories">
                         </a>
@@ -40,6 +40,9 @@
                         </a>
                     </form>
                 </li>
+                
+                <!-- Don't add new buttons below this line it will break the Login button-->
+                
                 <%
                 User userLoggedIn = (User) session.getAttribute("loggedInUser");
                     

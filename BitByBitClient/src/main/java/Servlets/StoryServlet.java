@@ -116,6 +116,7 @@ public class StoryServlet extends HttpServlet {
                 rd.forward(request, response);
 
                 break;
+            case ("Search"):
 
 
             case ("Like Story"):

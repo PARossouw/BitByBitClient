@@ -1,5 +1,3 @@
-
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Story.Model.Story;"%>
 <%@page import="Category.Model.Category;" %>
@@ -15,42 +13,9 @@
         <link rel="stylesheet" href="custom.css">
     </head>
     <body>
+        <jsp:include page="header.jsp"></jsp:include>
         <section class="banner" background-img src="images/h_bg1.jpg">
-            <nav>
-                <ul class="clearfix">
-                    <li class="nav_logo">
-                        <img src="images/open-book.png" class="logo_img" alt="Netflix Logo">
-
-                    </li>
-                    <li>
-                        <a href=index.html>
-                            <button class="button3">Home</button>
-                        </a>
-
-                    </li>
-                    <li>
-
-                    </li>
-                    <li>                       
-                        <button type="button">Refer a Friend</button>
-                    </li>
-                    <li>                       
-                        <button type="button">Contact Us</button>
-                    </li>
-                    <li>
-
-                        <a href=User.jsp>
-                            <button type="button">Login/Register</button>
-                        </a>
-
-
-
-
-                    </li>
-                </ul>
-
-            </nav>
-
+            
         </section>
 
         <section class="main_content">

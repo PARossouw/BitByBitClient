@@ -11,11 +11,13 @@
         <title>Login</title>
         <link rel="stylesheet" href="normalized.css">
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-        <link rel="stylesheet" href="registerlogin.css">
+        <link rel="stylesheet" href="custom.css">
     </head>
 
     <body>
+        <jsp:include page="header.jsp"></jsp:include>
         <section class="banner" background-img src="images/storyOfTheDay.jpg">
+
             <nav>
                 <ul class="clearfix">
                     <li class="nav_logo">
@@ -44,6 +46,7 @@
                 </ul>
 
             </nav>
+
 
             <%
           String responseMessageRegister = (String) request.getAttribute("checked");

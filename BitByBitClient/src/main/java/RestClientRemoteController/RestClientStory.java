@@ -32,7 +32,7 @@ public class RestClientStory {
     }
 
     public List<Story> searchStoriesByCategories(List<Category> categories) throws JsonProcessingException {
-        String uri = url + "/search/categories/{categories}";
+        String uri = url + "/search/categories";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri).resolveTemplate("categories", categories);
         List<Story> stories = null;
