@@ -114,6 +114,7 @@ storyTest = restClientStory.retrieveStory(story);
                 rd.forward(request, response);
 
                 break;
+            case ("Search"):
 
 
             case ("Like Story"):

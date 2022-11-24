@@ -1,9 +1,3 @@
-<%-- 
-    Document   : DailyStory
-    Created on : 20 Nov 2022, 08:57:37
-    Author     : ametr
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -11,45 +5,14 @@
         <title>Readers Are Innovators</title>
         <link rel="stylesheet" href="normalized.css">
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-        <link rel="stylesheet" href="dailystory.css">
+        <link rel="stylesheet" href="custom.css">
     </head>
 
     <body>
+        <jsp:include page="header.jsp"></jsp:include>
         <section class="banner" background-img src="images/storyOfTheDay.jpg">
-            <nav>
-                <ul class="clearfix">
-                    <li class="nav_logo">
-                        <img src="images/open-book.png" class="logo_img" alt="Netflix Logo">
-                
-                    </li>
-                    <li>
-                       
-                      <a href=index.html>
-                          <button type="button">Home</button>
-                      </a>
-                
-                    </li>
-                    <li>
-                        
-                        <button type="button">Categories</button>
-                    </li>
-                    <li>                       
-                         <button type="button">Refer a Friend</button>
-                    </li>
-                    <li>                       
-                         <button type="button">Contact Us</button>
-                    </li>
-                    <li>
-                         <button type="button">Login/Register</button>
-                    </li>
-                </ul>
-               
-            </nav>
+            
             <div class="banner">
-                
-                
-
-                
                 
                 <b><h1 style="color:black"><span class="bolded">Story of the day</span></h1></b>
               

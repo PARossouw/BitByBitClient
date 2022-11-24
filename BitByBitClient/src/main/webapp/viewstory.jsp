@@ -1,7 +1,3 @@
-<%-- 
-import Story
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Story.Model.Story;"%>
 <%@page import="User_Interactions.Comment.Model.Comment;"%>
@@ -12,11 +8,13 @@ import Story
         <title>View Story</title>
         <link rel="stylesheet" href="normalized.css">
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-        <link rel="stylesheet" href="dailystory.css">
+        <link rel="stylesheet" href="custom.css">
     </head>
 
     <body>
+        <jsp:include page="header.jsp"></jsp:include>
         <section class="banner" background-img src="images/storyOfTheDay.jpg">
+
             <nav>
                 <ul class="clearfix">
                     <li class="nav_logo">
@@ -46,6 +44,7 @@ import Story
                 </ul>
 
             </nav>
+
 
             <div class="banner">
 
