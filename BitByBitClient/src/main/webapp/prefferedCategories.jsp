@@ -1,5 +1,4 @@
 
-
 <%@page import="java.util.ArrayList"%>
 <%@page import="Category.Model.Category;"%>
 <%@page import="java.util.List"%>
@@ -16,7 +15,7 @@
     </head>
 
     <body>
-        <section class="header" background-img src="images/storyOfTheDay.jpg">
+        <section class="banner" background-img src="images/storyOfTheDay.jpg">
             <nav>
                 <ul class="clearfix">
                     <li class="nav_logo">

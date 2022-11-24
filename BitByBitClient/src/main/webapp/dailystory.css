@@ -9,12 +9,12 @@ body{
 }
 
 
-.header ul{
+.banner ul{
     margin:0;
     background-image: url(images/gradient.png);
 }
 
-.header li{
+.banner li{
     list-style-type:none ;
     float: left;
     padding: 5px;
@@ -32,7 +32,7 @@ body{
 .nav_logo .logo_img{
     width: 100%;
 }
-.header{
+.banner{
     background: url(images/pexels-gradienta-6985045.jpg) ;
    /* width: 1500px;*/
     height: 600px;
@@ -42,13 +42,13 @@ body{
 
 }
 
-.h_div{
+.banner{
     margin-left: auto;
     margin-top:20%;
     width: 80%;
 }
 
-.h_div .button1{
+.banner .button1{
     background-color: red;
     color:white;
     border:none;
@@ -57,7 +57,7 @@ body{
     padding: 3.5px;
     border-radius: 3px;
 }
-.h_div .button2{
+.banner .button2{
     background-color: grey;
     color:white;
     border:none;
@@ -68,7 +68,7 @@ body{
     border-radius: 3px;
 }
 
-.h_div .button3{
+.banner .button3{
     background-color: green;
     color:white;
     border:none;

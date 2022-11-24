@@ -1,12 +1,6 @@
-<%-- 
-    Document   : LoginRegister
-    Created on : 17 Nov 2022, 10:38:52
-    Author     : tarunsing, pieterrossouw
---%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!DOCTYPE html> 
 <html>
 
     <head>
@@ -17,58 +11,10 @@
     </head>
 
     <body>
-        <section class="header" background-img src="images/storyOfTheDay.jpg">
-            <nav>
-                <ul class="clearfix">
-                    <li class="nav_logo">
-                        <img src="images/open-book.png" class="logo_img" alt="Netflix Logo">
-
-                    </li>
-                    <li>
-                        <a href=index.jsp>
-                            <button type="button">Home</button>
-                        </a>
-                    </li>
-                    <li>
-                        <button type="button">Categories</button>
-                    </li>
-                    <li>                       
-                        <button type="button">Refer a Friend</button>
-                    </li>
-                    <li>                       
-                        <button type="button">Contact Us</button>
-                    </li>
-
-
-                   <%
-                    String userLoggedInHeader = (String) session.getAttribute("user");
-                %>
-                <%
-                    if(userLoggedInHeader != null) {
-                %>
-               <li>
-                        <button type="button">Profile</button>
-               </li>
-                <%
-                    }
-else 
-{
-   %>
-               <li>
-                        <button type="button">Login/Register</button>
-               </li>
-                <%
-
-}
-
-
-                %>
-                    
-
-                </ul>
-
-            </nav>
-            <div class="h_div">
+        <jsp:include page="header.jsp"></jsp:include>
+        <section class="banner_login">
+            
+            <div>
 
                 <form action="UserServlet" method="post">
                     <h3 style="color:black">Login</h3>
