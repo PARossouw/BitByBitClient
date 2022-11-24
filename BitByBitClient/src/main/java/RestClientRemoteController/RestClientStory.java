@@ -2,6 +2,8 @@ package RestClientRemoteController;
 
 import Category.Model.Category;
 import Story.Model.Story;
+import User.Model.Reader;
+import User.Model.User;
 import User.Model.Writer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,7 +26,7 @@ public class RestClientStory {
     private ObjectMapper mapper;
 
     public RestClientStory(String url) {
-        this.url = url + "/RIP/Story";
+        this.url = url + "/Story";
         this.mapper = new ObjectMapper();
     }
 
@@ -84,29 +86,62 @@ public class RestClientStory {
         return stories;
     }
     
-    public List<Story> getFiveStoriesForStoryOfTheDay()throws JsonProcessingException{
-        String uri = url + "/getFiveStoriesForStoryOfTheDay";
+    public List<Story> storyReview()throws JsonProcessingException{
+        String uri = url + "/getPendingStories";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
         List<Story> stories = new ArrayList();
         stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
         
-        
-        
-        List<Story> storyList = new ArrayList<>();
-        Calendar cal = Calendar.getInstance();
-                
-        Story story = new Story(1, "mock title", "mock writer", "mock description", "mock imagepath", "mock body", false, true, cal, true, true, 10, 57, 4.0);
-        storyList.add(story);
-        storyList.add(story);
-        storyList.add(story);
-        storyList.add(story);
-        storyList.add(story);
-        
-        
+//        Story myStory = new Story();
+//        myStory.setTitle("testy title");
+//        myStory.setBody("testyBody");
+//        myStory.setWriter("testyWriter");
+//        
+//        stories.add(myStory);
+//        stories.add(myStory);
+//        stories.add(myStory);
+//        stories.add(myStory);
+//        stories.add(myStory);
+//        stories.add(myStory);
         
         return stories;
         
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+//        String uri = url + "/getFiveStoriesForStoryOfTheDay";
+//        restClient = ClientBuilder.newClient();
+//        webTarget = restClient.target(uri);
+//        Response response = null;
+//        response = webTarget.request().get();
+//        return response.readEntity(Story.class);
+        
+        
+                
+        
+        
+        
+        //return story;
+        
+    }
+    
+    public List<Story> viewLikedStories(Reader reader) throws JsonProcessingException {
+        String uri = url + "/viewLikedStories/{reader}";
+        restClient = ClientBuilder.newClient();
+        webTarget = restClient.target(uri).resolveTemplate("reader", reader);
+        List<Story> stories = null;
+        stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
+        
+        return stories;
     }
 
     private String toJsonString(Object o) throws JsonProcessingException {
