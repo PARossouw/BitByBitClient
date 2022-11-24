@@ -31,6 +31,7 @@ public class StoryServlet extends HttpServlet {
     public static RestClientStory_Transaction restClientStory_Transaction;
 
     private Story storyToReview;
+    private Story storyView = new Story(); 
     List<Story> storyReviewList = new ArrayList<>();
 
     public StoryServlet() {
@@ -97,13 +98,14 @@ public class StoryServlet extends HttpServlet {
 
         switch (request.getParameter("submit")) {
 
-            case ("Story of the Day"):
-                Story story = new Story(1, "mock title yo ma se", "mock writer", "mock description", "mock imagepath", "mock body", false, true, cal, true, true, 10, 57, 4.0);
-Story storyTest = new Story();
-storyTest = restClientStory.retrieveStory(story);
+            case ("View Story"):
+                Story story = new Story(1, "mock title yo ma se good person", "mock writer", "mock description", "mock imagepath", "mock body", false, true, cal, true, true, 10, 57, 4.0);
+
+                this.storyView = restClientStory.retrieveStory(story);
+                
 
                 
-                request.setAttribute("story", story);
+                request.setAttribute("story", this.storyView);
                 Comment comment = new Comment();
                 comment.setCommentBody("Mock comment body");
                 request.setAttribute("comment", comment);
@@ -130,8 +132,8 @@ storyTest = restClientStory.retrieveStory(story);
 //
                 request.setAttribute("likes", "You have liked the story");
                 
-                RequestDispatcher rd2 = request.getRequestDispatcher("viewstory.jsp");
-                rd2.forward(request, response);
+                RequestDispatcher rd6 = request.getRequestDispatcher("viewstory.jsp");
+                rd6.forward(request, response);
            
                 break;
 //              
