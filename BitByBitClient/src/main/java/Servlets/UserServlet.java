@@ -212,7 +212,7 @@ public class UserServlet extends HttpServlet {
                 }
                 
                 request.setAttribute("checked", chosenCategories);
-                RequestDispatcher rd3 = request.getRequestDispatcher("prefferedCategories.jsp");
+                RequestDispatcher rd3 = request.getRequestDispatcher("index.jsp");
                 rd3.forward(request, response);
                  // >>>>>
 

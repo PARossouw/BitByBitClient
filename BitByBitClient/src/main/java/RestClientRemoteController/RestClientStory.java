@@ -24,7 +24,7 @@ public class RestClientStory {
     private ObjectMapper mapper;
 
     public RestClientStory(String url) {
-        this.url = url + "/RIP/Story";
+        this.url = url + "/Story";
         this.mapper = new ObjectMapper();
     }
 

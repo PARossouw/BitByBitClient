@@ -1,8 +1,4 @@
-<%-- 
-    Document   : prefferedCategories
-    Created on : 21 Nov 2022, 21:11:00
-    Author     : tarunsing
---%>
+
 
 <%@page import="java.util.ArrayList"%>
 <%@page import="Category.Model.Category;"%>
@@ -49,7 +45,7 @@
                 </ul>
 
             </nav>
-            
+
             <%
           String responseMessageRegister = (String) request.getAttribute("checked");
             %>
@@ -62,10 +58,11 @@
             <%
                 }
             %>
-            
+
 
             <form action="UserServlet" method="post">
-                <h1 style="color:black">Displaying Category List</h1>
+                <h3 style="color:black">Displaying Category List</h3>
+                <h4 style="color:black">Please select your preferred categories</h4>
                 <table border ="1" width="500" align="center">
                     <tr bgcolor="00FF7F">
 
@@ -88,7 +85,7 @@
                             %>
 
                             <input type="checkbox" value ="<%=variableName%>" name ="category" >
-                            <label for="vehicle3" style="color:black"><%=std.get(i).getName() + " "+variableName%></label><br>
+                            <label for="vehicle3" style="color:black"><%=std.get(i).getName()%></label><br>
 
                         </td>
 
@@ -96,16 +93,10 @@
                     </tr>
                     <%}}%>
 
-
-
-
                 </table> 
                 <hr/>
                 <input class="button1" name="submit" type="submit" value="submitCategories">
-
-
             </form>
-
 
             <%
                    String responseMessage = (String) request.getAttribute("categoryStuff");
