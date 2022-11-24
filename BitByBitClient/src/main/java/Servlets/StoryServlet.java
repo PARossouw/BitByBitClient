@@ -49,6 +49,7 @@ public class StoryServlet extends HttpServlet {
 
         switch (request.getParameter("submit")) {
 
+
             case ("Review Story"):
 
                 storyReviewList = restClientStory.storyReview();
@@ -96,27 +97,47 @@ public class StoryServlet extends HttpServlet {
 
         switch (request.getParameter("submit")) {
 
-            //This is gonna be more like a view story method
             case ("Story of the Day"):
-                Story story = new Story(1, "mock title", "mock writer", "mock description", "mock imagepath", "mock body", false, true, cal, true, true, 10, 57, 4.0);
+                Story story = new Story(1, "mock title yo ma se", "mock writer", "mock description", "mock imagepath", "mock body", false, true, cal, true, true, 10, 57, 4.0);
+Story storyTest = new Story();
+storyTest = restClientStory.retrieveStory(story);
 
-                String story1 = story.getBody();
+                
                 request.setAttribute("story", story);
-
                 Comment comment = new Comment();
                 comment.setCommentBody("Mock comment body");
                 request.setAttribute("comment", comment);
 
-                session.getAttribute("user");
 
+                session.getAttribute("user");
                 RequestDispatcher rd = request.getRequestDispatcher("viewstory.jsp");
                 rd.forward(request, response);
 
-                //making the actual method: Get a list of five random stories
-                //Story s = new Story();
-                //Story story = restClientStory.retrieveStory(s);
                 break;
             case ("Search"):
+
+
+            case ("Like Story"):
+                 Story storyView1 = new Story();
+                 storyView1 = null;
+                request.setAttribute("story", storyView1);
+//
+                Comment commentView1 = new Comment();
+                commentView1 = null;
+                
+                request.setAttribute("comment", commentView1);
+                 session.getAttribute("user");
+//
+                request.setAttribute("likes", "You have liked the story");
+                
+                RequestDispatcher rd2 = request.getRequestDispatcher("viewstory.jsp");
+                rd2.forward(request, response);
+           
+                break;
+//              
+
+        
+            case ("viewStoriesByCategory"):
                 List<Category> allCategories = new ArrayList<>();
                 allCategories = restClientCategory.displayAllCategories();
 
@@ -184,9 +205,19 @@ public class StoryServlet extends HttpServlet {
                 break;
             case ("Next Story"):
 
+
                 break;
 
         }
+//          Story storyView1 = new Story(1, "mock like title", "mock writer", "mock description", "mock imagepath", "mock view body", false, true, cal, true, true, 10, 57, 4.6);
+//
+//                String storyBody1 = storyView1.getBody();
+//                request.setAttribute("story", storyView1);
+//
+//                Comment commentView1 = new Comment();
+//                commentView1.setCommentBody("Mock like comment body");
+//                request.setAttribute("comment", commentView1);
+                
 
     }
 
