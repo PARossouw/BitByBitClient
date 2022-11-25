@@ -117,6 +117,27 @@ public class StoryServlet extends HttpServlet {
 
                 break;
             case ("Search"):
+                break;
+                
+           
+                 case ("Create Story"):
+                Story storyCreate = new Story(1, "Create Story", "mock create writer", "mock description", "mock imagepath", "mock body", false, true, cal, true, true, 10, 57, 4.0);
+
+
+                
+                request.setAttribute("story", storyCreate);
+                Comment commentCreate = new Comment();
+                commentCreate.setCommentBody("Mock comment body");
+                request.setAttribute("comment", commentCreate);
+
+
+                session.getAttribute("user");
+                RequestDispatcher rdCreate = request.getRequestDispatcher("createStory.jsp");
+                rdCreate.forward(request, response);
+
+                break;
+                
+                
 
 
             case ("Like Story"):

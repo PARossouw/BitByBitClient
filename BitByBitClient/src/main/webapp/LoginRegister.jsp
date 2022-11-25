@@ -79,11 +79,9 @@
 
                     <input class="button1" name="submit" type="submit" value="Register">
                 </form>
+
                     
-                    
-
-
-
+                    <%--
                 <%
                     String userLoggedIn = (String) session.getAttribute("user");
                 %>
@@ -97,6 +95,7 @@
                     }
                 %>
 
+                    --%>
 
 
             </div>

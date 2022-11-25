@@ -70,23 +70,23 @@ public class RestClientStory {
     }
 
     public Story retrieveStory(Story story) throws JsonProcessingException {
-        String uri = url + "/retrieve";
-        restClient = ClientBuilder.newClient();
-        webTarget = restClient.target(uri);
-        Response response = null;
-        response = webTarget.request().post(Entity.json(toJsonString(story)));
-        return response.readEntity(Story.class);
+//        String uri = url + "/retrieve";
+//        restClient = ClientBuilder.newClient();
+//        webTarget = restClient.target(uri);
+//        Response response = null;
+//        response = webTarget.request().post(Entity.json(toJsonString(story)));
+//        return response.readEntity(Story.class);
 
 // test purposes below 
-//Story storyObj = new Story();
-//storyObj.setStoryID(420);
-//        storyObj.setTitle("DAO practice Title");
-//        storyObj.setAvgRating(2.9);
-//        storyObj.setWriter("DAO Pratice Author Tarun Sing");
-//        storyObj.setDescription("DAO Practice Description");
-//        storyObj.setBody("DAO Practice Body");
+Story storyObj = new Story();
+storyObj.setStoryID(420);
+        storyObj.setTitle("DAO practice Title");
+        storyObj.setAvgRating(2.9);
+        storyObj.setWriter("DAO Pratice Author Tarun Sing");
+        storyObj.setDescription("DAO Practice Description");
+        storyObj.setBody("DAO Practice Body");
 
-//return storyObj;
+return storyObj;
     }
 
     public List<Story> searchForStory(String storyParameter) throws JsonProcessingException {
