@@ -15,11 +15,18 @@ import jakarta.annotation.ManagedBean;
 import jakarta.servlet.RequestDispatcher;
 import RestClientRemoteController.RestClientCategory;
 import RestClientRemoteController.RestClientStory_Transaction;
-import User.Model.Editor;
+import SMS.smsreq;
 import User.Model.User;
 import jakarta.servlet.http.HttpSession;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @WebServlet(name = "StoryServlet", urlPatterns = {"/StoryServlet"})
 @ManagedBean
@@ -31,12 +38,16 @@ public class StoryServlet extends HttpServlet {
     public static RestClientStory_Transaction restClientStory_Transaction;
 
     private Story storyToReview;
-    List<Story> storyReviewList = new ArrayList<>();
+    private Story storyView = new Story();
+    private List<Story> storyReviewList = new ArrayList<>();
+    private User user;
+    private String message;
+    private RequestDispatcher rd;
 
     public StoryServlet() {
         this.restClientStory = new RestClientStory("http://localhost:8080/RIP/RIP");
         this.restClientCategory = new RestClientCategory("http://localhost:8080/RIP/RIP");
-        this.restClientStory_Transaction = new RestClientStory_Transaction ("http://localhost:8080/RIP/RIP");
+        this.restClientStory_Transaction = new RestClientStory_Transaction("http://localhost:8080/RIP/RIP");
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -96,27 +107,43 @@ public class StoryServlet extends HttpServlet {
 
         switch (request.getParameter("submit")) {
 
-            //This is gonna be more like a view story method
-            case ("Story of the Day"):
-                Story story = new Story(1, "mock title", "mock writer", "mock description", "mock imagepath", "mock body", false, true, cal, true, true, 10, 57, 4.0);
+            case ("View Story"):
+                Story story = new Story(1, "mock title yo ma se good person", "mock writer", "mock description", "mock imagepath", "mock body", false, true, cal, true, true, 10, 57, 4.0);
 
-                String story1 = story.getBody();
-                request.setAttribute("story", story);
+                this.storyView = restClientStory.retrieveStory(story);
 
+                request.setAttribute("story", this.storyView);
                 Comment comment = new Comment();
                 comment.setCommentBody("Mock comment body");
                 request.setAttribute("comment", comment);
 
                 session.getAttribute("user");
-
                 RequestDispatcher rd = request.getRequestDispatcher("viewstory.jsp");
                 rd.forward(request, response);
 
-                //making the actual method: Get a list of five random stories
-                //Story s = new Story();
-                //Story story = restClientStory.retrieveStory(s);
                 break;
             case ("Search"):
+
+            case ("Like Story"):
+                Story storyView1 = new Story();
+                storyView1 = null;
+                request.setAttribute("story", storyView1);
+//
+                Comment commentView1 = new Comment();
+                commentView1 = null;
+
+                request.setAttribute("comment", commentView1);
+                session.getAttribute("user");
+//
+                request.setAttribute("likes", "You have liked the story");
+
+                RequestDispatcher rd6 = request.getRequestDispatcher("viewstory.jsp");
+                rd6.forward(request, response);
+
+                break;
+//              
+
+            case ("viewStoriesByCategory"):
                 List<Category> allCategories = new ArrayList<>();
                 allCategories = restClientCategory.displayAllCategories();
 
@@ -141,28 +168,82 @@ public class StoryServlet extends HttpServlet {
                 //List<Story> storyList = restClientStory.getFiveStoriesForStoryOfTheDay();
                 break;
             case ("Approve"):
-                User editor = new User();
-                editor = (User)session.getAttribute("user");
-                int editorID = editor.getUserID();
-                
-                Editor editorr = new Editor();
-                editorr.setUserID(editorID);
-                
-                RequestDispatcher rd2 = request.getRequestDispatcher("Editor.jsp");
-                
+
+                user = (User) session.getAttribute("user");
                 Story storyToApprove = this.storyToReview;
-                String message = restClientStory_Transaction.approvePendingStory(editorr, storyToApprove);
-                //String message = "Story successfully approved";
-                
+
+                message = restClientStory_Transaction.approvePendingStory(user, this.storyToReview);
+
                 request.setAttribute("message", message);
-                
+
+                rd = request.getRequestDispatcher("Editor.jsp");
+
                 //getting the next story
                 for (int i = 0; i < storyReviewList.size(); i++) {
 
                     if (i == storyReviewList.size() - 1) {
                         request.setAttribute("storyReview", null);
-                        rd2 = request.getRequestDispatcher("Editor.jsp");
-                        rd2.forward(request, response);
+                        rd = request.getRequestDispatcher("Editor.jsp");
+                        rd.forward(request, response);
+                        break;
+                    }
+
+                    else if (this.storyToReview == storyReviewList.get(i)) {
+
+                        this.storyToReview = storyReviewList.get(i + 1);
+                        request.setAttribute("storyReview", this.storyToReview);
+                        rd = request.getRequestDispatcher("Editor.jsp");
+                        rd.forward(request, response);
+                        break;
+                    }
+                    
+                }
+                    //send sms CHANGING THE DATE TO TEST
+                    smsreq sms = new smsreq();
+                    //sms.setDatetime(new Date(2022,11,24,23,0,0));
+                    sms.setDatetime("2022/05/20,10:00:00");
+                    sms.setUser(1);
+                    sms.setPass("password");
+                    sms.setMsisdn("0739068691");
+                    sms.setMessage("test message");
+                    
+            try {
+                JAXBContext jaxBContext = JAXBContext.newInstance(smsreq.class);
+                
+                Marshaller marshaller = jaxBContext.createMarshaller();
+                
+                File xmlOutput = new File("C:\\Users\\ametr\\Desktop\\xmlTestOutput.xml");
+                marshaller.marshal(sms, xmlOutput);
+                
+                //dunno about this
+                rd = request.getRequestDispatcher("http://196.41.180.157:8080/sms/sms_request");
+                request.setAttribute("smsreq", xmlOutput);
+                rd.forward(request, response);
+                
+                
+                
+            } catch (JAXBException ex) {
+                Logger.getLogger(StoryServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+                break;
+            case ("Reject"):
+
+                user = (User) session.getAttribute("user");
+
+                message = restClientStory_Transaction.rejectPendingStory(user, this.storyToReview);
+
+                request.setAttribute("message", message);
+
+                rd = request.getRequestDispatcher("Editor.jsp");
+
+                //getting the next story
+                for (int i = 0; i < storyReviewList.size(); i++) {
+
+                    if (i == storyReviewList.size() - 1) {
+                        request.setAttribute("storyReview", null);
+                        rd = request.getRequestDispatcher("Editor.jsp");
+                        rd.forward(request, response);
                         break;
                     }
 
@@ -170,16 +251,12 @@ public class StoryServlet extends HttpServlet {
 
                         this.storyToReview = storyReviewList.get(i + 1);
                         request.setAttribute("storyReview", this.storyToReview);
-                        rd2 = request.getRequestDispatcher("Editor.jsp");
-                        rd2.forward(request, response);
+                        rd = request.getRequestDispatcher("Editor.jsp");
+                        rd.forward(request, response);
                         break;
                     }
 
                 }
-                rd2.forward(request, response);
-
-                break;
-            case ("Reject"):
 
                 break;
             case ("Next Story"):
@@ -187,6 +264,14 @@ public class StoryServlet extends HttpServlet {
                 break;
 
         }
+//          Story storyView1 = new Story(1, "mock like title", "mock writer", "mock description", "mock imagepath", "mock view body", false, true, cal, true, true, 10, 57, 4.6);
+//
+//                String storyBody1 = storyView1.getBody();
+//                request.setAttribute("story", storyView1);
+//
+//                Comment commentView1 = new Comment();
+//                commentView1.setCommentBody("Mock like comment body");
+//                request.setAttribute("comment", commentView1);
 
     }
 

@@ -24,6 +24,7 @@ public class RestClientStory {
     private Client restClient;
     private WebTarget webTarget;
     private ObjectMapper mapper;
+    //private Story story;
 
     public RestClientStory(String url) {
         this.url = url + "/Story";
@@ -75,6 +76,17 @@ public class RestClientStory {
         Response response = null;
         response = webTarget.request().post(Entity.json(toJsonString(story)));
         return response.readEntity(Story.class);
+
+// test purposes below 
+//Story storyObj = new Story();
+//storyObj.setStoryID(420);
+//        storyObj.setTitle("DAO practice Title");
+//        storyObj.setAvgRating(2.9);
+//        storyObj.setWriter("DAO Pratice Author Tarun Sing");
+//        storyObj.setDescription("DAO Practice Description");
+//        storyObj.setBody("DAO Practice Body");
+
+//return storyObj;
     }
 
     public List<Story> searchForStory(String storyParameter) throws JsonProcessingException {

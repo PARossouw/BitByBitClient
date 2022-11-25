@@ -82,7 +82,10 @@ public class UserServlet extends HttpServlet {
                 String usernameOrEmail = (String) request.getParameter("UsernameOrEmail");
                 String password = (String) request.getParameter("Password");
 
-                if (usernameOrEmail.contains("@")) {
+
+                if(usernameOrEmail.contains("@") && usernameOrEmail.contains("."))
+                {
+
                     userCheck.setEmail(usernameOrEmail);
                 } else {
                     userCheck.setUsername(usernameOrEmail);
@@ -98,14 +101,15 @@ public class UserServlet extends HttpServlet {
                     loggedInUser = (User) session.getAttribute("user");
                     request.setAttribute("loggedInUser", loggedInUser);
                     RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+
                     rd.forward(request, response);
-                    
+
                 } else {
                     String msg2 = "Login failed, please try again.";
                     request.setAttribute("message", msg2);
                     RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
                     rd.forward(request, response);
-                    
+
                     loggedInUser = (User) session.getAttribute("user");
                 }
                 break;
@@ -116,11 +120,10 @@ public class UserServlet extends HttpServlet {
 
                 List<Category> categoryList = new ArrayList<>();
                 categoryList = restClientCategory.displayAllCategories();
-            
+
                 //categoryList.add("Horror");
                 //categoryList.add("Comedy");
                 //categoryList.add("Fiction");
-
                 String usernameRegister = (String) request.getParameter("Username");
                 String emailRegister = (String) request.getParameter("Email");
                 String phoneRegister = (String) request.getParameter("PhoneNumber");
@@ -192,45 +195,42 @@ public class UserServlet extends HttpServlet {
                 List<Category> myList = new ArrayList<>();
                 myList = restClientCategory.displayAllCategories();
 
-                List<String> userPrefferedCategories =  new ArrayList<>();
+                List<String> userPrefferedCategories = new ArrayList<>();
                 List<Category> prefferedCategories = new ArrayList<>();
-                
+
                 String[] checkedBoxes = request.getParameterValues("category");
 
-                if(checkedBoxes.length > 0)
-                {
-                for (int i = 0; i < checkedBoxes.length; i++) 
-                {
-                    String chosenName = myList.get(Integer.parseInt( (String) checkedBoxes[i])).getName();
-                    Category category = new Category();
-                    category.setName(chosenName);
-                    prefferedCategories.add(category);
-                }
-                
+                if (checkedBoxes.length > 0) {
+                    for (int i = 0; i < checkedBoxes.length; i++) {
+                        String chosenName = myList.get(Integer.parseInt((String) checkedBoxes[i])).getName();
+                        Category category = new Category();
+                        category.setName(chosenName);
+                        prefferedCategories.add(category);
+                    }
+
                 }
                 String chosenCategories = "";
 
                 // For Testing purposes <<
-                for(int i = 0 ; i < prefferedCategories.size() ; i++)
-                {
-                    chosenCategories += prefferedCategories.get(i).getName() +"\n";  
+                for (int i = 0; i < prefferedCategories.size(); i++) {
+                    chosenCategories += prefferedCategories.get(i).getName() + "\n";
                 }
-                
-                request.setAttribute("checked", chosenCategories);
-                RequestDispatcher rd3 = request.getRequestDispatcher("prefferedCategories.jsp");
-                rd3.forward(request, response);
-                 // >>>>>
 
-                
+                request.setAttribute("checked", chosenCategories);
+                RequestDispatcher rd3 = request.getRequestDispatcher("index.jsp");
+                rd3.forward(request, response);
+                // >>>>>
+
                 Reader reader = new Reader();
                 reader.setUsername((String) session.getAttribute("user"));
                 reader.setUserID(Integer.parseInt((String) session.getAttribute("userID")));
                 reader.setRoleID(Integer.parseInt((String) session.getAttribute("roleID")));
-                
-                restClientUser.addPreferredCategoriesToUser(reader, prefferedCategories);                
+
+                restClientUser.addPreferredCategoriesToUser(reader, prefferedCategories);
                 break;
-    
-            case "getPreferredCategories":
+
+            case "Profile":
+
                 List<Category> preferredCategories;
 
                 switch (loggedInUser.getRoleID()) {
@@ -246,13 +246,7 @@ public class UserServlet extends HttpServlet {
 
                 request.setAttribute("preferredCategories", preferredCategories);
                 request.setAttribute("user", loggedInUser);
-                RequestDispatcher rd = request.getRequestDispatcher("User.jsp");
-                rd.forward(request, response);
-
-                break;
-
-            case "viewLikedStories":
-
+                
                 List<Story> likedStories;
                 switch (loggedInUser.getRoleID()) {
                     case 1:
@@ -264,10 +258,11 @@ public class UserServlet extends HttpServlet {
                     default:
                         likedStories = null;
                 }
-                
+
                 request.setAttribute("likedStories", likedStories);
-                RequestDispatcher rd2 = request.getRequestDispatcher("User.jsp");
-                rd2.forward(request, response);
+                RequestDispatcher rd1 = request.getRequestDispatcher("User.jsp");
+                
+                rd1.forward(request, response);
 
                 break;
 
@@ -276,6 +271,7 @@ public class UserServlet extends HttpServlet {
         }
 
     }
+
     @Override
     public String getServletInfo() {
         return "Short description";

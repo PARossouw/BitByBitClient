@@ -1,5 +1,6 @@
 <%@page import="User.Model.Reader"%>
 <%@page import="User.Model.Writer"%>
+<%@page import="Story.Model.Story"%>
 <%@page import="User.Model.Editor"%>
 <%@page import="User.Model.AdminEditor"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -15,14 +16,26 @@
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-        <section class="banner" background-img src="images/storyOfTheDay.jpg">
-            
-            <div class="banner">
-                <h3 style="color:black">Welcome to your user homepage</h3>
+            <section class="banner_common">
+
+                <div class="banner_common">
+                    <h2 style="color:black">Welcome to your user homepage</h2>
                 <%
                 if(request.getAttribute("user") instanceof Reader) {%>
 
-                <h5 style="color:black">Readers Options</h5>
+                <h4 style="color:black">Readers Likes</h4>
+                <%List<Story> likedStories = (ArrayList<Story>)request.getAttribute("likedStories");
+                        
+                if(likedStories != null) {
+                    for(Story story : likedStories){%>
+                    
+                    <h5>
+                        <%
+                            story.getTitle();
+                        %>
+                    </h5>
+                <%  }
+                }%>
                 <form action="UserServlet" method="get">
                     <input class="button1" name="submit" type="submit" value="My Liked Stories">
                 </form>
@@ -97,7 +110,7 @@
                     </a>
                 </div>
                 <%}%>
-
+<!--
                 <%
                     String storyMessage = (String) request.getAttribute("likedStories");
                     String categoryMessage = (String) request.getAttribute("preferredCategories");
@@ -126,6 +139,7 @@
                 <%
                     }
                 %>
+-->
             </div>
         </section>
         <section class="main_content">
