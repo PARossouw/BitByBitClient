@@ -1,5 +1,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="User.Model.User;"%>
 <!DOCTYPE html>
 <html>
 
@@ -20,9 +21,19 @@
                     <h3 style="color:black">Login</h3>
                     <%
                         String responseMessage = (String) request.getAttribute("message");
+                        String userLoggedIn = (String) request.getAttribute("user");
+                         session.setAttribute("user", userLoggedIn);
+                        
                     %>
                     <%
                         if(responseMessage != null) {
+                        
+                        session.setAttribute("user", userLoggedIn);
+                        
+
+                        
+
+
                     %>
                     <div>
                         <h3 style="color:red"><%=responseMessage%></h3>
@@ -71,14 +82,11 @@
                 </form>
                     
                     
-  
-                    
-                    
 
 
-
+                    <%--
                 <%
-                    String userLoggedIn = (String) session.getAttribute("user");
+                    User userLoggedIn = (User) session.getAttribute("user");
                 %>
                 <%
                     if(userLoggedIn != null) {
@@ -90,6 +98,7 @@
                     }
                 %>
 
+                    --%>
 
 
             </div>

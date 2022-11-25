@@ -3,6 +3,7 @@ package RestClientRemoteController;
 
 import Story.Model.Story;
 import User.Model.Editor;
+import User.Model.User;
 import User.Model.Writer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,7 +29,7 @@ public class RestClientStory_Transaction {
     
     
     
-     public String approvePendingStory(Editor editor, Story story) throws JsonProcessingException {
+     public String approvePendingStory(User editor, Story story) throws JsonProcessingException {
         String uri = url + "/approve";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
@@ -50,15 +51,25 @@ public class RestClientStory_Transaction {
     }
 
        //@FormParam must be put in the aruguments on the rest controller side
-    public String rejectPendingStory(Editor editor, Story story) throws JsonProcessingException {
-         String uri = url + "/reject";
+    public String rejectPendingStory(User editor, Story story) throws JsonProcessingException {
+        String uri = url + "/reject";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
-        HashMap<Editor, Story> pendingStoriesReject = new HashMap();
-        pendingStoriesReject.put(editor, story);
+        
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("editor", editor);
+        jsonObject.put("story", story);
         Response response = null;
-        response = webTarget.request().post(Entity.json(toJsonString(pendingStoriesReject)));
+        response = webTarget.request().post(Entity.json(toJsonString(jsonObject)));
         return response.readEntity(String.class);
+        
+//        HashMap<User, Story> pendingStoriesReject = new HashMap();
+//        pendingStoriesReject.put(editor, story);
+//        Response response = null;
+//        response = webTarget.request().post(Entity.json(toJsonString(pendingStoriesReject)));
+//        return response.readEntity(String.class);
+
        
     }
 

@@ -34,53 +34,58 @@
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-<!--        <section class="header" background-img src="images/storyOfTheDay.jpg">
-            
-            <div class="h_div">
+            <section class="header" background-img src="images/storyOfTheDay.jpg">
 
-            <section class="main_content">
-                <div class="side_nav">
-                </div>
+                <div class="h_div">
+            <h1>Approve and Reject Stories</h1>
 
-                <div>
-                    <img src=images/title.png>
-                    <h3 style = "color:black"> Writer: <%=writer%></h3>
-                    <p style = "color:black">Title: <%=title%></br> </p>
-                    <p style = "color:black">Story body: <%=body%></br> </p>
+                    <section class="main_content">
+                        <div class="side_nav">
+                        </div>
 
-                    <form action="StoryServlet" method="post">
-                        <a>
-                            <input class="button1" name="submit" type="submit" value="Approve">
-                            <input class="button1" name="submit" type="submit" value="Reject">
-                        </a>
-                    </form>
-                    <form action="StoryServlet" method="get">
-                        <a>
-                            <input class="button1" name="submit" type="submit" value="Next Story">
-                        </a>
-                    </form>
+                        <div>
+                            <img src=images/title.png>
+                            <h3 style = "color:black"> Writer: <%=writer%></h3>
+                        <p style = "color:black">Title: <%=title%></br> </p>
+                        <p style = "color:black">Story body: <%=body%></br> </p>
 
-
-
-
-                    <%
-
-                    }else{
-                    %>
-                    <h3>No stories to review</h3>
-                    <%     
-                         }
-
-
-                    %>
-                </div>
+                        <form action="StoryServlet" method="post">
+                            <a>
+                                <input class="button1" name="submit" type="submit" value="Approve">
+                                <input class="button1" name="submit" type="submit" value="Reject">
+                            </a>
+                        </form>
+                        <form action="StoryServlet" method="get">
+                            <a>
+                                <input class="button1" name="submit" type="submit" value="Next Story">
+                            </a>
+                        </form>
 
 
 
 
-            </section>
+                        <%
 
-    </body>
+                        }else{
+                        %>
+                        <h3>No stories to review</h3>
+                        <%     
+                             }
 
 
-</html>
+                        %>
+                        <br>
+                        <h1>Choose a Story of the day</h1>
+                        
+                    </div>
+
+
+
+
+
+                </section>
+
+                </body>
+
+
+                </html>
