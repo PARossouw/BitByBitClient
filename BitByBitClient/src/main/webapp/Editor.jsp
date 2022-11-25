@@ -2,6 +2,18 @@
 <%@page import="Story.Model.Story;"%>
 <!DOCTYPE html>
 <html>
+    
+    <%
+        String smsResponse = (String) request.getAttribute("smsResponse");
+        if(1<2){
+    %>
+    <h3 style = "color:green"><%=smsResponse + "Hello"%></h3>
+    <%
+        }
+    %>
+    
+    
+    
     <%
         String message = (String) request.getAttribute("message");
         Story story = (Story) request.getAttribute("storyReview");

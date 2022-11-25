@@ -28,6 +28,7 @@ public class UserServlet extends HttpServlet {
     private static RestClientUser restClientUser;
     private static RestClientCategory restClientCategory;
     private static RestClientStory restClientStory;
+    private static User loggedInUser;
 
     public UserServlet() {
         this.restClientUser = new RestClientUser("http://localhost:8080/RIP/RIP");
@@ -72,7 +73,7 @@ public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        processRequest(request, response);
         HttpSession session = request.getSession(false);
-        User loggedInUser = new User();
+        
         switch (request.getParameter("submit")) {
             case "Login":
 
