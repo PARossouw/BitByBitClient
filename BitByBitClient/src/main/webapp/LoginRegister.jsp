@@ -1,5 +1,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="User.Model.User;"%>
 <!DOCTYPE html>
 <html>
 
@@ -83,9 +84,9 @@
                     
 
 
-
+                    <%--
                 <%
-                    String userLoggedIn = (String) session.getAttribute("user");
+                    User userLoggedIn = (User) session.getAttribute("user");
                 %>
                 <%
                     if(userLoggedIn != null) {
@@ -97,6 +98,7 @@
                     }
                 %>
 
+                    --%>
 
 
             </div>
