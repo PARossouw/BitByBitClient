@@ -107,6 +107,60 @@ body{
     margin-right: 5px;
 }
 
+.banner_common{
+    background: url(images/pexels-gradienta-6985045.jpg) no-repeat;
+    width: 100%;
+    height: 500px;
+    background-attachment: fixed;
+    background-size:cover;
+    color:black;
+}
+
+.banner_common div{
+    margin-left: 20%;
+    padding-top: 17%;
+}
+
+.banner_common h1{
+    color:black;
+}
+
+.banner_common .button1{
+    background-color: red;
+    color:white;
+    border:none;
+    outline: none;
+    width:11%;
+    padding: 3.5px;
+    border-radius: 3px;
+}
+.banner_common .button2{
+    background-color: grey;
+    color:white;
+    border:none;
+    outline: none;
+    width:11%;
+    padding: 3.5px;
+    margin-left: 5px;
+    border-radius: 3px;
+}
+
+.banner_common .button3{
+    background-color: green;
+    color:white;
+    border:none;
+    outline: none;
+    width:11%;
+    padding: 3.5px;
+    margin-left: 5px;
+    border-radius: 3px;
+}
+
+.banner_common ul{
+    margin: 0;
+    background-image: url(images/gradient.png);
+}
+
 .main_content{
     margin-top: 25px;
     margin-left: 35px;
