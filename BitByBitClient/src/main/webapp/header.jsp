@@ -29,9 +29,9 @@
                     <button type="button">Refer a Friend</button>
                 </li>
                 <li>
-                    <a href="User.jsp">
-                        <button type="button">Contact Us</button>
-                    </a>
+                    <form action="index" method="post">
+                        <input class="button1" name="submit" type="submit" value="ContactUs">
+                    </form>
                 </li>
                 <li>
                     <form action="StoryServlet" method="get">
@@ -40,25 +40,22 @@
                         </a>
                     </form>
                 </li>
-                
                 <!-- Don't add new buttons below this line it will break the Login button-->
-                
+
                 <%
                 User userLoggedIn = (User) session.getAttribute("loggedInUser");
                     
                 if(userLoggedIn != null) {
                     if(userLoggedIn.getRoleID() < 3) {%>
                 <li class="same">
-                    <a href=User.jsp>
-                        <button type="button">Profile</button> 
-                    </a>
+                    <form action="UserServlet" method="post">
+                        <input class="button1" name="submit" type="submit" value="Profile">
+                    </form>
                 </li>
                 <li>
                     <%} else {%>
                     <form action="StoryServlet" method="get">
-                        <a>
-                            <input class="button1" name="submit" type="submit" value="Profile">
-                        </a>
+                        <input class="button1" name="submit" type="submit" value="Profile">
                     </form>
                 </li>
                 <%}

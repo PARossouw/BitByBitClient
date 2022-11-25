@@ -12,12 +12,12 @@
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-        <section class="banner_login">
-            
-            <div>
+            <section class="banner_common">
 
-                <form action="UserServlet" method="post">
-                    <h3 style="color:black">Login</h3>
+                <div>
+
+                    <form action="UserServlet" method="post">
+                        <h3 style="color:black">Login</h3>
                     <%
                         String responseMessage = (String) request.getAttribute("message");
                     %>
@@ -69,13 +69,6 @@
 
                     <input class="button1" name="submit" type="submit" value="Register">
                 </form>
-                    
-                    
-  
-                    
-                    
-
-
 
                 <%
                     String userLoggedIn = (String) session.getAttribute("user");
@@ -98,15 +91,9 @@
         <section class="main_content">
             <div class="side_nav">
             </div>
-
             <div>
                 <p style="color:black" >Brought to you Bit by Bit<p>
             </div>
-
-
-
-
         </section>
     </body>
-
 </html>
