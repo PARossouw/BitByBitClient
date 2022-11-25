@@ -80,9 +80,6 @@
 
                     <input class="button1" name="submit" type="submit" value="Register">
                 </form>
-                    
-                    
-
 
                     <%--
                 <%

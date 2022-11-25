@@ -19,6 +19,8 @@
                     <input class="button1" name="submit" type="submit" value="View Story">
                     
              
+                     <input class="button1" name="submit" type="submit" value="Create Story">
+
                      
 
                     <input class="button1" name="submit" type="submit" value="Story of the Day">
