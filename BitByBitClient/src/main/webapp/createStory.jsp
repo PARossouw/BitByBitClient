@@ -44,6 +44,39 @@
                 </ul>
 
             </nav>
+            
+            <form action="UserServlet" method="post">
+
+                    <%
+                        String responseMessageRegister = (String) request.getAttribute("messageRegister");
+                    %>
+                    <%
+                        if(responseMessageRegister != null) {
+                    %>
+                    <div>
+                        <h3 style="color:red"><%=responseMessageRegister%></h3>
+                    </div>
+                    <%
+                        }
+                    %>
+
+                    <h3 style="color:black">Register</h3>
+                    <input type="text" class="form" name ="Username" placeholder="Username">
+
+                    <input type="text" class="form" name ="Email" placeholder="Email">
+
+                    <input type="text" class="form" name ="PhoneNumber" placeholder="Phone Number">
+                    <br></br>
+
+                    <input type="text" class="form" name ="Password" placeholder="Password">
+
+                    <input type="text" class="form" name ="ConfirmPassword" placeholder="Confirm Password">
+
+                    <br></br>
+
+                    <input class="button1" name="submit" type="submit" value="Register">
+                </form>
+
 
 
             <div class="banner">
