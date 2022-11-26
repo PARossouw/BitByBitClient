@@ -124,26 +124,80 @@ public class StoryServlet extends HttpServlet {
                 break;
             case ("Search"):
                 break;
+
+            case ("Create Story"):
+                // request.setAttribute("createStory", "Story has been created.");
+
+                List<Category> categoryList = new ArrayList<>();
+                //categoryList = restClientCategory.displayAllCategories();
+                Category category1 = new Category();
+                Category category2 = new Category();
+                Category category3 = new Category();
+
+                category1.setName("Comedy");
+                category2.setName("Fiction");
+                category3.setName("Horror");
+
+                categoryList.add(category1);
+                categoryList.add(category2);
+                categoryList.add(category3);
                 
-           
-                 case ("Create Story"):
-                Story storyCreate = new Story(1, "Create Story", "mock create writer", "mock description", "mock imagepath", "mock body", false, true, cal, true, true, 10, 57, 4.0);
-
-
                 
-                request.setAttribute("story", storyCreate);
-                Comment commentCreate = new Comment();
-                commentCreate.setCommentBody("Mock comment body");
-                request.setAttribute("comment", commentCreate);
+                // Story that we are editing / Creating
+                Story storyContinueCreating = new Story();
+                storyContinueCreating.setTitle("Harold and Kumar");
+                storyContinueCreating.setDescription("They want some weed description");
+                storyContinueCreating.setBody("Story about two broke asians");
+               
+                
+                  List<Category> categoryUserList = new ArrayList<>();
+                  categoryUserList.add(category3);
+                  storyContinueCreating.setCategoryList(categoryUserList);
+                  
+                  
+                
+                
+                
+                
+                request.setAttribute("story", storyContinueCreating);
+                
+                
 
-
-                session.getAttribute("user");
+                request.setAttribute("categoryList", categoryList);
                 RequestDispatcher rdCreate = request.getRequestDispatcher("createStory.jsp");
                 rdCreate.forward(request, response);
 
                 break;
-                
-                
+
+            case ("Save Changes"):
+
+                Story storyToSave = new Story();
+
+                storyToSave.setTitle((String) request.getParameter("StoryTitle"));
+                storyToSave.setDescription((String) request.getParameter("StoryDescription"));
+                storyToSave.setImagePath((String) request.getParameter("ImagePath"));
+                storyToSave.setBody((String) request.getParameter("StoryBody"));
+                storyToSave.setIsDraft(true);
+                storyToSave.setIsApproved(false);
+
+                String saveChanges = "Story changes have been saved and will be ready for you to complete at a later time.";
+                request.setAttribute("createStory", saveChanges);
+
+                // For Editor edits, this should direct to the Editor Approvval page again
+                RequestDispatcher rdSaveChanges = request.getRequestDispatcher("index.jsp");
+                rdSaveChanges.forward(request, response);
+                break;
+
+            case ("Submit For Review"):
+                String reviewMessage = "Your story has been submitted for a review."
+                        + "\n Once compete, you will be notified via Text Message regarding the outcome."
+                        + "\n Thank you for contributing to Bit-By-Bit";
+
+                request.setAttribute("createStory", reviewMessage);
+                RequestDispatcher rdSubmitForReview = request.getRequestDispatcher("index.jsp");
+                rdSubmitForReview.forward(request, response);
+
+                break;
 
             case ("Like Story"):
                 Story storyView1 = new Story();
@@ -162,8 +216,8 @@ public class StoryServlet extends HttpServlet {
                 rd6.forward(request, response);
 
                 break;
-//              
 
+//              
             case ("viewStoriesByCategory"):
                 List<Category> allCategories = new ArrayList<>();
                 allCategories = restClientCategory.displayAllCategories();
@@ -207,9 +261,7 @@ public class StoryServlet extends HttpServlet {
                         rd = request.getRequestDispatcher("Editor.jsp");
                         rd.forward(request, response);
                         break;
-                    }
-
-                    else if (this.storyToReview == storyReviewList.get(i)) {
+                    } else if (this.storyToReview == storyReviewList.get(i)) {
 
                         this.storyToReview = storyReviewList.get(i + 1);
                         request.setAttribute("storyReview", this.storyToReview);
@@ -217,35 +269,33 @@ public class StoryServlet extends HttpServlet {
                         rd.forward(request, response);
                         break;
                     }
-                    
+
                 }
-                    //send sms CHANGING THE DATE TO TEST
-                    smsreq sms = new smsreq();
-                    //sms.setDatetime(new Date(2022,11,24,23,0,0));
-                    sms.setDatetime("2022/05/20,10:00:00");
-                    sms.setUser(1);
-                    sms.setPass("password");
-                    sms.setMsisdn("0739068691");
-                    sms.setMessage("test message");
-                    
-            try {
-                JAXBContext jaxBContext = JAXBContext.newInstance(smsreq.class);
-                
-                Marshaller marshaller = jaxBContext.createMarshaller();
-                
-                File xmlOutput = new File("C:\\Users\\ametr\\Desktop\\xmlTestOutput.xml");
-                marshaller.marshal(sms, xmlOutput);
-                
-                //dunno about this
-                rd = request.getRequestDispatcher("http://196.41.180.157:8080/sms/sms_request");
-                request.setAttribute("smsreq", xmlOutput);
-                rd.forward(request, response);
-                
-                
-                
-            } catch (JAXBException ex) {
-                Logger.getLogger(StoryServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                //send sms CHANGING THE DATE TO TEST
+                smsreq sms = new smsreq();
+                //sms.setDatetime(new Date(2022,11,24,23,0,0));
+                sms.setDatetime("2022/05/20,10:00:00");
+                sms.setUser(1);
+                sms.setPass("password");
+                sms.setMsisdn("0739068691");
+                sms.setMessage("test message");
+
+                try {
+                    JAXBContext jaxBContext = JAXBContext.newInstance(smsreq.class);
+
+                    Marshaller marshaller = jaxBContext.createMarshaller();
+
+                    File xmlOutput = new File("C:\\Users\\ametr\\Desktop\\xmlTestOutput.xml");
+                    marshaller.marshal(sms, xmlOutput);
+
+                    //dunno about this
+                    rd = request.getRequestDispatcher("http://196.41.180.157:8080/sms/sms_request");
+                    request.setAttribute("smsreq", xmlOutput);
+                    rd.forward(request, response);
+
+                } catch (JAXBException ex) {
+                    Logger.getLogger(StoryServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
                 break;
             case ("Reject"):
