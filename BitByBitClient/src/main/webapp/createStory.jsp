@@ -1,6 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Story.Model.Story;"%>
+<%@page import="Category.Model.Category;"%>
 <%@page import="User_Interactions.Comment.Model.Comment;"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <!DOCTYPE html> 
 <html>
 
@@ -13,200 +16,173 @@
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-        <section class="banner" background-img src="images/storyOfTheDay.jpg">
 
-            <nav>
-                <ul class="clearfix">
-                    <li class="nav_logo">
-                        <img src="images/open-book.png" class="logo_img" alt="Netflix Logo">
+        <body style="background-color:aquamarine;">
+            <form action="StoryServlet" method="post">
+                <h1 style="color:black">Create a short story</h1>
 
-                    </li>
-                    <li>
+            <%
+String createStoryOutcome = (String) request.getAttribute("createStory");
+            %>
+            <%
+                if(createStoryOutcome != null) {
+            %>
+            <div>
+                <h3 style="color:red"><%=createStoryOutcome%></h3>
+            </div>
+            <%
+                }
+            %>
+            <%
+                           Story story = (Story) request.getAttribute("story");                          
+                           String storyBody = "";
+                           String title = "";
+                           String description = "";
+                           List<Category> userCategoryList = null;               
+                           
+                           if(story != null)
+                           {
+                          storyBody = story.getBody();
+                          title = story.getTitle();
+                          description = story.getDescription();     
+                          userCategoryList =  (ArrayList<Category>)story.getCategoryList();
+                         // userCategoryList = story.getCategoryList();
+               }            
+            %>
 
-                        <a href=index.jsp>
-                            <button type="button">Home</button>
-                        </a>
+            <label for="text">Story Title</label>
+            <br>
+            <textarea id="text" name="StoryTitle" rows="2" cols="80" ><%=title%></textarea >
+            <br/>
 
-                    </li>
-                    <li>
+            <label for="text">Story Description</label>
+            <br>
+            <textarea id="text" name="StoryDescription" rows="5" cols="80"><%=description%></textarea>
+            <br/>
 
-                        <button type="button">Categories</button>
-                    </li>
-                    <li>                       
-                        <button type="button">Refer a Friend</button>
-                    </li>
-                    <li>                       
-                        <button type="button">Contact Us</button>
-                    </li>
-                    <li>
-                        <button type="button">Profile</button>
-                    </li>
-                </ul>
+            <label for="text">Image Path {To Do}</label>
+            <br>
+            <textarea id="text" name="ImagePath" rows="2" cols="80"></textarea>
+            <br/>
 
-            </nav>
+            <label for="text">Body of Story</label>
+            <br>
+            <textarea id="text" name="StoryBody" rows="60" cols="80"><%=storyBody%></textarea>
+            <br/>
+
             
-            <form action="UserServlet" method="post">
-
-                    <%
-                        String responseMessageRegister = (String) request.getAttribute("messageRegister");
-                    %>
-                    <%
-                        if(responseMessageRegister != null) {
-                    %>
-                    <div>
-                        <h3 style="color:red"><%=responseMessageRegister%></h3>
-                    </div>
-                    <%
-                        }
-                    %>
-
-                    <h3 style="color:black">Register</h3>
-                    <input type="text" class="form" name ="Username" placeholder="Username">
-
-                    <input type="text" class="form" name ="Email" placeholder="Email">
-
-                    <input type="text" class="form" name ="PhoneNumber" placeholder="Phone Number">
-                    <br></br>
-
-                    <input type="text" class="form" name ="Password" placeholder="Password">
-
-                    <input type="text" class="form" name ="ConfirmPassword" placeholder="Confirm Password">
-
-                    <br></br>
-
-                    <input class="button1" name="submit" type="submit" value="Register">
-                </form>
+            <h4 style="color:black">Please select the categories of which the story falls under.</h4>
+            <table border ="1" width="500" align="center">
+                <tr bgcolor="00FF7F">
 
 
-
-            <div class="banner">
-
+                </tr>
+                <%List<Category> std = 
+                    (ArrayList<Category>)request.getAttribute("categoryList");
+                      int chosenCategories = 0;  
+                     if(userCategoryList.size() != 0)
+                     {
+                        
+                for(int i = 0; i<std.size() ; i++){
                 
- 
-                    
-                
-                
-
-
-                <%
-                            Story story = (Story) request.getAttribute("story");
-                            
-                            String storyBody = "";
-                            String title = "";
-                            String rating = "";
-                           String writer = ""; 
-                            
-                           
-                            if(story != null)
-                            {
-                           storyBody = story.getBody();
-                           title = story.getTitle();
-                           rating = "Rating " + story.getAvgRating();
-                            
-                           writer = story.getWriter();
-                            
-                            //include avgrating and views
-                }
-                
-                %>
-                            
-                           
-                  <%          
-                       Comment comment = (Comment) request.getAttribute("comment");
-                       String commentBody = "";
-                      if(comment != null)
-                      {
-                            commentBody = comment.getCommentBody();
-                  }
-
+                for(int j = 0 ; j<userCategoryList.size() ; j++)
+                {
                 %>
 
-                <h3 style="color:black"><%=title%></h3>
-                <h5 style="color:black">Written by : <%=writer%></h5>
-                <h5 style="color:black"><%=rating%></h5>
-
-                <%--
-                <a >
-                    
-                    
-                    <input class="button1" name="submit" type="submit" value="submitCategories">
-                </a>
-
-                <a href=viewstory.html>
-                    <button class="button2">Comment</button>
-                </a>
-
-
-                <a href=viewstory.html>
-                    <button class="button2">Rate</button>
-                </a>
-                --%>
-
-                <form action="StoryServlet" method="post">
-
-                    <input class="button1" name="submit" type="submit" value="Like Story">
-
-
-                    <a href=DailyStory.jsp>
-                        <button class="button2">View All Stories</button>
-                    </a>
-                </form>
-
-                
-                  <%
-          String responseMessageRegister = (String) request.getAttribute("likes");
-            %>
-            <%
-                if(responseMessageRegister != null) {
-            %>
-            <div>
-                <h3 style="color:red"><%=responseMessageRegister%></h3>
-            </div>
-            <%
-                }
-            %>
-
-
-            </div>
-        </section>
-
-        <section class="main_content">
-            <div class="side_nav">
-            </div>
-
-            <div>
-
-                <form action="StoryServlet" method="post">
-                    <p style="color:black">
-
+                <tr>
+                    <td>
 
                         <%
-                            if(storyBody != null) {
-                        
+                            String variableName = ""+i;
                         %>
-                    <div>
-                        <h1 style="color:black"><%=title%></h1>
-                        <h3 style="color:black"><%=storyBody%></h3>
-                        <h5 style="color:black"><%=commentBody%></h5>
-                    </div>
-                    <%
-                        }
-                    %>
 
-                    <p>
-                </form>
+                        <%
+                            if(std.get(i).getName().equals(userCategoryList.get(j).getName()))
+                            {
+                        %>
+                        <input type="checkbox" value ="<%=variableName%>" name ="category" checked>
+                        <label for="vehicle3" style="color:black"><%=std.get(i).getName()%></label><br>
+                        <%}
 
+                            else{
+                        %>
 
-
-
-
-            </div>
-
-
+                        <input type="checkbox" value ="<%=variableName%>" name ="category">
+                        <label for="vehicle3" style="color:black"><%=std.get(i).getName()%></label><br>
+                        <%
+                            }%>
+                    </td>
 
 
-        </section>
-    </body>
+                </tr>
+                <%}}}
+                
+else{
+for(int i = 0; i<std.size() ; i++){
+                
+                
+                %>
+
+                <tr>
+                    <td>
+
+                        <%
+                            String variableName = ""+i;
+                        %>
+
+                  
+
+                           
+
+                        <input type="checkbox" value ="<%=variableName%>" name ="category">
+                        <label for="vehicle3" style="color:black"><%=std.get(i).getName()%></label><br>
+                        <%
+                            }}%>
+                    </td>
+
+
+                </tr>
+
+            </table> 
+            <hr/>
+
+
+
+
+            <input class="button2" name="submit" type="submit" value="Save Changes" >
+            <input class="button1" name="submit" type="submit" value="Submit For Review">
+            <br></br>
+        </form>
+
+
+
+        <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+    </section>
+
+    <section class="main_content">
+        <div class="side_nav">
+        </div>
+
+
+
+
+    </section>
+</body>
 
 </html>
 
