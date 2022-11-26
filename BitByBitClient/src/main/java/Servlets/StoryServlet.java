@@ -131,7 +131,6 @@ public class StoryServlet extends HttpServlet {
             case ("Create Story"):
 
                 // request.setAttribute("createStory", "Story has been created.");
-
                 List<Category> categoryList = new ArrayList<>();
                 //categoryList = restClientCategory.displayAllCategories();
                 Category category1 = new Category();
@@ -145,43 +144,33 @@ public class StoryServlet extends HttpServlet {
                 categoryList.add(category1);
                 categoryList.add(category2);
                 categoryList.add(category3);
-                
-                
+
                 // Story that we are editing / Creating
                 Story storyContinueCreating = new Story();
                 storyContinueCreating.setTitle("Harold and Kumar");
                 storyContinueCreating.setDescription("They want some weed description");
                 storyContinueCreating.setBody("Story about two broke asians");
-               
-                
-                  List<Category> categoryUserList = new ArrayList<>();
-                  categoryUserList.add(category3);
-                  storyContinueCreating.setCategoryList(categoryUserList);
-                  
-                  
-                
-                
-                
-                
+
+                List<Category> categoryUserList = new ArrayList<>();
+                categoryUserList.add(category3);
+                storyContinueCreating.setCategoryList(categoryUserList);
+
                 request.setAttribute("story", storyContinueCreating);
-                
-                
 
                 request.setAttribute("categoryList", categoryList);
-=======
-                Story storyCreate = new Story(1, "Create Story", "mock create writer", "mock description", "mock imagepath", "mock body", false, true, cal, true, true, 10, 57, 4.0);
 
-                request.setAttribute("story", storyCreate);
-                Comment commentCreate = new Comment();
-                commentCreate.setCommentBody("Mock comment body");
-                request.setAttribute("comment", commentCreate);
+//                Story storyCreate = new Story(1, "Create Story", "mock create writer", "mock description", "mock imagepath", "mock body", false, true, cal, true, true, 10, 57, 4.0);
+//
+//                request.setAttribute("story", storyCreate);
+//                Comment commentCreate = new Comment();
+//                commentCreate.setCommentBody("Mock comment body");
+//                request.setAttribute("comment", commentCreate);
 
-                session.getAttribute("user");
+                //session.getAttribute("user");
                 RequestDispatcher rdCreate = request.getRequestDispatcher("createStory.jsp");
                 rdCreate.forward(request, response);
 
                 break;
-
 
             case ("Save Changes"):
 
@@ -212,7 +201,6 @@ public class StoryServlet extends HttpServlet {
                 rdSubmitForReview.forward(request, response);
 
                 break;
-
 
             case ("Like Story"):
                 Story storyView1 = new Story();
@@ -290,7 +278,7 @@ public class StoryServlet extends HttpServlet {
                 smsreq sms = new smsreq();
                 //sms.setDatetime(new Date(2022,11,24,23,0,0));
                 sms.setDatetime("2022/05/20,10:00:00");
-                sms.setUser(1);
+                sms.setUser("1");
                 sms.setPass("password");
                 sms.setMsisdn("0739068691");
                 sms.setMessage("test message");
@@ -312,44 +300,43 @@ public class StoryServlet extends HttpServlet {
                     Logger.getLogger(StoryServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                }
-                //send sms CHANGING THE DATE TO TEST
-                smsreq sms = new smsreq();
-                //sms.setDatetime(new Date(2022,11,24,23,0,0));
-                sms.setDatetime("2022/05/20,10:00:00");
-                sms.setUser("GROUP2");
-                sms.setPass("2group");
-                sms.setMsisdn("0716772150");
-                sms.setMessage("test message");
+        
+        //send sms CHANGING THE DATE TO TEST
+        sms = new smsreq();
+        //sms.setDatetime(new Date(2022,11,24,23,0,0));
+        sms.setDatetime("2022/05/20,10:00:00");
+        sms.setUser("GROUP2");
+        sms.setPass("2group");
+        sms.setMsisdn("0716772150");
+        sms.setMessage("test message");
 
-                
-                try {
-                    JAXBContext jaxBContext = JAXBContext.newInstance(smsreq.class);
+        try {
+            JAXBContext jaxBContext = JAXBContext.newInstance(smsreq.class);
 
-                    Marshaller marshaller = jaxBContext.createMarshaller();
+            Marshaller marshaller = jaxBContext.createMarshaller();
 
-                    File xmlOutput = new File("C:\\Users\\ametr\\Desktop\\xmlTestOutput.xml");
-                    marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-                    StringWriter sw = new StringWriter();
-                    marshaller.marshal(sms, sw);
-                    String smsResponse = restClientSms.sendMessage(sw);//have another argument here that has the actual message
-                    //String smsResponse = "testmctesty";
-                    request.setAttribute("smsResponse", smsResponse);
-                    rd = request.getRequestDispatcher("Editor.jsp");
-                    rd.forward(request, response);
-
+            File xmlOutput = new File("C:\\Users\\ametr\\Desktop\\xmlTestOutput.xml");
+            marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+            StringWriter sw = new StringWriter();
+            marshaller.marshal(sms, sw);
+            String smsResponse = restClientSms.sendMessage(sw);//have another argument here that has the actual message
+            //String smsResponse = "testmctesty";
+            request.setAttribute("smsResponse", smsResponse);
+            rd = request.getRequestDispatcher("Editor.jsp");
+            rd.forward(request, response);
 
 //dunno about this
 //                rd = request.getRequestDispatcher("http://196.41.180.157:8080/sms/sms_request");
 //                request.setAttribute("smsreq", xmlOutput);
 //                rd.forward(request, response);
-                } catch (JAXBException ex) {
-                    Logger.getLogger(StoryServlet.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        } catch (JAXBException ex) {
+            Logger.getLogger(StoryServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
+        break;
+    
 
-                break;
-            case ("Reject"):
+case ("Reject"):
 
                 user = (User) session.getAttribute("user");
 
@@ -398,7 +385,7 @@ public class StoryServlet extends HttpServlet {
     }
 
     @Override
-    public String getServletInfo() {
+public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
