@@ -15,6 +15,12 @@
                 <p style="color:black">Making reading accessible to all.</p><br>
                 <form action="StoryServlet" method="post">
                     <input class="button1" name="submit" type="submit" value="View Story">
+                    
+             
+                     <input class="button1" name="submit" type="submit" value="Create Story">
+
+                     
+
                     <input class="button1" name="submit" type="submit" value="Story of the Day">
                     <a href=DailyStory.jsp>
                         <button class="button2">View All Stories</button>
@@ -35,6 +41,21 @@
 
                 </nav>
             </div>
+            
+                        <%
+String createStoryOutcome = (String) request.getAttribute("createStory");
+            %>
+            <%
+                if(createStoryOutcome != null) {
+            %>
+            <div>
+                <h3 style="color:red"><%=createStoryOutcome%></h3>
+            </div>
+            <%
+                }
+            %>
+            
+            
 
             <div class="vid_list">
                 <input type="text" class="form" placeholder="Search input">

@@ -26,6 +26,7 @@ public class UserServlet extends HttpServlet {
     private static RestClientUser restClientUser;
     private static RestClientCategory restClientCategory;
     private static RestClientStory restClientStory;
+    public static User loggedInUser;
 
     public UserServlet() {
         this.restClientUser = new RestClientUser("http://localhost:8080/RIP/RIP");
@@ -61,6 +62,41 @@ public class UserServlet extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher("User.jsp");
                 rd.forward(request, response);
                 break;
+                
+            case "Search Writer" :
+                
+                //hardCoding
+//                List<Writer> writers = new ArrayList<>();
+//                Writer w = new Writer();
+//                Writer x = new Writer();
+//                Writer y = new Writer();
+//                Writer z = new Writer();
+//                w.setUsername("writer 1");
+//                writers.add(w);
+//                x.setUsername("writer 2");
+//                writers.add(x);
+//                y.setUsername("writer 3");
+//                writers.add(y);
+//                z.setUsername("writer 4");
+//                writers.add(z);
+//                
+                
+                //doing it
+                String writerSearch = (String) request.getParameter("writer");
+                
+                List<Writer> writers = restClientUser.searchWriter(writerSearch);
+                
+                request.setAttribute("writers", writers);
+                RequestDispatcher rd3 = request.getRequestDispatcher("BlockWriter.jsp");
+                rd3.forward(request, response);
+                
+                
+                
+                
+                //RequestDispatcher rd = request.getRequestDispatcher("BlockWriter.jsp");
+                //rd.forward(request, response);
+                
+                break;
             default:
                 throw new AssertionError();
         }
@@ -70,7 +106,7 @@ public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        processRequest(request, response);
         HttpSession session = request.getSession(false);
-        User loggedInUser = new User();
+        
         switch (request.getParameter("submit")) {
             case "Login":
 
@@ -261,6 +297,23 @@ public class UserServlet extends HttpServlet {
                 
                 rd1.forward(request, response);
 
+                break;
+                
+            case "Block Selected Writers" :
+                String[] results = request.getParameterValues("results");
+                String writerResults = "Writers that have been blocked: ";
+                
+                for (int i = 0; i < results.length; i++) {
+                    writerResults += results[i] + ", ";
+                }
+                
+                request.setAttribute("writerResults", writerResults);
+                RequestDispatcher rd2 = request.getRequestDispatcher("BlockWriter.jsp");
+                
+                rd2.forward(request, response);
+                
+
+                
                 break;
 
             default:
