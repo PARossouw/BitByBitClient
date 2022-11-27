@@ -44,6 +44,21 @@
 
                 </nav>
             </div>
+            
+                        <%
+String createStoryOutcome = (String) request.getAttribute("createStory");
+            %>
+            <%
+                if(createStoryOutcome != null) {
+            %>
+            <div>
+                <h3 style="color:red"><%=createStoryOutcome%></h3>
+            </div>
+            <%
+                }
+            %>
+            
+            
 
             <div class="vid_list">
                 <input type="text" class="form" placeholder="Search input">
