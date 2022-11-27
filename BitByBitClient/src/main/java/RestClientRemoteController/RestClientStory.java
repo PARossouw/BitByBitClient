@@ -85,6 +85,8 @@ storyObj.setStoryID(420);
         storyObj.setWriter("DAO Pratice Author Tarun Sing");
         storyObj.setDescription("DAO Practice Description");
         storyObj.setBody("DAO Practice Body");
+        storyObj.setViews(637);
+        storyObj.setLikes(88);
 
 return storyObj;
     }
