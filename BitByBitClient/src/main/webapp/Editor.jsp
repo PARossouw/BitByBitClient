@@ -3,14 +3,7 @@
 <!DOCTYPE html>
 <html>
     
-    <%
-        String smsResponse = (String) request.getAttribute("smsResponse");
-        if(1<2){
-    %>
-    <h3 style = "color:green"><%=smsResponse + "Hello"%></h3>
-    <%
-        }
-    %>
+
     
     
     
@@ -86,8 +79,8 @@
 
 
                         %>
-                        <br>
-                        <h1>Choose a Story of the day</h1>
+<!--                        <br>
+                        <h1>Choose a Story of the day</h1>-->
                         
                     </div>
 

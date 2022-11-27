@@ -32,17 +32,18 @@ public class RestClientSMS {
     }
 
     public String sendMessage(StringWriter sw) throws JsonProcessingException {
-            restClient = ClientBuilder.newClient();
-            webTarget = restClient.target(url);
-            Response response = null;
+        restClient = ClientBuilder.newClient();
+        webTarget = restClient.target(url);
+        Response response = null;
         try {
+
             String xmlToString = sw.toString();
-            
+
             response = webTarget.request().post(Entity.xml(xmlToString));
         } catch (Exception ex) {
             Logger.getLogger(RestClientSMS.class.getName()).log(Level.SEVERE, null, ex);
         }
-            return response.readEntity(String.class);
+        return response.readEntity(String.class);
     }
 
     private String toJsonString(Object o) throws JsonProcessingException {
