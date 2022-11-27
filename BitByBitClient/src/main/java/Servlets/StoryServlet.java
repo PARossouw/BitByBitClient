@@ -359,44 +359,16 @@ public class StoryServlet extends HttpServlet {
                         break;
                     }
                 }
-<<<<<<< Updated upstream
-                //send sms CHANGING THE DATE TO TEST
-                smsreq sms = new smsreq();
-                //sms.setDatetime(new Date(2022,11,24,23,0,0));
-                sms.setDatetime("2022/05/20,10:00:00");
-                sms.setUser("1");
-                sms.setPass("password");
-                sms.setMsisdn("0739068691");
-                sms.setMessage("test message");
+                
+//                //send sms CHANGING THE DATE TO TEST
+//                sms = new smsreq();
+//                //sms.setDatetime(new Date(2022,11,24,23,0,0));
+//                sms.setDatetime("2022/05/20,10:00:00");
+//                sms.setUser("GROUP2");
+//                sms.setPass("2group");
+//                sms.setMsisdn("0716772150");
+//                sms.setMessage("test message");
 
-                try {
-                    JAXBContext jaxBContext = JAXBContext.newInstance(smsreq.class);
-
-                    Marshaller marshaller = jaxBContext.createMarshaller();
-
-                    File xmlOutput = new File("C:\\Users\\ametr\\Desktop\\xmlTestOutput.xml");
-                    marshaller.marshal(sms, xmlOutput);
-
-                    //dunno about this
-                    rd = request.getRequestDispatcher("http://196.41.180.157:8080/sms/sms_request");
-                    request.setAttribute("smsreq", xmlOutput);
-                    rd.forward(request, response);
-
-                } catch (JAXBException ex) {
-                    Logger.getLogger(StoryServlet.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                //send sms CHANGING THE DATE TO TEST
-                sms = new smsreq();
-                //sms.setDatetime(new Date(2022,11,24,23,0,0));
-                sms.setDatetime("2022/05/20,10:00:00");
-                sms.setUser("GROUP2");
-                sms.setPass("2group");
-                sms.setMsisdn("0716772150");
-                sms.setMessage("test message");
-
-=======
->>>>>>> Stashed changes
                 try {
                     JAXBContext jaxBContext = JAXBContext.newInstance(smsreq.class);
 
@@ -410,13 +382,6 @@ public class StoryServlet extends HttpServlet {
                     rd = request.getRequestDispatcher("Editor.jsp");
                     rd.forward(request, response);
 
-<<<<<<< Updated upstream
-//dunno about this
-//                rd = request.getRequestDispatcher("http://196.41.180.157:8080/sms/sms_request");
-//                request.setAttribute("smsreq", xmlOutput);
-//                rd.forward(request, response);
-=======
->>>>>>> Stashed changes
                 } catch (JAXBException ex) {
                     Logger.getLogger(StoryServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
