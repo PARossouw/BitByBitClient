@@ -120,10 +120,10 @@ return storyObj;
         return stories;
     }
     
-    public List<Story> viewLikedStories(Reader reader) throws JsonProcessingException {
-        String uri = url + "/viewLikedStories/{reader}";
+    public List<Story> viewLikedStories(User reader) throws JsonProcessingException {
+        String uri = url + "/viewLikedStories";
         restClient = ClientBuilder.newClient();
-        webTarget = restClient.target(uri).resolveTemplate("reader", reader);
+        webTarget = restClient.target(uri).resolveTemplate("reader", reader.getUsername());
         List<Story> stories = null;
         stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
         
