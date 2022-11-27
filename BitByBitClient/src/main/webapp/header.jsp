@@ -29,8 +29,8 @@
                     <button type="button">Refer a Friend</button>
                 </li>
                 <li>
-                    <form action="index" method="post">
-                        <input class="button1" name="submit" type="submit" value="ContactUs">
+                    <form action="UserServlet" method="post">
+                        <input class="button1" name="submit" type="submit" value="Profile">
                     </form>
                 </li>
                 <li>

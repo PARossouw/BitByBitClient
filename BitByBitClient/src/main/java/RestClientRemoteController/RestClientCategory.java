@@ -3,6 +3,7 @@ package RestClientRemoteController;
 import Category.Model.Category;
 import Story.Model.Story;
 import User.Model.Reader;
+import User.Model.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -70,15 +71,14 @@ import org.json.simple.JSONObject;
         return topCategories;
     }
     
-    public List<Category> getPreferredCategories(Reader reader) throws JsonProcessingException{
+    public List<Category> getPreferredCategories(User reader) throws JsonProcessingException{
         String uri = url + "/preferredCategories";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
         
-        List<Category> preferredCategories = null;
-        preferredCategories = mapper.readValue(
-                webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<List<Category>>() {
-        });
+        List<Category> preferredCategories;
+        preferredCategories = mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<List<Category>>() {});
+                
         return preferredCategories;
     }
     
