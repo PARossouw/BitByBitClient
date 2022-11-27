@@ -130,10 +130,6 @@ for(int i = 0; i<std.size() ; i++){
                             String variableName = ""+i;
                         %>
 
-                  
-
-                           
-
                         <input type="checkbox" value ="<%=variableName%>" name ="category">
                         <label for="vehicle3" style="color:black"><%=std.get(i).getName()%></label><br>
                         <%
@@ -157,18 +153,6 @@ for(int i = 0; i<std.size() ; i++){
 
 
         <div>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         </div>
