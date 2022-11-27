@@ -28,7 +28,9 @@ import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 import java.io.File;
 import java.io.StringWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -54,6 +56,9 @@ public class StoryServlet extends HttpServlet {
     private Comment comment;
     private RequestDispatcher rd;
     private RestClientSMS restClientSms;
+    private Story storyToApprove;
+    private smsreq sms;
+    public static Story storyOfTheDay;
 
     public StoryServlet() {
         this.restClientStory = new RestClientStory("http://localhost:8080/RIP/RIP");
@@ -109,6 +114,26 @@ public class StoryServlet extends HttpServlet {
 
                 }
 
+                break;
+
+            case ("Choose Story of The Day"):
+
+                storyReviewList = restClientStory.getStoriesForStoryOfTheDay();
+
+                request.setAttribute("storyReviewList", storyReviewList);
+                rd = request.getRequestDispatcher("ChooseDailyStory.jsp");
+
+                rd.forward(request, response);
+                break;
+
+            case ("Load More Stories"):
+
+                storyReviewList = restClientStory.getStoriesForStoryOfTheDay();
+
+                request.setAttribute("storyReviewList", storyReviewList);
+                rd = request.getRequestDispatcher("ChooseDailyStory.jsp");
+
+                rd.forward(request, response);
                 break;
         }
     }
@@ -305,20 +330,19 @@ public class StoryServlet extends HttpServlet {
                 }
                 break;
 
-            case ("getFiveStoriesForStoryOfTheDay"):
-
-                //List<Story> storyList = restClientStory.getFiveStoriesForStoryOfTheDay();
-                break;
             case "Approve":
 
-                user = (User) session.getAttribute("user");
-                Story storyToApprove = this.storyToReview;
+                this.user = (User) session.getAttribute("user");
+                this.storyToApprove = this.storyToReview;
 
-                message = restClientStory_Transaction.approvePendingStory(user, this.storyToReview);
+                this.sms = restClientStory_Transaction.approvePendingStory(user, this.storyToReview);
+                //this.sms = new smsreq(); sms.setMessage("tesssst");
+
+                message = sms.getMessage();
 
                 request.setAttribute("message", message);
 
-                rd = request.getRequestDispatcher("Editor.jsp");
+                this.rd = request.getRequestDispatcher("Editor.jsp");
 
                 //getting the next story
                 for (int i = 0; i < storyReviewList.size(); i++) {
@@ -326,18 +350,16 @@ public class StoryServlet extends HttpServlet {
                     if (i == storyReviewList.size() - 1) {
                         request.setAttribute("storyReview", null);
                         rd = request.getRequestDispatcher("Editor.jsp");
-                        //rd.forward(request, response);
                         break;
                     } else if (this.storyToReview == storyReviewList.get(i)) {
 
                         this.storyToReview = storyReviewList.get(i + 1);
                         request.setAttribute("storyReview", this.storyToReview);
                         rd = request.getRequestDispatcher("Editor.jsp");
-                        //rd.forward(request, response);
                         break;
                     }
-
                 }
+<<<<<<< Updated upstream
                 //send sms CHANGING THE DATE TO TEST
                 smsreq sms = new smsreq();
                 //sms.setDatetime(new Date(2022,11,24,23,0,0));
@@ -373,25 +395,28 @@ public class StoryServlet extends HttpServlet {
                 sms.setMsisdn("0716772150");
                 sms.setMessage("test message");
 
+=======
+>>>>>>> Stashed changes
                 try {
                     JAXBContext jaxBContext = JAXBContext.newInstance(smsreq.class);
 
                     Marshaller marshaller = jaxBContext.createMarshaller();
 
-                    File xmlOutput = new File("C:\\Users\\ametr\\Desktop\\xmlTestOutput.xml");
                     marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
                     StringWriter sw = new StringWriter();
                     marshaller.marshal(sms, sw);
-                    String smsResponse = restClientSms.sendMessage(sw);//have another argument here that has the actual message
-                    //String smsResponse = "testmctesty";
-                    request.setAttribute("smsResponse", smsResponse);
+                    String smsResponse = restClientSms.sendMessage(sw);
+
                     rd = request.getRequestDispatcher("Editor.jsp");
                     rd.forward(request, response);
 
+<<<<<<< Updated upstream
 //dunno about this
 //                rd = request.getRequestDispatcher("http://196.41.180.157:8080/sms/sms_request");
 //                request.setAttribute("smsreq", xmlOutput);
 //                rd.forward(request, response);
+=======
+>>>>>>> Stashed changes
                 } catch (JAXBException ex) {
                     Logger.getLogger(StoryServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -400,13 +425,14 @@ public class StoryServlet extends HttpServlet {
 
             case ("Reject"):
 
-                user = (User) session.getAttribute("user");
+                this.user = (User) session.getAttribute("user");
+                this.storyToApprove = this.storyToReview;
 
-                message = restClientStory_Transaction.rejectPendingStory(user, this.storyToReview);
-
+                this.sms = restClientStory_Transaction.rejectPendingStory(user, this.storyToReview);
+                message = sms.getMessage();
                 request.setAttribute("message", message);
 
-                rd = request.getRequestDispatcher("Editor.jsp");
+                this.rd = request.getRequestDispatcher("Editor.jsp");
 
                 //getting the next story
                 for (int i = 0; i < storyReviewList.size(); i++) {
@@ -414,7 +440,7 @@ public class StoryServlet extends HttpServlet {
                     if (i == storyReviewList.size() - 1) {
                         request.setAttribute("storyReview", null);
                         rd = request.getRequestDispatcher("Editor.jsp");
-                        rd.forward(request, response);
+                        //rd.forward(request, response);
                         break;
                     }
 
@@ -423,14 +449,37 @@ public class StoryServlet extends HttpServlet {
                         this.storyToReview = storyReviewList.get(i + 1);
                         request.setAttribute("storyReview", this.storyToReview);
                         rd = request.getRequestDispatcher("Editor.jsp");
-                        rd.forward(request, response);
+                        //rd.forward(request, response);
                         break;
                     }
 
                 }
+                try {
+                    JAXBContext jaxBContext = JAXBContext.newInstance(smsreq.class);
+
+                    Marshaller marshaller = jaxBContext.createMarshaller();
+
+                    marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+                    StringWriter sw = new StringWriter();
+                    marshaller.marshal(sms, sw);
+                    String smsResponse = restClientSms.sendMessage(sw);
+
+                    rd = request.getRequestDispatcher("Editor.jsp");
+                    rd.forward(request, response);
+                } catch (JAXBException ex) {
+                    Logger.getLogger(StoryServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
                 break;
-            case ("Next Story"):
+            case ("Make Story of the Day"):
+
+                int i = Integer.parseInt(request.getParameter("submit_id"));
+                this.storyOfTheDay = storyReviewList.get(i);
+
+                message = storyReviewList.get(i).getTitle() + " was made story of the day";
+                request.setAttribute("message", message);
+                rd = request.getRequestDispatcher("ChooseDailyStory.jsp");
+                rd.forward(request, response);
 
                 break;
 

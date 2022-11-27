@@ -1,8 +1,8 @@
 
 package RestClientRemoteController;
 
+import SMS.smsreq;
 import Story.Model.Story;
-import User.Model.Editor;
 import User.Model.User;
 import User.Model.Writer;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -29,7 +29,7 @@ public class RestClientStory_Transaction {
     
     
     
-     public String approvePendingStory(User editor, Story story) throws JsonProcessingException {
+     public smsreq approvePendingStory(User editor, Story story) throws JsonProcessingException {
         String uri = url + "/approve";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
@@ -42,7 +42,10 @@ public class RestClientStory_Transaction {
         
         
         
-        return response.readEntity(String.class);
+        return response.readEntity(smsreq.class);
+        
+        //hardcoding for test:
+        //JSONObject jsonObjectForTest = new JSONObject();
         
 
 
@@ -51,7 +54,7 @@ public class RestClientStory_Transaction {
     }
 
        //@FormParam must be put in the aruguments on the rest controller side
-    public String rejectPendingStory(User editor, Story story) throws JsonProcessingException {
+    public smsreq rejectPendingStory(User editor, Story story) throws JsonProcessingException {
         String uri = url + "/reject";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
@@ -62,7 +65,7 @@ public class RestClientStory_Transaction {
         jsonObject.put("story", story);
         Response response = null;
         response = webTarget.request().post(Entity.json(toJsonString(jsonObject)));
-        return response.readEntity(String.class);
+        return response.readEntity(smsreq.class);
         
 //        HashMap<User, Story> pendingStoriesReject = new HashMap();
 //        pendingStoriesReject.put(editor, story);
