@@ -167,9 +167,6 @@ public class StoryServlet extends HttpServlet {
                 break;
                 
 
-            case ("Search"):
-                break;
-
             case ("Create Story"):
 
                 List<Category> categoryList = new ArrayList<>();
@@ -184,6 +181,21 @@ public class StoryServlet extends HttpServlet {
                 categoryList.add(category1);
                 categoryList.add(category2);
                 categoryList.add(category3);
+                
+                break;
+
+            case ("Like Story"):
+                Story storyView1 = new Story();
+                storyView1 = null;
+                request.setAttribute("story", storyView1);
+
+                Comment commentView1 = new Comment();
+                commentView1 = null;
+
+                request.setAttribute("comment", commentView1);
+                session.getAttribute("user");
+
+                request.setAttribute("likes", "You have liked the story");
 
                 // Story that we are editing / Creating
                 Story storyContinueCreating = new Story();
@@ -338,8 +350,8 @@ public class StoryServlet extends HttpServlet {
                 rdRate.forward(request, response);
                 break;
 
-//              
-            case ("viewStoriesByCategory"):
+            case ("Search"):
+
                 List<Category> allCategories = new ArrayList<>();
                 allCategories = restClientCategory.displayAllCategories();
 
