@@ -1,7 +1,6 @@
 package RestClientRemoteController;
 
 import Category.Model.Category;
-import Story.Model.Story;
 import User.Model.Editor;
 import User.Model.Reader;
 import User.Model.User;
@@ -22,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.simple.JSONObject;
 
 public class RestClientUser {
 
@@ -65,12 +65,17 @@ public class RestClientUser {
         return response.readEntity(String.class);
     }
 
-    public String blockWriter(Writer writer) throws JsonProcessingException {
+    public String blockWriter(String[] results, List<Writer> writersSearcched) throws JsonProcessingException {
         String uri = url + "/writer/block";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
         Response response = null;
-        response = webTarget.request().post(Entity.json(toJsonString(writer)));
+        
+        JSONObject jObject = new JSONObject();
+        jObject.put("results", results);
+        jObject.put("writersSeacrched", writersSearcched);
+        response = webTarget.request().post(Entity.json(toJsonString(jObject)));
+        
         return response.readEntity(String.class);
     }
 
