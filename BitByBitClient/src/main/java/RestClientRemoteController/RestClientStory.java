@@ -6,6 +6,7 @@ import User.Model.Reader;
 import User.Model.User;
 import User.Model.Writer;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
@@ -17,6 +18,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.json.simple.JSONObject;
+
 
 public class RestClientStory {
 
@@ -34,10 +41,28 @@ public class RestClientStory {
     public List<Story> searchStoriesByCategories(List<Category> categories) throws JsonProcessingException {
         String uri = url + "/search/categories";
         restClient = ClientBuilder.newClient();
-        webTarget = restClient.target(uri).resolveTemplate("categories", categories);
-        List<Story> stories = null;
-        stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
-        return stories;
+        webTarget = restClient.target(uri);
+        List<Story> stories = new ArrayList<>();
+        
+        JSONObject jsonObject = new JSONObject();
+        
+        jsonObject.put("amount", categories.size());
+        for(int i = 0; i < categories.size(); i++){
+            jsonObject.put(""+i, categories.get(i));
+        }
+            
+        Response response = null;
+        response = webTarget.request().post(Entity.json(toJsonString(jsonObject)));
+        return response.readEntity(List.class);
+        
+//        Response response = null;
+//        
+//        response = webTarget.request().post(Entity.json(toJsonString(categories)));
+//        //stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
+//        //stories = mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<List<Story>>(){});
+//        //return stories;
+//        stories = response.readEntity(List.class);
+//        return stories;
 
     }
 
@@ -70,26 +95,50 @@ public class RestClientStory {
     }
 
     public Story retrieveStory(Story story) throws JsonProcessingException {
-//        String uri = url + "/retrieve";
-//        restClient = ClientBuilder.newClient();
-//        webTarget = restClient.target(uri);
-//        Response response = null;
-//        response = webTarget.request().post(Entity.json(toJsonString(story)));
-//        return response.readEntity(Story.class);
+        String uri = url + "/retrieve";
+        restClient = ClientBuilder.newClient();
+        webTarget = restClient.target(uri);
+        Response response = null;
+        response = webTarget.request().post(Entity.json(toJsonString(story)));
+        return response.readEntity(Story.class);
 
 // test purposes below 
-Story storyObj = new Story();
-storyObj.setStoryID(420);
-        storyObj.setTitle("DAO practice Title");
-        storyObj.setAvgRating(2.9);
-        storyObj.setWriter("DAO Pratice Author Tarun Sing");
-        storyObj.setDescription("DAO Practice Description");
-        storyObj.setBody("DAO Practice Body");
-        storyObj.setViews(637);
-        storyObj.setLikes(88);
-
-return storyObj;
+//Story storyObj = new Story();
+//storyObj.setStoryID(420);
+//        storyObj.setTitle("DAO practice Title");
+//        storyObj.setAvgRating(2.9);
+//        storyObj.setWriter("DAO Pratice Author Tarun Sing");
+//        storyObj.setDescription("DAO Practice Description");
+//        storyObj.setBody("DAO Practice Body");
+//        storyObj.setViews(637);
+//        storyObj.setLikes(88);
+//
+//return storyObj;
     }
+    
+    
+//     public List<Writer> retrieveStoryGet(String storySearch) {
+//        List<Writer> writers = new ArrayList();
+//        try {
+//            String uri = url + "/searchWriter/{writerSearch}";
+//            restClient = ClientBuilder.newClient();
+//            webTarget = restClient.target(uri).resolveTemplate("writerSearch", writerSearch);
+//
+//            writers = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Writer[].class));
+//
+//            return writers;
+//        } catch (JsonProcessingException ex) {
+//            Logger.getLogger(RestClientUser.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return writers;
+//    }
+//    
+    
+    
+    
+    
+    
+    
 
     public List<Story> searchForStory(String storyParameter) throws JsonProcessingException {
         String uri = url + "/search/";

@@ -18,7 +18,7 @@
         <jsp:include page="header.jsp"></jsp:include>
 
         <body style="background-color:aquamarine;">
-            <form action="StoryServlet" method="post">
+            <form action="StoryServlet" method="post" enctype="multipart/form-data">
                 <h1 style="color:black">Create a short story</h1>
 
             <%
@@ -60,17 +60,25 @@ String createStoryOutcome = (String) request.getAttribute("createStory");
             <textarea id="text" name="StoryDescription" rows="5" cols="80"><%=description%></textarea>
             <br/>
 
-            <label for="text">Image Path {To Do}</label>
+
+            <label for="photo">Choose a photo!</label>
+
+            <input 
+                type="file"
+                id="photo" 
+                name="file"
+                accept ="image/*"
+                 >
+
             <br>
-            <textarea id="text" name="ImagePath" rows="2" cols="80"></textarea>
-            <br/>
+
 
             <label for="text">Body of Story</label>
             <br>
             <textarea id="text" name="StoryBody" rows="60" cols="80"><%=storyBody%></textarea>
             <br/>
 
-            
+
             <h4 style="color:black">Please select the categories of which the story falls under.</h4>
             <table border ="1" width="500" align="center">
                 <tr bgcolor="00FF7F">
