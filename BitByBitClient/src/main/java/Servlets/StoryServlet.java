@@ -236,12 +236,8 @@ public class StoryServlet extends HttpServlet {
                 request.setAttribute("categoryList", categoryList);
                 RequestDispatcher rdCreate = request.getRequestDispatcher("createStory.jsp");
                 rdCreate.forward(request, response);
-
-                
                 
                 break;
-
-
 
             case ("Save Changes"):
                 Story storyToSave = new Story();
@@ -298,10 +294,10 @@ public class StoryServlet extends HttpServlet {
                 break;
 
             case ("Like"):
-                Story storyView1 = new Story();
+                Story storyView2 = new Story();
                 int storyID = Integer.parseInt((String) request.getParameter("story_id"));
-                storyView1.setStoryID(storyID);
-                this.storyView = restClientStory.retrieveStory(storyView1);
+                storyView2.setStoryID(storyID);
+                this.storyView = restClientStory.retrieveStory(storyView2);
                 Reader reader = (Reader) session.getAttribute("user");
                 restClientLike.likeStory(reader, this.storyView);
                 request.setAttribute("story", this.storyView);
@@ -310,11 +306,12 @@ public class StoryServlet extends HttpServlet {
                 rd6.forward(request, response);
                 break;
 
+
             case ("Comment"):
-                Story storyView2 = new Story();
+                Story storyView3 = new Story();
                 int storyIDComment = Integer.parseInt((String) request.getParameter("story_id"));
-                storyView2.setStoryID(storyIDComment);
-                this.storyView = restClientStory.retrieveStory(storyView2);
+                storyView3.setStoryID(storyIDComment);
+                this.storyView = restClientStory.retrieveStory(storyView3);
                 request.setAttribute("story", this.storyView);
                 session.getAttribute("user");
                 request.setAttribute("optsToComment", "add a comment");
@@ -341,6 +338,7 @@ public class StoryServlet extends HttpServlet {
                 RequestDispatcher rdComment = request.getRequestDispatcher("viewstory.jsp");
                 rdComment.forward(request, response);
                 break;
+
 
             case ("SubmitComment"):
                 Story storyViewSubmitComment = new Story();
