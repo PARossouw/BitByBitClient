@@ -301,10 +301,15 @@ public class UserServlet extends HttpServlet {
                 break;
                 
             case "Block Selected Writers" :
-                String[] results = request.getParameterValues("results");
-                String writerResults = "Writers that have been blocked: ";
-                
-                writerResults += restClientUser.blockWriter(results, writersSearched);
+                String []results = request.getParameterValues("results");
+                Writer w = new Writer();
+                String writerResults = "";
+//                for (int i = 0; i < writersSearched.size(); i++) {
+//                    if(writersSearched.get(i).getUsername().equals(results)){
+//                        w = writersSearched.get(i);
+//                    }
+//                }
+                writerResults = restClientUser.blockWriter(writersSearched.get(Integer.parseInt(results[0])));
                 
                 request.setAttribute("writerResults", writerResults);
                 RequestDispatcher rd2 = request.getRequestDispatcher("BlockWriter.jsp");
