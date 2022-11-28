@@ -165,6 +165,7 @@ public class StoryServlet extends HttpServlet {
                 rd.forward(request, response);
 
                 break;
+                
 
             case ("Create Story"):
 
