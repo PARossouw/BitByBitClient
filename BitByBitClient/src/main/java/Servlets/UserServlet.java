@@ -27,6 +27,7 @@ public class UserServlet extends HttpServlet {
     private static RestClientCategory restClientCategory;
     private static RestClientStory restClientStory;
     public static User loggedInUser;
+    private List<Writer> writersSearched;
 
     public UserServlet() {
         this.restClientUser = new RestClientUser("http://localhost:8080/RIP/RIP");
@@ -84,9 +85,9 @@ public class UserServlet extends HttpServlet {
                 //doing it
                 String writerSearch = (String) request.getParameter("writer");
                 
-                List<Writer> writers = restClientUser.searchWriter(writerSearch);
+                writersSearched = restClientUser.searchWriter(writerSearch);
                 
-                request.setAttribute("writers", writers);
+                request.setAttribute("writers", writersSearched);
                 RequestDispatcher rd3 = request.getRequestDispatcher("BlockWriter.jsp");
                 rd3.forward(request, response);
                 
@@ -303,9 +304,7 @@ public class UserServlet extends HttpServlet {
                 String[] results = request.getParameterValues("results");
                 String writerResults = "Writers that have been blocked: ";
                 
-                for (int i = 0; i < results.length; i++) {
-                    writerResults += results[i] + ", ";
-                }
+                writerResults += restClientUser.blockWriter(results, writersSearched);
                 
                 request.setAttribute("writerResults", writerResults);
                 RequestDispatcher rd2 = request.getRequestDispatcher("BlockWriter.jsp");
