@@ -218,42 +218,29 @@ public class StoryServlet extends HttpServlet {
                 categoryList.add(category2);
                 categoryList.add(category3);
                 
-                break;
+                 request.setAttribute("categoryList", categoryList);
 
-            case ("Like Story"):
-                Story storyView1 = new Story();
-                storyView1 = null;
-                request.setAttribute("story", storyView1);
-
-                Comment commentView1 = new Comment();
-                commentView1 = null;
-
-                request.setAttribute("comment", commentView1);
-                session.getAttribute("user");
-
-                request.setAttribute("likes", "You have liked the story");
-
-                // Story that we are editing / Creating
-                
-                
-                                Story storyContinueCreating = new Story();
+                 // Story that we are editing / Creating
+                Story storyContinueCreating = new Story();
                 storyContinueCreating.setTitle("Harold and Kumar");
                 storyContinueCreating.setDescription("They want some weed description");
                 storyContinueCreating.setBody("Story about two broke asians");
+                  List<Category> categoryUserList = new ArrayList<>();
+                  categoryUserList.add(category3);
+                  storyContinueCreating.setCategoryList(categoryUserList);
 
-                List<Category> categoryUserList = new ArrayList<>();
-                categoryUserList.add(category3);
-                storyContinueCreating.setCategoryList(categoryUserList);
-
-                
                 request.setAttribute("story", storyContinueCreating);
 
-                request.setAttribute("categoryList", categoryList);
 
+
+                request.setAttribute("categoryList", categoryList);
                 RequestDispatcher rdCreate = request.getRequestDispatcher("createStory.jsp");
                 rdCreate.forward(request, response);
 
+                
+                
                 break;
+
 
 
             case ("Save Changes"):
