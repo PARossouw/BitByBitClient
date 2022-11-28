@@ -5,8 +5,6 @@ import RestClientRemoteController.RestClientCategory;
 import RestClientRemoteController.RestClientStory;
 import RestClientRemoteController.RestClientUser;
 import Story.Model.Story;
-import User.Model.AdminEditor;
-import User.Model.Editor;
 import User.Model.Reader;
 import User.Model.User;
 import User.Model.Writer;
@@ -28,7 +26,8 @@ public class UserServlet extends HttpServlet {
     private static RestClientUser restClientUser;
     private static RestClientCategory restClientCategory;
     private static RestClientStory restClientStory;
-    private static User loggedInUser;
+    public static User loggedInUser;
+    private List<Writer> writersSearched;
 
     public UserServlet() {
         this.restClientUser = new RestClientUser("http://localhost:8080/RIP/RIP");
@@ -63,6 +62,41 @@ public class UserServlet extends HttpServlet {
                 request.setAttribute("likes", likes);
                 RequestDispatcher rd = request.getRequestDispatcher("User.jsp");
                 rd.forward(request, response);
+                break;
+                
+            case "Search Writer" :
+                
+                //hardCoding
+//                List<Writer> writers = new ArrayList<>();
+//                Writer w = new Writer();
+//                Writer x = new Writer();
+//                Writer y = new Writer();
+//                Writer z = new Writer();
+//                w.setUsername("writer 1");
+//                writers.add(w);
+//                x.setUsername("writer 2");
+//                writers.add(x);
+//                y.setUsername("writer 3");
+//                writers.add(y);
+//                z.setUsername("writer 4");
+//                writers.add(z);
+//                
+                
+                //doing it
+                String writerSearch = (String) request.getParameter("writer");
+                
+                writersSearched = restClientUser.searchWriter(writerSearch);
+                
+                request.setAttribute("writers", writersSearched);
+                RequestDispatcher rd3 = request.getRequestDispatcher("BlockWriter.jsp");
+                rd3.forward(request, response);
+                
+                
+                
+                
+                //RequestDispatcher rd = request.getRequestDispatcher("BlockWriter.jsp");
+                //rd.forward(request, response);
+                
                 break;
             default:
                 throw new AssertionError();
@@ -232,39 +266,53 @@ public class UserServlet extends HttpServlet {
 
             case "Profile":
 
-                List<Category> preferredCategories;
+                List<Category> preferredCategories = restClientCategory.getPreferredCategories((User) loggedInUser);
 
-                switch (loggedInUser.getRoleID()) {
-                    case 1:
-                        preferredCategories = restClientCategory.getPreferredCategories((Reader) loggedInUser);
-                        break;
-                    case 2:
-                        preferredCategories = restClientCategory.getPreferredCategories((Writer) loggedInUser);
-                        break;
-                    default:
-                        preferredCategories = null;
-                }
+//                switch (loggedInUser.getRoleID()) {
+//                    case 1:
+//                        preferredCategories = restClientCategory.getPreferredCategories((Reader) loggedInUser);
+//                        break;
+//                    case 2:
+//                        preferredCategories = restClientCategory.getPreferredCategories((Writer) loggedInUser);
+//                        break;
+//                    default:
+//                        preferredCategories = null;
+//                }
 
-                request.setAttribute("preferredCategories", preferredCategories);
-                request.setAttribute("user", loggedInUser);
+                List<Story> likedStories = restClientStory.viewLikedStories((User) loggedInUser);
+//                switch (loggedInUser.getRoleID()) {
+//                    case 1:
+//                        likedStories = restClientStory.viewLikedStories((Reader) loggedInUser);
+//                        break;
+//                    case 2:
+//                        likedStories = restClientStory.viewLikedStories((Writer) loggedInUser);
+//                        break;
+//                    default:
+//                        likedStories = null;
+//                }
                 
-                List<Story> likedStories;
-                switch (loggedInUser.getRoleID()) {
-                    case 1:
-                        likedStories = restClientStory.viewLikedStories((Reader) loggedInUser);
-                        break;
-                    case 2:
-                        likedStories = restClientStory.viewLikedStories((Writer) loggedInUser);
-                        break;
-                    default:
-                        likedStories = null;
-                }
-
+                request.setAttribute("preferredCategories", preferredCategories);
                 request.setAttribute("likedStories", likedStories);
+                request.setAttribute("user", loggedInUser);
                 RequestDispatcher rd1 = request.getRequestDispatcher("User.jsp");
                 
                 rd1.forward(request, response);
 
+                break;
+                
+            case "Block Selected Writers" :
+                String[] results = request.getParameterValues("results");
+                String writerResults = "Writers that have been blocked: ";
+                
+                writerResults += restClientUser.blockWriter(results, writersSearched);
+                
+                request.setAttribute("writerResults", writerResults);
+                RequestDispatcher rd2 = request.getRequestDispatcher("BlockWriter.jsp");
+                
+                rd2.forward(request, response);
+                
+
+                
                 break;
 
             default:

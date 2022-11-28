@@ -107,51 +107,23 @@ public class RestClientStory {
         List<Story> stories = new ArrayList();
         stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
         
-//        Story myStory = new Story();
-//        myStory.setTitle("testy title");
-//        myStory.setBody("testyBody");
-//        myStory.setWriter("testyWriter");
-//        
-//        stories.add(myStory);
-//        stories.add(myStory);
-//        stories.add(myStory);
-//        stories.add(myStory);
-//        stories.add(myStory);
-//        stories.add(myStory);
-        
         return stories;
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-//        String uri = url + "/getFiveStoriesForStoryOfTheDay";
-//        restClient = ClientBuilder.newClient();
-//        webTarget = restClient.target(uri);
-//        Response response = null;
-//        response = webTarget.request().get();
-//        return response.readEntity(Story.class);
-        
-        
-                
-        
-        
-        
-        //return story;
-        
     }
     
-    public List<Story> viewLikedStories(Reader reader) throws JsonProcessingException {
-        String uri = url + "/viewLikedStories/{reader}";
+    public List<Story> getStoriesForStoryOfTheDay()throws JsonProcessingException{
+        String uri = url + "/getStoriesForStoryOfTheDay";
         restClient = ClientBuilder.newClient();
-        webTarget = restClient.target(uri).resolveTemplate("reader", reader);
+        webTarget = restClient.target(uri);
+        List<Story> stories = new ArrayList();
+        stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
+        
+        return stories;
+    }
+    
+    public List<Story> viewLikedStories(User reader) throws JsonProcessingException {
+        String uri = url + "/viewLikedStories";
+        restClient = ClientBuilder.newClient();
+        webTarget = restClient.target(uri).resolveTemplate("reader", reader.getUsername());
         List<Story> stories = null;
         stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
         
