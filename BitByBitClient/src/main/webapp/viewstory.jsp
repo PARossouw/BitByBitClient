@@ -74,8 +74,7 @@
                     
                     List<Comment> allComments = 
                     (ArrayList<Comment>)request.getAttribute("comment");
-            // Comment comment = (Comment) request.getAttribute("comment");
-            // String commentBody = "";
+
             if(allComments != null)
             {
             
@@ -103,7 +102,7 @@ String userToComment = (String) request.getAttribute("optsToComment");
                 <input class="button1" name="story_id" type="hidden" value="<%=storyID%>">
                 <label for="text">Please enter a comment below</label>
                 <br>
-                <textarea id="text" name="StoryTitle" rows="2" cols="80" ></textarea >
+                <textarea id="text" name="storyComment" rows="2" cols="80" ></textarea >
                 <br/>
                 <input class="button1" name="submit" type="submit" value="SubmitComment">
             </form>
