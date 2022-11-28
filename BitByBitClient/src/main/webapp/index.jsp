@@ -17,7 +17,7 @@
                     <input class="button1" name="submit" type="submit" value="View Story">
                     
              
-                     <input class="button1" name="submit" type="submit" value="Create Story">
+                     <input class="button1" name="submit" type="submit" value="Edit Story">
 
                      
 
@@ -26,6 +26,19 @@
                         <button class="button2">View All Stories</button>
                     </a>
                 </form>
+                
+                
+                  <form action="StoryServlet" method="get">
+                    <input class="button1" name="submit" type="submit" value="View Story Get">
+                    
+             
+            
+                </form>
+                
+                
+       
+                   
+                
             </div>
         </section>
         <section class="main_content">
