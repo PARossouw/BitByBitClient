@@ -8,7 +8,7 @@
 <html>
 
     <head>
-        <title>View Story</title>
+        <title>Edit Story</title>
         <link rel="stylesheet" href="normalized.css">
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
         <link rel="stylesheet" href="custom.css">
@@ -19,7 +19,7 @@
 
         <body style="background-color:aquamarine;">
             <form action="StoryServlet" method="post" enctype="multipart/form-data">
-                <h1 style="color:black">Create a short story</h1>
+                <h1 style="color:black">Edit a short story</h1>
 
             <%
 String createStoryOutcome = (String) request.getAttribute("createStory");
