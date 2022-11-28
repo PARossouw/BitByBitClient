@@ -14,17 +14,17 @@
     </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-        <section class="banner" background-img src="images/h_bg1.jpg">
-            
-        </section>
+            <section class="banner" background-img src="images/h_bg1.jpg">
 
-        <section class="main_content">
+            </section>
 
-            <div>
+            <section class="main_content">
 
-                <form action="StoryServlet" method="post">
-                    <div>
-                        <label for="Categories">Select the categories you wish to search by.</label>
+                <div>
+
+                    <form action="StoryServlet" method="post">
+                        <div>
+                            <label for="Categories">Select the categories you wish to search by.</label>
 
                         <%
                             List<Category> categories = (ArrayList<Category>) request.getAttribute("categories");
@@ -44,12 +44,14 @@
                                 %>
                                 <td>
                                     <input type="checkbox" name="category" value="<%=i%>">
-                                    <label for="category" style="color:black"><%=categories.get(i).getName() + " "+i%></label>
+                                    <label for="category" style="color:black"><%=categories.get(i).getName()%></label>
                                 </td>
-                            </tr>
 
-                            <%
+                                <%
                                     }//end for
+                                %>
+                            </tr>
+                            <%
                                 }//end if
                             %>
                         </table>
