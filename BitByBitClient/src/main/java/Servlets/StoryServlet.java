@@ -141,7 +141,43 @@ public class StoryServlet extends HttpServlet {
 
                 rd.forward(request, response);
                 break;
+                
+                
+            case ("viewStoryGet"):
+                  String writerSearch = (String) request.getParameter("writer");
+                  Story story = new Story();
+                  
+                  String storyID = "1";
+                 // story = restClientStory.retrieveStoryGet(storyID);
+                  
+                
+                //writersSearched = restClientUser.searchWriter(writerSearch);
+                
+                request.setAttribute("story", story);
+
+                //session.getAttribute("user");
+                RequestDispatcher rd = request.getRequestDispatcher("viewstory.jsp");
+                rd.forward(request, response);
+               
+                break;
+                
+                /*
+                  Story story = new Story(1, "mock title yo ma se good person", "mock writer", "mock description", "mock imagepath", "mock body", false, true, cal, true, true, 10, 57, 4.0);
+
+                this.storyView = restClientStory.retrieveStory(story);
+
+                request.setAttribute("story", this.storyView);
+
+                session.getAttribute("user");
+                RequestDispatcher rd = request.getRequestDispatcher("viewstory.jsp");
+                rd.forward(request, response);
+                */
+                
         }
+        
+        
+        
+        
     }
 
     @Override
@@ -165,6 +201,7 @@ public class StoryServlet extends HttpServlet {
                 rd.forward(request, response);
 
                 break;
+                
 
             case ("Create Story"):
 
@@ -180,6 +217,25 @@ public class StoryServlet extends HttpServlet {
                 categoryList.add(category1);
                 categoryList.add(category2);
                 categoryList.add(category3);
+                
+                 request.setAttribute("categoryList", categoryList);
+
+                 // Story that we are editing / Creating
+                Story storyContinueCreating = new Story();
+                storyContinueCreating.setTitle("Harold and Kumar");
+                storyContinueCreating.setDescription("They want some weed description");
+                storyContinueCreating.setBody("Story about two broke asians");
+                  List<Category> categoryUserList = new ArrayList<>();
+                  categoryUserList.add(category3);
+                  storyContinueCreating.setCategoryList(categoryUserList);
+
+                request.setAttribute("story", storyContinueCreating);
+
+
+
+                request.setAttribute("categoryList", categoryList);
+                RequestDispatcher rdCreate = request.getRequestDispatcher("createStory.jsp");
+                rdCreate.forward(request, response);
                 
                 break;
 
