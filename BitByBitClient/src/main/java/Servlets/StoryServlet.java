@@ -122,28 +122,26 @@ public class StoryServlet extends HttpServlet {
                 rd.forward(request, response);
 
                 break;
-            case ("Search"):
 
             case ("Like Story"):
                 Story storyView1 = new Story();
                 storyView1 = null;
                 request.setAttribute("story", storyView1);
-//
+
                 Comment commentView1 = new Comment();
                 commentView1 = null;
 
                 request.setAttribute("comment", commentView1);
                 session.getAttribute("user");
-//
+
                 request.setAttribute("likes", "You have liked the story");
 
                 RequestDispatcher rd6 = request.getRequestDispatcher("viewstory.jsp");
                 rd6.forward(request, response);
 
                 break;
-//              
-
-            case ("viewStoriesByCategory"):
+                
+            case ("Search"):
                 List<Category> allCategories = new ArrayList<>();
                 allCategories = restClientCategory.displayAllCategories();
 

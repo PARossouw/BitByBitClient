@@ -6,6 +6,7 @@ import User.Model.Reader;
 import User.Model.User;
 import User.Model.Writer;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import org.json.simple.JSONObject;
 
 public class RestClientStory {
 
@@ -34,10 +36,28 @@ public class RestClientStory {
     public List<Story> searchStoriesByCategories(List<Category> categories) throws JsonProcessingException {
         String uri = url + "/search/categories";
         restClient = ClientBuilder.newClient();
-        webTarget = restClient.target(uri).resolveTemplate("categories", categories);
-        List<Story> stories = null;
-        stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
-        return stories;
+        webTarget = restClient.target(uri);
+        List<Story> stories = new ArrayList<>();
+        
+        JSONObject jsonObject = new JSONObject();
+        
+        jsonObject.put("amount", categories.size());
+        for(int i = 0; i < categories.size(); i++){
+            jsonObject.put(""+i, categories.get(i));
+        }
+            
+        Response response = null;
+        response = webTarget.request().post(Entity.json(toJsonString(jsonObject)));
+        return response.readEntity(List.class);
+        
+//        Response response = null;
+//        
+//        response = webTarget.request().post(Entity.json(toJsonString(categories)));
+//        //stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
+//        //stories = mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<List<Story>>(){});
+//        //return stories;
+//        stories = response.readEntity(List.class);
+//        return stories;
 
     }
 
