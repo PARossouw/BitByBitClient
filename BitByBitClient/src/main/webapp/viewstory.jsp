@@ -1,6 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Story.Model.Story;"%>
 <%@page import="User_Interactions.Comment.Model.Comment;"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <!DOCTYPE html> 
 <html>
 
@@ -13,167 +15,149 @@
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-        <section class="banner" background-img src="images/storyOfTheDay.jpg">
+        <body style="background-color:aquamarine;">
 
-            <nav>
-                <ul class="clearfix">
-                    <li class="nav_logo">
-                        <img src="images/open-book.png" class="logo_img" alt="Netflix Logo">
-
-                    </li>
-                    <li>
-
-                        <a href=index.html>
-                            <button type="button">Home</button>
-                        </a>
-
-                    </li>
-                    <li>
-
-                        <button type="button">Categories</button>
-                    </li>
-                    <li>                       
-                        <button type="button">Refer a Friend</button>
-                    </li>
-                    <li>                       
-                        <button type="button">Contact Us</button>
-                    </li>
-                    <li>
-                        <button type="button">Profile</button>
-                    </li>
-                </ul>
-
-            </nav>
-
-
-            <div class="banner">
-
+        <%
+                    Story story = (Story) request.getAttribute("story");
+                            
+                    String storyID = "";
+                    String storyBody = "";
+                    String title = "";
+                    String rating = "";
+                   String writer = ""; 
+                   String description = "";
+                   String views = "";
+                   String likes = "";
+                           
+                            
+                           
+                    if(story != null)
+                    {
+                    storyID = ""+ story.getStoryID();
+                   storyBody = story.getBody();
+                   title = story.getTitle();
+                   rating = "Rating : " + story.getAvgRating();
+                   writer = story.getWriter();
+                   description = story.getDescription();
+                   views = "Views : "+ story.getViews();
+                   likes = "Likes : " + story.getLikes();
+        }
                 
+        %>
+
+
  
-                    
-                
-                
+
+        <h2 style="color:black"><%=title%></h2>
+        <h5 style="color:black">Author : <%=writer%></h5>
+        <h5 style="color:black"><%=rating%></h5>
+        <h5 style="color:black"><%=views%></h5>
+        <h5 style="color:black"><%=likes%></h5>
+        <h5 style="color:black"><%=description%></h5>
 
 
+        <%
+ String responseMessageRegister = (String) request.getAttribute("likes");
+        %>
+        <%
+            if(responseMessageRegister != null) {
+        %>
+        <div>
+            <h3 style="color:red"><%=responseMessageRegister%></h3>
+        </div>
+        <%
+            }
+        %>
+        
+        <h3 style="color:purple">Previous Comments</h3>
                 <%
-                            Story story = (Story) request.getAttribute("story");
-                            
-                            String storyBody = "";
-                            String title = "";
-                            String rating = "";
-                           String writer = ""; 
-                            
-                           
-                            if(story != null)
-                            {
-                           storyBody = story.getBody();
-                           title = story.getTitle();
-                           rating = "Rating " + story.getAvgRating();
-                            
-                           writer = story.getWriter();
-                            
-                            //include avgrating and views
-                }
-                
-                %>
-                            
-                           
-                  <%          
-                       Comment comment = (Comment) request.getAttribute("comment");
-                       String commentBody = "";
-                      if(comment != null)
-                      {
-                            commentBody = comment.getCommentBody();
-                  }
-
-                %>
-
-                <h3 style="color:black"><%=title%></h3>
-                <h5 style="color:black">Written by : <%=writer%></h5>
-                <h5 style="color:black"><%=rating%></h5>
-
-                <%--
-                <a >
                     
-                    
-                    <input class="button1" name="submit" type="submit" value="submitCategories">
-                </a>
+                    List<Comment> allComments = 
+                    (ArrayList<Comment>)request.getAttribute("comment");
 
-                <a href=viewstory.html>
-                    <button class="button2">Comment</button>
-                </a>
-
-
-                <a href=viewstory.html>
-                    <button class="button2">Rate</button>
-                </a>
-                --%>
-
-                <form action="StoryServlet" method="post">
-
-                    <input class="button1" name="submit" type="submit" value="Like Story">
-
-
-                    <a href=DailyStory.jsp>
-                        <button class="button2">View All Stories</button>
-                    </a>
-                </form>
-
-                
+            if(allComments != null)
+            {
+            
+            for(int i = 0; i<allComments.size(); i++)
+            {
+            
+                  //commentBody = comment.getCommentBody();
+                  %>
+                  
+                  <h5 style="color:purple"><%=allComments.get(i).getCommentBody()%></h5>
                   <%
-          String responseMessageRegister = (String) request.getAttribute("likes");
-            %>
-            <%
-                if(responseMessageRegister != null) {
-            %>
-            <div>
-                <h3 style="color:red"><%=responseMessageRegister%></h3>
-            </div>
-            <%
-                }
-            %>
+        }}
+      
+         %>
+        
+
+        <%
+String userToComment = (String) request.getAttribute("optsToComment");
+        %>
+        <%
+            if(userToComment != null) {
+        %>
+        <div>
+            <form action="StoryServlet" method="post">
+                <input class="button1" name="story_id" type="hidden" value="<%=storyID%>">
+                <label for="text">Please enter a comment below</label>
+                <br>
+                <textarea id="text" name="storyComment" rows="2" cols="80" ></textarea >
+                <br/>
+                <input class="button1" name="submit" type="submit" value="SubmitComment">
+            </form>
+
+        </div>
+        <%
+            }
+        %>
+        
+
+        
 
 
-            </div>
-        </section>
+        <form action="StoryServlet" method="post">
 
-        <section class="main_content">
-            <div class="side_nav">
-            </div>
-
-            <div>
-
-                <form action="StoryServlet" method="post">
-                    <p style="color:black">
+            <input class="button1" name="story_id" type="hidden" value="<%=storyID%>">
+            <input class="button1" name="submit" type="submit" value="Like">
+            <input class="button1" name="submit" type="submit" value="Comment">
 
 
-                        <%
-                            if(storyBody != null) {
-                        
-                        %>
-                    <div>
-                        <h1 style="color:black"><%=title%></h1>
-                        <h3 style="color:black"><%=storyBody%></h3>
-                        <h5 style="color:black"><%=commentBody%></h5>
-                    </div>
-                    <%
-                        }
-                    %>
-
-                    <p>
-                </form>
+        </form>
 
 
+        <form action="StoryServlet" method="post">
+            <br></br>
+            <input class="button1" name="story_id" type="hidden" value="<%=storyID%>">
+            <input type="radio"  name="user_Rating" value="1">
+            <label for="1">1 Star</label>
+            <input type="radio"  name="user_Rating" value="2">
+            <label for="2">2 Star</label>
+            <input type="radio"  name="user_Rating" value="3">
+            <label for="3">3 Star</label>
+            <input type="radio"  name="user_Rating" value="4">
+            <label for="4">4 Star</label>
+            <input type="radio"  name="user_Rating" value="5">
+            <label for="5">5 Star</label>
+            <input name="submit" type="submit" value="Rate">
+            <br></br>
+        </form> 
 
-
-
-            </div>
+        <h4 style="color:black"><%=storyBody%></h4>
 
 
 
 
-        </section>
-    </body>
+    </div>
+</section>
+
+<div>
+
+
+</div>
+
+</section>
+</body>
 
 </html>
 

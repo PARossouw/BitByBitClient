@@ -2,6 +2,11 @@
 <%@page import="Story.Model.Story;"%>
 <!DOCTYPE html>
 <html>
+    
+
+    
+    
+    
     <%
         String message = (String) request.getAttribute("message");
         Story story = (Story) request.getAttribute("storyReview");
@@ -74,8 +79,8 @@
 
 
                         %>
-                        <br>
-                        <h1>Choose a Story of the day</h1>
+<!--                        <br>
+                        <h1>Choose a Story of the day</h1>-->
                         
                     </div>
 

@@ -20,22 +20,16 @@
 
                 <div class="banner_common">
                     <h2 style="color:black">Welcome to your user homepage</h2>
-                <%
-                if(request.getAttribute("user") instanceof Reader) {%>
-
-                <h4 style="color:black">Readers Likes</h4>
+                
+                <h4 style="color:black">Your Likes</h4>
                 <%List<Story> likedStories = (ArrayList<Story>)request.getAttribute("likedStories");
                         
                 if(likedStories != null) {
                     for(Story story : likedStories){%>
-                    
-                    <h5>
-                        <%
-                            story.getTitle();
-                        %>
-                    </h5>
-                <%  }
-                }%>
+
+                    <h5><%=story.getTitle();%><br></br></h5>
+                
+                <%}%>
                 <form action="UserServlet" method="get">
                     <input class="button1" name="submit" type="submit" value="My Liked Stories">
                 </form>
@@ -44,7 +38,7 @@
                     <input class="button1" name="submit" type="submit" value="Become a Writer">
                 </form>    
 
-                <%} else if (request.getAttribute("user") instanceof Writer) {%>
+                <%} else if (request.getAttribute("user") instanceof Reader) {%>
 
                 <div>
                     <br>   </br>
@@ -110,41 +104,12 @@
                     </a>
                 </div>
                 <%}%>
-<!--
-                <%
-                    String storyMessage = (String) request.getAttribute("likedStories");
-                    String categoryMessage = (String) request.getAttribute("preferredCategories");
-                    if(storyMessage != null) {%>
-                <div>
-                    <h3 style="color:black"><%=storyMessage%></h3>
-                </div>
-                <%}
-                    if(categoryMessage != null) {%>
-                <div>
-                    <h3 style="color:black"><%=categoryMessage%></h3>
-                </div>
-                <%}%>
-
-
-
-                <%
-                    String responseMessage = (String) request.getAttribute("likes");
-                %>
-                <%
-                    if(responseMessage != null) {
-                %>
-                <div>
-                    <h3 style="color:black"><%=responseMessage%></h3>
-                </div>
-                <%
-                    }
-                %>
--->
             </div>
         </section>
         <section class="main_content">
             <div class="side_nav">
             </div>
         </section>
+        <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>

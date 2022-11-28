@@ -80,25 +80,24 @@
 
                     <input class="button1" name="submit" type="submit" value="Register">
                 </form>
-                    
-                    
 
 
-                    <%--
-                <%
-                    User userLoggedIn = (User) session.getAttribute("user");
-                %>
-                <%
-                    if(userLoggedIn != null) {
-                %>
-                <div>
-                    <h3 style="color:red"><%=userLoggedIn%></h3>
-                </div>
-                <%
-                    }
-                %>
 
-                    --%>
+                <%--
+            <%
+                User userLoggedIn = (User) session.getAttribute("user");
+            %>
+            <%
+                if(userLoggedIn != null) {
+            %>
+            <div>
+                <h3 style="color:red"><%=userLoggedIn%></h3>
+            </div>
+            <%
+                }
+            %>
+
+                --%>
 
 
             </div>
@@ -107,9 +106,7 @@
         <section class="main_content">
             <div class="side_nav">
             </div>
-            <div>
-                <p style="color:black" >Brought to you Bit by Bit<p>
-            </div>
         </section>
+        <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>

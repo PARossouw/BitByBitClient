@@ -14,15 +14,14 @@
                 <h1>Welcome to Readers are Innovators</h1>
                 <p style="color:black">Making reading accessible to all.</p><br>
                 <form action="StoryServlet" method="post">
-
-
                     <input class="button1" name="submit" type="submit" value="View Story">
                     
              
+                     <input class="button1" name="submit" type="submit" value="Create Story">
+
                      
 
                     <input class="button1" name="submit" type="submit" value="Story of the Day">
-
                     <a href=DailyStory.jsp>
                         <button class="button2">View All Stories</button>
                     </a>
@@ -31,9 +30,9 @@
         </section>
         <section class="main_content">
             <div class="side_nav">
-                <nav></nav>
+                <nav>
                 <ul class="browse">
-                    <b><lh class="bbh">Browse</lh></b>
+                    <li class="bbh">Browse</li>
                     <li class="active">Editors Picks</li>
                     <li>RIP Originals</li>
                     <li>Trending</li>
@@ -42,6 +41,21 @@
 
                 </nav>
             </div>
+            
+                        <%
+String createStoryOutcome = (String) request.getAttribute("createStory");
+            %>
+            <%
+                if(createStoryOutcome != null) {
+            %>
+            <div>
+                <h3 style="color:red"><%=createStoryOutcome%></h3>
+            </div>
+            <%
+                }
+            %>
+            
+            
 
             <div class="vid_list">
                 <input type="text" class="form" placeholder="Search input">

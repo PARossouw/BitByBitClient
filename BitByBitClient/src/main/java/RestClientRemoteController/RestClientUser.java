@@ -14,9 +14,14 @@ import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.simple.JSONObject;
 
 public class RestClientUser {
 
@@ -60,12 +65,17 @@ public class RestClientUser {
         return response.readEntity(String.class);
     }
 
-    public String blockWriter(Writer writer) throws JsonProcessingException {
+    public String blockWriter(String[] results, List<Writer> writersSearcched) throws JsonProcessingException {
         String uri = url + "/writer/block";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
         Response response = null;
-        response = webTarget.request().post(Entity.json(toJsonString(writer)));
+        
+        JSONObject jObject = new JSONObject();
+        jObject.put("results", results);
+        jObject.put("writersSeacrched", writersSearcched);
+        response = webTarget.request().post(Entity.json(toJsonString(jObject)));
+        
         return response.readEntity(String.class);
     }
 
@@ -118,7 +128,24 @@ public class RestClientUser {
 
         Map<Writer, Integer> writers = null;
         writers = mapper.readValue(
-                webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<Map<Writer, Integer>>() {});
+                webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<Map<Writer, Integer>>() {
+        });
+        return writers;
+    }
+
+    public List<Writer> searchWriter(String writerSearch) {
+        List<Writer> writers = new ArrayList();
+        try {
+            String uri = url + "/searchWriter/{writerSearch}";
+            restClient = ClientBuilder.newClient();
+            webTarget = restClient.target(uri).resolveTemplate("writerSearch", writerSearch);
+
+            writers = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Writer[].class));
+
+            return writers;
+        } catch (JsonProcessingException ex) {
+            Logger.getLogger(RestClientUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return writers;
     }
 
