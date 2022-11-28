@@ -169,10 +169,13 @@ public class RestClientStory {
         return stories;
     }
     
-    public List<Story> viewLikedStories(User reader) throws JsonProcessingException {
-        String uri = url + "/viewLikedStories";
+    public List<Story> viewLikedStories(Integer readerID) throws JsonProcessingException {
+        User reader = new User();
+        reader.setUserID(readerID);
+        String uri = url + "/viewLikedStories/{readerID}";
         restClient = ClientBuilder.newClient();
-        webTarget = restClient.target(uri).resolveTemplate("reader", reader.getUsername());
+        webTarget = restClient.target(uri).resolveTemplate("readerID", reader.getUserID());
+        
         List<Story> stories = null;
         stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
         
