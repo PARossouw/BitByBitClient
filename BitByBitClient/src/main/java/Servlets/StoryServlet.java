@@ -32,9 +32,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
 
 @WebServlet(name = "StoryServlet", urlPatterns = {"/StoryServlet"})
 @ManagedBean
+@MultipartConfig
 public class StoryServlet extends HttpServlet {
 
     public static RestClientStory restClientStory;
@@ -163,6 +169,7 @@ public class StoryServlet extends HttpServlet {
                 categoryUserList.add(category3);
                 storyContinueCreating.setCategoryList(categoryUserList);
 
+                
                 request.setAttribute("story", storyContinueCreating);
 
                 request.setAttribute("categoryList", categoryList);
@@ -181,7 +188,8 @@ public class StoryServlet extends HttpServlet {
                 storyToSave.setIsDraft(true);
                 storyToSave.setIsApproved(false);
 
-                String saveChanges = restClientStory.saveStory(storyToSave);
+                String saveChanges = "changes saved successfully.";
+             //   String saveChanges = restClientStory.saveStory(storyToSave);
                 request.setAttribute("createStory", saveChanges);
 
                 // For Editor edits, this should direct to the Editor Approvval page again
@@ -198,8 +206,28 @@ public class StoryServlet extends HttpServlet {
                 storyToReview.setIsDraft(false);  // Not sure about this
                 storyToReview.setIsApproved(false);
 
-                String reviewMessage = restClientStory.submitCompletedStory(storyToReview);
+                // Getting the image data 
+                Part part = request.getPart("file");
+                String fileName = part.getSubmittedFileName();
 
+                String path = "/Users/tarunsing/Documents/Van Zyl /Files/"+fileName;
+                //String path = getServletContext().getRealPath("/"+"files"+File.separator+fileName);
+                InputStream is = part.getInputStream();
+                 String reviewMessage = "Good Work its submitted " + fileName +"\n" + "Path is : " +path;
+                boolean succs = uploadFile(is,path);
+                if(succs)
+                {
+                    reviewMessage = "Did Write";
+                }
+                else
+                {
+                    reviewMessage = "Did not write";
+                }
+
+                //String reviewMessage = restClientStory.submitCompletedStory(storyToReview);]
+
+     
+                
                 request.setAttribute("createStory", reviewMessage);
                 RequestDispatcher rdSubmitForReview = request.getRequestDispatcher("index.jsp");
                 rdSubmitForReview.forward(request, response);
@@ -450,5 +478,35 @@ public class StoryServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
+    public boolean uploadFile(InputStream is, String path)
+    
+    {
+                boolean test = false;
+                try{
+                    byte[] byt = new byte[is.available()];
+                    is.read();
+//                    FileOutputStream fops = new FileOutputStream("/Users/tarunsing/Documents/Van Zyl /Files/infodata12");
+File myObj = new File(path);
+        myObj.createNewFile();
+FileOutputStream fops = new FileOutputStream(path);
+  
+  
+  
+                    fops.write(byt);
+                    fops.flush();
+                    fops.close();
+                    test = true;
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
+        
+        
+        return test;
+    }
 
+    
 }
+
