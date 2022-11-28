@@ -141,7 +141,43 @@ public class StoryServlet extends HttpServlet {
 
                 rd.forward(request, response);
                 break;
+                
+                
+            case ("viewStoryGet"):
+                  String writerSearch = (String) request.getParameter("writer");
+                  Story story = new Story();
+                  
+                  String storyID = "1";
+                 // story = restClientStory.retrieveStoryGet(storyID);
+                  
+                
+                //writersSearched = restClientUser.searchWriter(writerSearch);
+                
+                request.setAttribute("story", story);
+
+                //session.getAttribute("user");
+                RequestDispatcher rd = request.getRequestDispatcher("viewstory.jsp");
+                rd.forward(request, response);
+               
+                break;
+                
+                /*
+                  Story story = new Story(1, "mock title yo ma se good person", "mock writer", "mock description", "mock imagepath", "mock body", false, true, cal, true, true, 10, 57, 4.0);
+
+                this.storyView = restClientStory.retrieveStory(story);
+
+                request.setAttribute("story", this.storyView);
+
+                session.getAttribute("user");
+                RequestDispatcher rd = request.getRequestDispatcher("viewstory.jsp");
+                rd.forward(request, response);
+                */
+                
         }
+        
+        
+        
+        
     }
 
     @Override
@@ -198,7 +234,9 @@ public class StoryServlet extends HttpServlet {
                 request.setAttribute("likes", "You have liked the story");
 
                 // Story that we are editing / Creating
-                Story storyContinueCreating = new Story();
+                
+                
+                                Story storyContinueCreating = new Story();
                 storyContinueCreating.setTitle("Harold and Kumar");
                 storyContinueCreating.setDescription("They want some weed description");
                 storyContinueCreating.setBody("Story about two broke asians");
@@ -216,6 +254,7 @@ public class StoryServlet extends HttpServlet {
                 rdCreate.forward(request, response);
 
                 break;
+
 
             case ("Save Changes"):
                 Story storyToSave = new Story();

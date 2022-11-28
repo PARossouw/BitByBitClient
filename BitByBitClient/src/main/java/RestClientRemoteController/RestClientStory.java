@@ -18,7 +18,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.json.simple.JSONObject;
+
 
 public class RestClientStory {
 
@@ -110,6 +115,30 @@ public class RestClientStory {
 //
 //return storyObj;
     }
+    
+    
+//     public List<Writer> retrieveStoryGet(String storySearch) {
+//        List<Writer> writers = new ArrayList();
+//        try {
+//            String uri = url + "/searchWriter/{writerSearch}";
+//            restClient = ClientBuilder.newClient();
+//            webTarget = restClient.target(uri).resolveTemplate("writerSearch", writerSearch);
+//
+//            writers = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Writer[].class));
+//
+//            return writers;
+//        } catch (JsonProcessingException ex) {
+//            Logger.getLogger(RestClientUser.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return writers;
+//    }
+//    
+    
+    
+    
+    
+    
+    
 
     public List<Story> searchForStory(String storyParameter) throws JsonProcessingException {
         String uri = url + "/search/";
