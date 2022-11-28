@@ -183,39 +183,6 @@ public class StoryServlet extends HttpServlet {
                 
                 break;
 
-            case ("Like Story"):
-                Story storyView1 = new Story();
-                storyView1 = null;
-                request.setAttribute("story", storyView1);
-
-                Comment commentView1 = new Comment();
-                commentView1 = null;
-
-                request.setAttribute("comment", commentView1);
-                session.getAttribute("user");
-
-                request.setAttribute("likes", "You have liked the story");
-
-                // Story that we are editing / Creating
-                Story storyContinueCreating = new Story();
-                storyContinueCreating.setTitle("Harold and Kumar");
-                storyContinueCreating.setDescription("They want some weed description");
-                storyContinueCreating.setBody("Story about two broke asians");
-
-                List<Category> categoryUserList = new ArrayList<>();
-                categoryUserList.add(category3);
-                storyContinueCreating.setCategoryList(categoryUserList);
-
-                
-                request.setAttribute("story", storyContinueCreating);
-
-                request.setAttribute("categoryList", categoryList);
-
-                RequestDispatcher rdCreate = request.getRequestDispatcher("createStory.jsp");
-                rdCreate.forward(request, response);
-
-                break;
-
             case ("Save Changes"):
                 Story storyToSave = new Story();
                 storyToSave.setTitle((String) request.getParameter("StoryTitle"));
@@ -271,10 +238,10 @@ public class StoryServlet extends HttpServlet {
                 break;
 
             case ("Like"):
-                Story storyView1 = new Story();
+                Story storyView2 = new Story();
                 int storyID = Integer.parseInt((String) request.getParameter("story_id"));
-                storyView1.setStoryID(storyID);
-                this.storyView = restClientStory.retrieveStory(storyView1);
+                storyView2.setStoryID(storyID);
+                this.storyView = restClientStory.retrieveStory(storyView2);
                 Reader reader = (Reader) session.getAttribute("user");
                 restClientLike.likeStory(reader, this.storyView);
                 request.setAttribute("story", this.storyView);
@@ -283,11 +250,12 @@ public class StoryServlet extends HttpServlet {
                 rd6.forward(request, response);
                 break;
 
+
             case ("Comment"):
-                Story storyView2 = new Story();
+                Story storyView3 = new Story();
                 int storyIDComment = Integer.parseInt((String) request.getParameter("story_id"));
-                storyView2.setStoryID(storyIDComment);
-                this.storyView = restClientStory.retrieveStory(storyView2);
+                storyView3.setStoryID(storyIDComment);
+                this.storyView = restClientStory.retrieveStory(storyView3);
                 request.setAttribute("story", this.storyView);
                 session.getAttribute("user");
                 request.setAttribute("optsToComment", "add a comment");
@@ -314,6 +282,7 @@ public class StoryServlet extends HttpServlet {
                 RequestDispatcher rdComment = request.getRequestDispatcher("viewstory.jsp");
                 rdComment.forward(request, response);
                 break;
+
 
             case ("SubmitComment"):
                 Story storyViewSubmitComment = new Story();
