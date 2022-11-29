@@ -38,6 +38,13 @@ public class RestClientSMS {
         try {
 
             String xmlToString = sw.toString();
+//            String xmlToString = "<smsreq>"
+//                    + "<datetime>2022/05/14.10:10:10</datetime>"
+//                    + "<user>GROUP2</user>"
+//                    + "<pass>2group</pass>"
+//                    + "<msisdn>0739068691</msisdn>"
+//                    + "<message>Hello Anton, you have successfully sent a msg</message>"
+//                    + "</smsreq>";
 
             response = webTarget.request().post(Entity.xml(xmlToString));
         } catch (Exception ex) {
@@ -46,8 +53,8 @@ public class RestClientSMS {
         return response.readEntity(String.class);
     }
 
-    private String toJsonString(Object o) throws JsonProcessingException {
-        return mapper.writeValueAsString(o);
-    }
+//    private String toJsonString(Object o) throws JsonProcessingException {
+//        return mapper.writeValueAsString(o);
+//    }
 
 }
