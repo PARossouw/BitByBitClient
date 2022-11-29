@@ -3,6 +3,7 @@
 <%@page import="Story.Model.Story"%>
 <%@page import="User.Model.Editor"%>
 <%@page import="User.Model.AdminEditor"%>
+<%@page import="java.util.List;"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html> 
 <html>
@@ -22,12 +23,13 @@
                     <h2 style="color:black">Welcome to your user homepage</h2>
                 
                 <h4 style="color:black">Your Likes</h4>
-                <%List<Story> likedStories = (ArrayList<Story>)request.getAttribute("likedStories");
+                <%
+                    List<Story> likedStories = (List)request.getAttribute("likedStories");
                         
                 if(likedStories != null) {
                     for(Story story : likedStories){%>
 
-                    <h5><%=story.getTitle();%><br></br></h5>
+                    <label for="vehicle3" style="color:black"><%=story.getTitle()%></label><br>
                 
                 <%}%>
                 <form action="UserServlet" method="get">

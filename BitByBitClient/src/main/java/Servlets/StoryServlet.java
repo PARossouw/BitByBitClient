@@ -137,7 +137,61 @@ public class StoryServlet extends HttpServlet {
 
                 rd.forward(request, response);
                 break;
+                
+                
+            case ("View Story Get"):
+                Story story = new Story();
+                
+                String storyIDToGet = "1";
+                story = restClientStory.retrieveStoryGet(storyIDToGet);
+                story.setStoryID(22);
+                request.setAttribute("story", story);
+                RequestDispatcher rdViewStoryGet = request.getRequestDispatcher("viewstory.jsp");
+                rdViewStoryGet.forward(request, response);
+                
+               
+                break;
+                
+                
+         
+                /*
+                Writer 
+                
+                  String writerSearch = (String) request.getParameter("writer");
+                
+                writersSearched = restClientUser.searchWriter(writerSearch);
+                
+                request.setAttribute("writers", writersSearched);
+                RequestDispatcher rd3 = request.getRequestDispatcher("BlockWriter.jsp");
+                rd3.forward(request, response);
+                
+                ====================
+                
+                   Story story = new Story(1, "mock title yo ma se good person", "mock writer", "mock description", "mock imagepath", "mock body", false, true, cal, true, true, 10, 57, 4.0);
+
+                this.storyView = restClientStory.retrieveStory(story);
+
+                request.setAttribute("story", this.storyView);
+
+                session.getAttribute("user");
+                RequestDispatcher rd = request.getRequestDispatcher("viewstory.jsp");
+                rd.forward(request, response);
+                
+                
+                
+                
+                
+                
+                
+                
+                */
+              
+                
         }
+        
+        
+        
+        
     }
 
     @Override
@@ -161,11 +215,9 @@ public class StoryServlet extends HttpServlet {
                 rd.forward(request, response);
 
                 break;
+                
 
-            case ("Search"):
-                break;
-
-            case ("Create Story"):
+            case ("Edit Story"):
 
                 List<Category> categoryList = new ArrayList<>();
                 Category category1 = new Category();
@@ -179,25 +231,28 @@ public class StoryServlet extends HttpServlet {
                 categoryList.add(category1);
                 categoryList.add(category2);
                 categoryList.add(category3);
+                
+                 request.setAttribute("categoryList", categoryList);
 
-                // Story that we are editing / Creating
+                 // Story that we are editing / Creating
                 Story storyContinueCreating = new Story();
+
+                
                 storyContinueCreating.setTitle("Harold and Kumar");
                 storyContinueCreating.setDescription("They want some weed description");
                 storyContinueCreating.setBody("Story about two broke asians");
+                  List<Category> categoryUserList = new ArrayList<>();
+                  categoryUserList.add(category3);
+                  storyContinueCreating.setCategoryList(categoryUserList);
 
-                List<Category> categoryUserList = new ArrayList<>();
-                categoryUserList.add(category3);
-                storyContinueCreating.setCategoryList(categoryUserList);
-
-                
                 request.setAttribute("story", storyContinueCreating);
 
+
+
                 request.setAttribute("categoryList", categoryList);
-
-                RequestDispatcher rdCreate = request.getRequestDispatcher("createStory.jsp");
+                RequestDispatcher rdCreate = request.getRequestDispatcher("editStory.jsp");
                 rdCreate.forward(request, response);
-
+                
                 break;
 
             case ("Save Changes"):
@@ -208,9 +263,18 @@ public class StoryServlet extends HttpServlet {
                 storyToSave.setBody((String) request.getParameter("StoryBody"));
                 storyToSave.setIsDraft(true);
                 storyToSave.setIsApproved(false);
+                storyToSave.setViews(0);
+                storyToSave.setLikes(0);
+                storyToSave.setAvgRating(0D);
+                
 
-                String saveChanges = "changes saved successfully.";
-             //   String saveChanges = restClientStory.saveStory(storyToSave);
+//                String saveChanges = "changes saved successfully.";
+                
+             //   
+                String saveChanges = restClientStory.saveStory(storyToSave);
+                
+                
+                
                 request.setAttribute("createStory", saveChanges);
 
                 // For Editor edits, this should direct to the Editor Approvval page again
@@ -218,6 +282,7 @@ public class StoryServlet extends HttpServlet {
                 rdSaveChanges.forward(request, response);
                 break;
 
+                
             case ("Submit For Review"):
                 Story storyToReview = new Story();
                 storyToReview.setTitle((String) request.getParameter("StoryTitle"));
@@ -255,10 +320,10 @@ public class StoryServlet extends HttpServlet {
                 break;
 
             case ("Like"):
-                Story storyView1 = new Story();
+                Story storyView2 = new Story();
                 int storyID = Integer.parseInt((String) request.getParameter("story_id"));
-                storyView1.setStoryID(storyID);
-                this.storyView = restClientStory.retrieveStory(storyView1);
+                storyView2.setStoryID(storyID);
+                this.storyView = restClientStory.retrieveStory(storyView2);
                 Reader reader = (Reader) session.getAttribute("user");
                 restClientLike.likeStory(reader, this.storyView);
                 request.setAttribute("story", this.storyView);
@@ -267,11 +332,12 @@ public class StoryServlet extends HttpServlet {
                 rd6.forward(request, response);
                 break;
 
+
             case ("Comment"):
-                Story storyView2 = new Story();
+                Story storyView3 = new Story();
                 int storyIDComment = Integer.parseInt((String) request.getParameter("story_id"));
-                storyView2.setStoryID(storyIDComment);
-                this.storyView = restClientStory.retrieveStory(storyView2);
+                storyView3.setStoryID(storyIDComment);
+                this.storyView = restClientStory.retrieveStory(storyView3);
                 request.setAttribute("story", this.storyView);
                 session.getAttribute("user");
                 request.setAttribute("optsToComment", "add a comment");
@@ -298,6 +364,7 @@ public class StoryServlet extends HttpServlet {
                 RequestDispatcher rdComment = request.getRequestDispatcher("viewstory.jsp");
                 rdComment.forward(request, response);
                 break;
+
 
             case ("SubmitComment"):
                 Story storyViewSubmitComment = new Story();
@@ -333,8 +400,8 @@ public class StoryServlet extends HttpServlet {
                 rdRate.forward(request, response);
                 break;
 
-//              
-            case ("viewStoriesByCategory"):
+            case ("Search"):
+
                 List<Category> allCategories = new ArrayList<>();
                 allCategories = restClientCategory.displayAllCategories();
 

@@ -63,9 +63,9 @@ public class UserServlet extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher("User.jsp");
                 rd.forward(request, response);
                 break;
-                
-            case "Search Writer" :
-                
+
+            case "Search Writer":
+
                 //hardCoding
 //                List<Writer> writers = new ArrayList<>();
 //                Writer w = new Writer();
@@ -81,23 +81,39 @@ public class UserServlet extends HttpServlet {
 //                z.setUsername("writer 4");
 //                writers.add(z);
 //                
-                
                 //doing it
                 String writerSearch = (String) request.getParameter("writer");
-                
+
                 writersSearched = restClientUser.searchWriter(writerSearch);
-                
+
                 request.setAttribute("writers", writersSearched);
                 RequestDispatcher rd3 = request.getRequestDispatcher("BlockWriter.jsp");
                 rd3.forward(request, response);
-                
-                
-                
-                
+
                 //RequestDispatcher rd = request.getRequestDispatcher("BlockWriter.jsp");
                 //rd.forward(request, response);
-                
                 break;
+
+            case "Profile":
+
+                Reader reader = new Reader();
+                
+                reader.setUserID(loggedInUser.getUserID());
+                reader.setUsername(loggedInUser.getUsername());
+                reader.setEmail(loggedInUser.getEmail());
+                
+                List<Category> preferredCategories = reader.getPreferredCategories();
+                List<Story> likedStories = reader.getLikedStories();
+
+                request.setAttribute("preferredCategories", preferredCategories);
+                request.setAttribute("likedStories", likedStories);
+                request.setAttribute("user", loggedInUser);
+                RequestDispatcher rd1 = request.getRequestDispatcher("User.jsp");
+
+                rd1.forward(request, response);
+
+                break;
+
             default:
                 throw new AssertionError();
         }
@@ -107,7 +123,7 @@ public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        processRequest(request, response);
         HttpSession session = request.getSession(false);
-        
+
         switch (request.getParameter("submit")) {
             case "Login":
 
@@ -117,9 +133,7 @@ public class UserServlet extends HttpServlet {
                 String usernameOrEmail = (String) request.getParameter("UsernameOrEmail");
                 String password = (String) request.getParameter("Password");
 
-
-                if(usernameOrEmail.contains("@") && usernameOrEmail.contains("."))
-                {
+                if (usernameOrEmail.contains("@") && usernameOrEmail.contains(".")) {
 
                     userCheck.setEmail(usernameOrEmail);
                 } else {
@@ -264,6 +278,14 @@ public class UserServlet extends HttpServlet {
                 restClientUser.addPreferredCategoriesToUser(reader, prefferedCategories);
                 break;
 
+
+            case "Block Selected Writers":
+                String[] results = request.getParameterValues("results");
+                String writerResults = "Writers that have been blocked: ";
+
+                writerResults += restClientUser.blockWriter(results, writersSearched);
+
+
             case "Profile":
 
                 List<Category> preferredCategories = restClientCategory.getPreferredCategories((User) loggedInUser);
@@ -311,13 +333,12 @@ public class UserServlet extends HttpServlet {
 //                }
                 writerResults = restClientUser.blockWriter(writersSearched.get(Integer.parseInt(results[0])));
                 
+
                 request.setAttribute("writerResults", writerResults);
                 RequestDispatcher rd2 = request.getRequestDispatcher("BlockWriter.jsp");
-                
-                rd2.forward(request, response);
-                
 
-                
+                rd2.forward(request, response);
+
                 break;
 
             default:

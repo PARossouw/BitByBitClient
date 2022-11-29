@@ -29,7 +29,7 @@
                     <button type="button">Refer a Friend</button>
                 </li>
                 <li>
-                    <form action="UserServlet" method="post">
+                    <form action="UserServlet" method="get">
                         <input class="button1" name="submit" type="submit" value="Profile">
                     </form>
                 </li>
@@ -58,7 +58,7 @@
                 if(userLoggedIn != null) {
                     if(userLoggedIn.getRoleID() < 3) {%>
                 <li class="same">
-                    <form action="UserServlet" method="post">
+                    <form action="UserServlet" method="get">
                         <input class="button1" name="submit" type="submit" value="Profile">
                     </form>
                 </li>
