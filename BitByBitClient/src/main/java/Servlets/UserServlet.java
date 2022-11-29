@@ -278,8 +278,49 @@ public class UserServlet extends HttpServlet {
                 restClientUser.addPreferredCategoriesToUser(reader, prefferedCategories);
                 break;
 
-            case "Block Selected Writers":
-                String[] results = request.getParameterValues("results");
+
+
+
+
+            case "Profile":
+
+                List<Category> preferredCategories = restClientCategory.getPreferredCategories((User) loggedInUser);
+
+//                switch (loggedInUser.getRoleID()) {
+//                    case 1:
+//                        preferredCategories = restClientCategory.getPreferredCategories((Reader) loggedInUser);
+//                        break;
+//                    case 2:
+//                        preferredCategories = restClientCategory.getPreferredCategories((Writer) loggedInUser);
+//                        break;
+//                    default:
+//                        preferredCategories = null;
+//                }
+
+                List<Story> likedStories = restClientStory.viewLikedStories((User) loggedInUser);
+//                switch (loggedInUser.getRoleID()) {
+//                    case 1:
+//                        likedStories = restClientStory.viewLikedStories((Reader) loggedInUser);
+//                        break;
+//                    case 2:
+//                        likedStories = restClientStory.viewLikedStories((Writer) loggedInUser);
+//                        break;
+//                    default:
+//                        likedStories = null;
+//                }
+                
+                request.setAttribute("preferredCategories", preferredCategories);
+                request.setAttribute("likedStories", likedStories);
+                request.setAttribute("user", loggedInUser);
+                RequestDispatcher rd1 = request.getRequestDispatcher("User.jsp");
+                
+                rd1.forward(request, response);
+
+                break;
+                
+            case "Block Selected Writers" :
+                String []results = request.getParameterValues("results");
+
                 Writer w = new Writer();
                 String writerResults = "";
 //                for (int i = 0; i < writersSearched.size(); i++) {
@@ -288,6 +329,7 @@ public class UserServlet extends HttpServlet {
 //                    }
 //                }
                 writerResults = restClientUser.blockWriter(writersSearched.get(Integer.parseInt(results[0])));
+
 
                 request.setAttribute("writerResults", writerResults);
                 RequestDispatcher rd2 = request.getRequestDispatcher("BlockWriter.jsp");
