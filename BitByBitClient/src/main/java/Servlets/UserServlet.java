@@ -96,7 +96,11 @@ public class UserServlet extends HttpServlet {
 
             case "Profile":
 
-                Reader reader = (Reader) loggedInUser;
+                Reader reader = new Reader();
+                
+                reader.setUserID(loggedInUser.getUserID());
+                reader.setUsername(loggedInUser.getUsername());
+                reader.setEmail(loggedInUser.getEmail());
                 
                 List<Category> preferredCategories = reader.getPreferredCategories();
                 List<Story> likedStories = reader.getLikedStories();
