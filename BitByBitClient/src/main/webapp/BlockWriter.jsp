@@ -50,7 +50,7 @@
                                 String variableName = ""+i;
                             %>
 
-                            <input type="checkbox" value ="<%=variableName%>" name ="results" >
+                            <input type="radio" value ="<%=variableName%>" name ="results" >
                             <label for="vehicle3" style="color:black"><%=writers.get(i).getUsername()%></label><br>
 
                         </td>
@@ -66,10 +66,10 @@
             </form>
                 <hr/>
                     <%}%>
-            <br></br>
-            <input class="button1" name="submit" type="submit" value="Display all writers">
-
+<!--            <br></br>
+            <input class="button1" name="submit" type="submit" value="Display all writers">-->
         </form>
+
 
     </body>
 </html>

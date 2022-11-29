@@ -65,16 +65,13 @@ public class RestClientUser {
         return response.readEntity(String.class);
     }
 
-    public String blockWriter(String[] results, List<Writer> writersSearcched) throws JsonProcessingException {
+    public String blockWriter(Writer writer) throws JsonProcessingException {
         String uri = url + "/writer/block";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
         Response response = null;
-        
-        JSONObject jObject = new JSONObject();
-        jObject.put("results", results);
-        jObject.put("writersSeacrched", writersSearcched);
-        response = webTarget.request().post(Entity.json(toJsonString(jObject)));
+
+        response = webTarget.request().post(Entity.json(toJsonString(writer)));
         
         return response.readEntity(String.class);
     }

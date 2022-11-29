@@ -9,6 +9,7 @@
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
+
         <section class="banner">
             <div>
                 <h1>Welcome to Readers are Innovators</h1>
@@ -19,7 +20,12 @@
              
                      <input class="button1" name="submit" type="submit" value="Edit Story">
 
-                     
+            <section class="banner">
+                <div>
+                    <h1>Welcome to Readers are Innovators</h1>
+                    <p style="color:black">Making reading accessible to all.</p><br>
+                    <form action="StoryServlet" method="post">
+                        <input class="button1" name="submit" type="submit" value="View Story">
 
                     <input class="button1" name="submit" type="submit" value="Story of the Day">
                     <a href=DailyStory.jsp>
@@ -56,6 +62,34 @@
             </div>
             
                         <%
+
+                        <input class="button1" name="submit" type="submit" value="Create Story">
+
+
+
+                        <input class="button1" name="submit" type="submit" value="Story of the Day">
+                        <a href=DailyStory.jsp>
+                            <button class="button2">View All Stories</button>
+                        </a>
+                    </form>
+                </div>
+            </section>
+            <section class="main_content">
+                <div class="side_nav">
+                    <nav>
+                        <ul class="browse">
+                            <li class="bbh">Browse</li>
+                            <li class="active">Editors Picks</li>
+                            <li>RIP Originals</li>
+                            <li>Trending</li>
+                            <li>Latest</li>
+                        </ul>
+
+                    </nav>
+                </div>
+
+            <%
+
 String createStoryOutcome = (String) request.getAttribute("createStory");
             %>
             <%
@@ -67,12 +101,16 @@ String createStoryOutcome = (String) request.getAttribute("createStory");
             <%
                 }
             %>
-            
-            
+
+
 
             <div class="vid_list">
-                <input type="text" class="form" placeholder="Search input">
-
+                <form action="StoryServlet" method="post">
+                    <div>
+                        <input type="text" class="form" placeholder="Search input">
+                        <input class="button1" name="submit" type="submit" value="Search for Story">
+                    </div>
+                </form>
                 <div>
                     <img src=images/title.png>
                     <h3>Harry Potter</h3>
