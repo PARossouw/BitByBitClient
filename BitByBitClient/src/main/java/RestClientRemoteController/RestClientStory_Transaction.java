@@ -44,8 +44,6 @@ public class RestClientStory_Transaction {
         
         return response.readEntity(smsreq.class);
         
-        //hardcoding for test:
-        //JSONObject jsonObjectForTest = new JSONObject();
         
 
 
