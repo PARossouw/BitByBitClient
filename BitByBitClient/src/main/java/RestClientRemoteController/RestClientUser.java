@@ -39,6 +39,7 @@ public class RestClientUser {
         String uri = url + "/login";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
+
         Response response = null;
         response = webTarget.request().post(Entity.json(toJsonString(user)));
         return response.readEntity(User.class);
@@ -72,7 +73,7 @@ public class RestClientUser {
         Response response = null;
 
         response = webTarget.request().post(Entity.json(toJsonString(writer)));
-        
+
         return response.readEntity(String.class);
     }
 
