@@ -182,12 +182,7 @@ public class StoryServlet extends HttpServlet {
                  allStoryComments = restClientComment.getAllComments(storySearch);        
             
                  request.setAttribute("comment", allStoryComments);
-                
-                
-                
-                
-                
-                
+
                  request.setAttribute("story", this.storyBeingRead); 
                 RequestDispatcher rdPrevComments = request.getRequestDispatcher("viewstory.jsp");
                          
@@ -397,6 +392,9 @@ public class StoryServlet extends HttpServlet {
                 this.comment = new Comment();
                 
                 this.comment.setCommentBody((String) request.getParameter("storyComment"));
+                
+                
+                
                 //Reader readerComment = (Reader) session.getAttribute("user");
                 
                 Reader readerComment = new Reader();

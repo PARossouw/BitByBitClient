@@ -27,6 +27,7 @@ public class RestClientComment {
     private Client restClient;
     private WebTarget webTarget;
     private ObjectMapper mapper = new ObjectMapper();
+    private Comment comment;
 
     public RestClientComment(String url) {
         this.url = url + "/Comment";
@@ -51,24 +52,50 @@ public class RestClientComment {
 //        restClient = ClientBuilder.newClient();
 //        webTarget = restClient.target(uri);
 
-        List<Comment> comments = new ArrayList();
 
+// Start of altered code 
+
+//        List<Comment> comments = new ArrayList();
+List<Comment> comments;
          try {
             String uri = url + "/getAllComments/{storySearch}";
             restClient = ClientBuilder.newClient();
             webTarget = restClient.target(uri).resolveTemplate("storySearch", storySearch);
 
-            comments = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Comment[].class));
+            comments = new ArrayList(Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Comment[].class)));
 
             return comments;
         } catch (JsonProcessingException ex) {
             Logger.getLogger(RestClientUser.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return comments;
-        
+//        return comments;
+return null;
+//        
         
         //End of Altered Code
         //
+        
+        // << Test Code 
+//        List<Comment> allStoryComments = new ArrayList();
+//            Comment testComment = new Comment();
+//                testComment.setCommentBody("Good StoryLine");
+//
+//                Comment testComment2 = new Comment();
+//                testComment2.setCommentBody("Nice Plot twist");
+//
+//                Comment testComment3 = new Comment();
+//                testComment3.setCommentBody("Long and insightful");
+//
+//                allStoryComments.add(testComment);
+//                allStoryComments.add(testComment2);
+//                allStoryComments.add(testComment3);
+//            return allStoryComments;
+        // >> End of Test code
+    
+        
+        
+        
+        
         
         
     
