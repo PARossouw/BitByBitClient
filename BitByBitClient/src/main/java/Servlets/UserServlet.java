@@ -26,7 +26,7 @@ public class UserServlet extends HttpServlet {
     private static RestClientUser restClientUser;
     private static RestClientCategory restClientCategory;
     private static RestClientStory restClientStory;
-    public static User loggedInUser;
+    public static User loggedInUser ;
     private List<Writer> writersSearched;
 
     public UserServlet() {
@@ -146,8 +146,15 @@ public class UserServlet extends HttpServlet {
 
                 if (userFeedback != null) {
                     session = request.getSession(true);
+                    
+                    
                     session.setAttribute("user", userFeedback);
-                    loggedInUser = (User) session.getAttribute("user");
+                    
+//                    this.loggedInUser = (User) session.getAttribute("user");
+this.loggedInUser = new User();
+                    this.loggedInUser = userFeedback;
+                    
+                    
                     request.setAttribute("loggedInUser", loggedInUser);
                     RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 
@@ -341,7 +348,6 @@ public class UserServlet extends HttpServlet {
             default:
                 throw new AssertionError();
         }
-
     }
 
     @Override
