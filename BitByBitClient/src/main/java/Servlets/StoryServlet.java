@@ -48,7 +48,7 @@ public class StoryServlet extends HttpServlet {
 
     public static RestClientCategory restClientCategory;
     public static RestClientStory_Transaction restClientStory_Transaction;
-    private static User loggedInUser;
+    //private static User loggedInUser;
 
     private Story storyToReview;
     private Story storyBeingRead = new Story();
@@ -80,6 +80,7 @@ public class StoryServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+       //  HttpSession session = request.getSession();
 
         switch (request.getParameter("submit")) {
 
@@ -152,10 +153,11 @@ public class StoryServlet extends HttpServlet {
 
             case ("Display Story To Edit"):
 
-                storyBeingRead = new Story();
+                //storyBeingRead = new Story();
 
+               // this.storyToReview.getStoryID();
                 String storyIDToGet1 = "4";
-                storyBeingRead = restClientStory.retrieveStoryGet(storyIDToGet1);
+                this.storyBeingRead = restClientStory.retrieveStoryGet(storyIDToGet1);
 
                
                 List<Category> categoryList = new ArrayList<>();
@@ -170,17 +172,32 @@ public class StoryServlet extends HttpServlet {
                 
 
                 List<Category> categoryUserList = new ArrayList<>();
-                categoryUserList = this.storyBeingRead.getCategoryList();
+                //categoryUserList = this.storyBeingRead.getCategoryList();
                 
                 
                 categoryUserList.add(category3);
                 
                 
-               // this.storyBeingRead.setCategoryList(categoryUserList);
+                this.storyBeingRead.setCategoryList(categoryUserList);
                 
                 request.setAttribute("story", this.storyBeingRead);
 
                 request.setAttribute("categoryList", categoryList);
+                
+                
+                
+                Boolean isEditor = false;
+             //   UserServlet.loggedInUser.getRoleID();
+                if(UserServlet.loggedInUser.getRoleID()==3)
+                {
+                    isEditor = true;
+                }
+  
+              
+                
+                
+                request.setAttribute("isEditor",isEditor );
+                
                 RequestDispatcher rdCreate = request.getRequestDispatcher("editStory.jsp");
                 rdCreate.forward(request, response);
 
