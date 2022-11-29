@@ -49,6 +49,14 @@
  
 
         <h2 style="color:black"><%=title%></h2>
+        
+        
+         <img src="book-stack.png" alt="Story of the day image">
+        
+        
+        
+        
+        
         <h5 style="color:black">Author : <%=writer%></h5>
         <h5 style="color:black"><%=rating%></h5>
         <h5 style="color:black"><%=views%></h5>
