@@ -16,7 +16,7 @@ public class smsreq {
     public smsreq() {
     }
 
-    public smsreq(Date daettime, String user, String pass, String msisdn, String message) {
+    public smsreq(String datetime, String user, String pass, String msisdn, String message) {
         this.datetime = datetime;
         this.user = "GROUP2";
         this.pass = "2group";
