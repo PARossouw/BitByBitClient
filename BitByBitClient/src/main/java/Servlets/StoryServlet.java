@@ -55,6 +55,7 @@ public class StoryServlet extends HttpServlet {
     private static User loggedInUser;
 
     private Story storyToReview;
+    private Story storyBeingRead = new Story(); 
     private Story storyView = new Story();
     private List<Story> storyReviewList = new ArrayList<>();
     private User user;
@@ -144,53 +145,55 @@ public class StoryServlet extends HttpServlet {
                 
                 
             case ("View Story Get"):
-                Story story = new Story();
+                storyBeingRead = new Story();
                 
-                String storyIDToGet = "1";
-                story = restClientStory.retrieveStoryGet(storyIDToGet);
-                story.setStoryID(22);
-                request.setAttribute("story", story);
+                
+                String storyIDToGet = "4";
+                storyBeingRead = restClientStory.retrieveStoryGet(storyIDToGet);
+                //story.setStoryID(22);
+                request.setAttribute("story", this.storyBeingRead);
                 RequestDispatcher rdViewStoryGet = request.getRequestDispatcher("viewstory.jsp");
                 rdViewStoryGet.forward(request, response);
                 
                
                 break;
                 
+            case ("View Previous Comments"):
+                 //session.getAttribute("user");
                 
-         
-                /*
-                Writer 
+                                List<Comment> allStoryComments = new ArrayList<>();
+// 
                 
-                  String writerSearch = (String) request.getParameter("writer");
-                
-                writersSearched = restClientUser.searchWriter(writerSearch);
-                
-                request.setAttribute("writers", writersSearched);
-                RequestDispatcher rd3 = request.getRequestDispatcher("BlockWriter.jsp");
-                rd3.forward(request, response);
-                
-                ====================
-                
-                   Story story = new Story(1, "mock title yo ma se good person", "mock writer", "mock description", "mock imagepath", "mock body", false, true, cal, true, true, 10, 57, 4.0);
-
-                this.storyView = restClientStory.retrieveStory(story);
-
-                request.setAttribute("story", this.storyView);
-
-                session.getAttribute("user");
-                RequestDispatcher rd = request.getRequestDispatcher("viewstory.jsp");
-                rd.forward(request, response);
-                
-                
+                // Test Data
+//                Comment testComment = new Comment();
+//                testComment.setCommentBody("Good StoryLine");
+//
+//                Comment testComment2 = new Comment();
+//                testComment2.setCommentBody("Nice Plot twist");
+//
+//                Comment testComment3 = new Comment();
+//                testComment3.setCommentBody("Long and insightful");
+//
+//                allStoryComments.add(testComment);
+//                allStoryComments.add(testComment2);
+//                allStoryComments.add(testComment3);
+                                
+                 String storySearch = "" + this.storyBeingRead.getStoryID();
+                 allStoryComments = restClientComment.getAllComments(storySearch);        
+            
+                 request.setAttribute("comment", allStoryComments);
                 
                 
                 
                 
                 
                 
-                */
-              
-                
+                 request.setAttribute("story", this.storyBeingRead); 
+                RequestDispatcher rdPrevComments = request.getRequestDispatcher("viewstory.jsp");
+                         
+                rdPrevComments.forward(request, response);
+                break;
+      
         }
         
         
@@ -208,6 +211,8 @@ public class StoryServlet extends HttpServlet {
         switch (request.getParameter("submit")) {
 
             case ("View Story"):
+                // This method has been replaced with the View Story Get method above. 
+                // Long live the king. 
                 Story story = new Story(1, "mock title yo ma se good person", "mock writer", "mock description", "mock imagepath", "mock body", false, true, cal, true, true, 10, 57, 4.0);
 
                 this.storyView = restClientStory.retrieveStory(story);
@@ -328,64 +333,82 @@ public class StoryServlet extends HttpServlet {
                 break;
 
             case ("Like"):
-                Story storyView1 = new Story();
-                int storyID = Integer.parseInt((String) request.getParameter("story_id"));
-                storyView1.setStoryID(storyID);
-                this.storyView = restClientStory.retrieveStory(storyView1);
-                Reader reader = (Reader) session.getAttribute("user");
-                restClientLike.likeStory(reader, this.storyView);
-                request.setAttribute("story", this.storyView);
-                request.setAttribute("likes", "You have liked the story ");
+
+               // Story likedStory= new Story();
+                //likedStory.setStoryID(88);
+                
+                
+                Reader reader = new Reader();
+                reader.setUserID(53);
+                reader.setUsername("Mike");
+                
+                
+                
+                
+                String storyLike = restClientLike.likeStory(reader, storyBeingRead);
+                request.setAttribute("story", storyBeingRead);
+                request.setAttribute("likes", storyLike);
                 RequestDispatcher rd6 = request.getRequestDispatcher("viewstory.jsp");
                 rd6.forward(request, response);
                 break;
 
             case ("Comment"):
-                Story storyView2 = new Story();
-                int storyIDComment = Integer.parseInt((String) request.getParameter("story_id"));
-                storyView2.setStoryID(storyIDComment);
-                this.storyView = restClientStory.retrieveStory(storyView2);
-                request.setAttribute("story", this.storyView);
+//                Story storyView2 = new Story();
+//                String storyIDComment = (String) request.getParameter("story_id"); 
+               // storyView2 = restClientStory.retrieveStoryGet(storyIDComment);
+                request.setAttribute("story", storyBeingRead);
                 session.getAttribute("user");
                 request.setAttribute("optsToComment", "add a comment");
 
                 List<Comment> allStoryComments = new ArrayList<>();
-                //   allStoryComments = restClientComment.getAllComments(storyView2);
+// 
+                
+                // Test Data
+//                Comment testComment = new Comment();
+//                testComment.setCommentBody("Good StoryLine");
+//
+//                Comment testComment2 = new Comment();
+//                testComment2.setCommentBody("Nice Plot twist");
+//
+//                Comment testComment3 = new Comment();
+//                testComment3.setCommentBody("Long and insightful");
+//
+//                allStoryComments.add(testComment);
+//                allStoryComments.add(testComment2);
+//                allStoryComments.add(testComment3);
+                 //>> End of Test Data 
+                
+                
+                
+                //allStoryComments = restClientComment.getAllComments(storyView2);
+                
 
-                // << Test Data Commented Out
-                Comment testComment = new Comment();
-                testComment.setCommentBody("Good StoryLine");
-
-                Comment testComment2 = new Comment();
-                testComment2.setCommentBody("Nice Plot twist");
-
-                Comment testComment3 = new Comment();
-                testComment3.setCommentBody("Long and insightful");
-
-                allStoryComments.add(testComment);
-                allStoryComments.add(testComment2);
-                allStoryComments.add(testComment3);
-
-                //>> End of Test Data 
-                request.setAttribute("comment", allStoryComments);
+               
+//                request.setAttribute("comment", allStoryComments);
                 RequestDispatcher rdComment = request.getRequestDispatcher("viewstory.jsp");
                 rdComment.forward(request, response);
                 break;
 
             case ("SubmitComment"):
                 Story storyViewSubmitComment = new Story();
-                int storyIDSubmitComment = Integer.parseInt((String) request.getParameter("story_id"));
-                storyViewSubmitComment.setStoryID(storyIDSubmitComment);
-                this.storyView = restClientStory.retrieveStory(storyViewSubmitComment);
+                 String storyIDCommentSubmit = (String) request.getParameter("story_id"); 
+                storyViewSubmitComment = restClientStory.retrieveStoryGet(storyIDCommentSubmit);
+                request.setAttribute("story", storyViewSubmitComment);
                 this.comment = new Comment();
+                
                 this.comment.setCommentBody((String) request.getParameter("storyComment"));
-                Reader readerComment = (Reader) session.getAttribute("user");
+                //Reader readerComment = (Reader) session.getAttribute("user");
+                
+                Reader readerComment = new Reader();
+                readerComment.setUserID(998);
+                
+                
                 this.comment.setReader(readerComment);
                 this.comment.setStory(storyViewSubmitComment);
-                restClientComment.commentOnAStory(this.comment);
-                request.setAttribute("story", this.storyView);
+                String commentStatus = restClientComment.commentOnAStory(this.comment);
+                request.setAttribute("story", storyBeingRead);
 
-                request.setAttribute("likes", "Your Comment has been submitted.");
+                request.setAttribute("likes", commentStatus);
                 RequestDispatcher rdSubmitComment = request.getRequestDispatcher("viewstory.jsp");
                 rdSubmitComment.forward(request, response);
                 break;
@@ -396,7 +419,7 @@ public class StoryServlet extends HttpServlet {
                 int userRating = Integer.parseInt((String) request.getParameter("user_Rating"));
                 int storyIDRate = Integer.parseInt((String) request.getParameter("story_id"));
                 storyViewRate.setStoryID(storyIDRate);
-                this.storyView = restClientStory.retrieveStory(storyViewRate);
+              //  this.storyView = restClientStory.retrieveStory(storyViewRate);
                 Reader loggedInReader = (Reader) session.getAttribute("user");
                 // restClientRating.rateStory(this.storyView, loggedInReader, userRating);
 
