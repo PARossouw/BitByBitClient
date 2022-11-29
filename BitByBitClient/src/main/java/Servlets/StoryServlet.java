@@ -157,24 +157,26 @@ public class StoryServlet extends HttpServlet {
                 String storyIDToGet1 = "4";
                 storyBeingRead = restClientStory.retrieveStoryGet(storyIDToGet1);
 
+               
                 List<Category> categoryList = new ArrayList<>();
-                Category category1 = new Category();
-                Category category2 = new Category();
+                categoryList = restClientCategory.displayAllCategories();
+                request.setAttribute("categoryList", categoryList);
+                
+
                 Category category3 = new Category();
 
-                category1.setName("Comedy");
-                category2.setName("Fiction");
                 category3.setName("Horror");
 
-                categoryList.add(category1);
-                categoryList.add(category2);
-                categoryList.add(category3);
-
-                request.setAttribute("categoryList", categoryList);
+                
 
                 List<Category> categoryUserList = new ArrayList<>();
+                categoryUserList = this.storyBeingRead.getCategoryList();
+                
+                
                 categoryUserList.add(category3);
-                this.storyBeingRead.setCategoryList(categoryUserList);
+                
+                
+               // this.storyBeingRead.setCategoryList(categoryUserList);
                 
                 request.setAttribute("story", this.storyBeingRead);
 
@@ -276,18 +278,47 @@ public class StoryServlet extends HttpServlet {
                 storyToSave.setDescription((String) request.getParameter("StoryDescription"));
                 storyToSave.setImagePath((String) request.getParameter("ImagePath"));
                 storyToSave.setBody((String) request.getParameter("StoryBody"));
+              
+                
+                /*
+                adds user chosen categories to a list. 
+                String[] checkedBoxes = request.getParameterValues("category");
+
+                if (checkedBoxes.length > 0) {
+                    for (int i = 0; i < checkedBoxes.length; i++) {
+                        String chosenName = myList.get(Integer.parseInt((String) checkedBoxes[i])).getName();
+                        Category category = new Category();
+                        category.setName(chosenName);
+                        prefferedCategories.add(category);
+                    }
+
+                }
+                String chosenCategories = "";
+                */
+                
+                
+                
+                
+                
+                
+                
+                
                 storyToSave.setIsDraft(true);
                 storyToSave.setIsApproved(false);
                 storyToSave.setViews(0);
                 storyToSave.setLikes(0);
                 storyToSave.setAvgRating(0D);
-
-//                String saveChanges = "changes saved successfully.";
-                //   
+   
                 String saveChanges = restClientStory.saveStory(storyToSave);
 
                 request.setAttribute("createStory", saveChanges);
 
+                
+                
+                
+                
+                
+                
                 // For Editor edits, this should direct to the Editor Approvval page again
                 RequestDispatcher rdSaveChanges = request.getRequestDispatcher("index.jsp");
                 rdSaveChanges.forward(request, response);
