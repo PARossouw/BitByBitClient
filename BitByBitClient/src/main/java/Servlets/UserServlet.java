@@ -96,8 +96,12 @@ public class UserServlet extends HttpServlet {
 
             case "Profile":
 
-                Reader reader = (Reader) loggedInUser;
-                
+                Reader reader = new Reader();
+
+                reader.setUserID(loggedInUser.getUserID());
+                reader.setUsername(loggedInUser.getUsername());
+                reader.setEmail(loggedInUser.getEmail());
+
                 List<Category> preferredCategories = reader.getPreferredCategories();
                 List<Story> likedStories = reader.getLikedStories();
 
@@ -275,6 +279,9 @@ public class UserServlet extends HttpServlet {
                 break;
 
 
+
+
+
             case "Profile":
 
                 List<Category> preferredCategories = restClientCategory.getPreferredCategories((User) loggedInUser);
@@ -313,6 +320,7 @@ public class UserServlet extends HttpServlet {
                 
             case "Block Selected Writers" :
                 String []results = request.getParameterValues("results");
+
                 Writer w = new Writer();
                 String writerResults = "";
 //                for (int i = 0; i < writersSearched.size(); i++) {
@@ -321,7 +329,7 @@ public class UserServlet extends HttpServlet {
 //                    }
 //                }
                 writerResults = restClientUser.blockWriter(writersSearched.get(Integer.parseInt(results[0])));
-                
+
 
                 request.setAttribute("writerResults", writerResults);
                 RequestDispatcher rd2 = request.getRequestDispatcher("BlockWriter.jsp");

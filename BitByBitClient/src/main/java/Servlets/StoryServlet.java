@@ -4,8 +4,6 @@ import Category.Model.Category;
 import Story.Model.Story;
 import jakarta.servlet.http.HttpServlet;
 import java.io.IOException;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.Calendar;
@@ -28,9 +26,7 @@ import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 import java.io.File;
 import java.io.StringWriter;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -475,7 +471,8 @@ public class StoryServlet extends HttpServlet {
 
                 message = sms.getMessage();
 
-                request.setAttribute("message", message);
+                //request.setAttribute("message", message);
+                
 
                 this.rd = request.getRequestDispatcher("Editor.jsp");
 
@@ -511,8 +508,13 @@ public class StoryServlet extends HttpServlet {
 
                     marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
                     StringWriter sw = new StringWriter();
+                   //marshaller.setProperty(, );
+                    //File file = new File("C:\\Users\\ametr\\Desktop\\xmlHELL.txt");
                     marshaller.marshal(sms, sw);
                     String smsResponse = restClientSms.sendMessage(sw);
+                    
+                    //hardcoding
+                    request.setAttribute("message", sw.toString());
 
                     rd = request.getRequestDispatcher("Editor.jsp");
                     rd.forward(request, response);
@@ -529,10 +531,10 @@ public class StoryServlet extends HttpServlet {
                 this.storyToApprove = this.storyToReview;
 
                 this.sms = restClientStory_Transaction.rejectPendingStory(user, this.storyToReview);
-                message = sms.getMessage();
-                request.setAttribute("message", message);
+                //message = sms.getMessage();
+//                request.setAttribute("message", message);
 
-                this.rd = request.getRequestDispatcher("Editor.jsp");
+                //this.rd = request.getRequestDispatcher("Editor.jsp");
 
                 //getting the next story
                 for (int i = 0; i < storyReviewList.size(); i++) {
@@ -563,7 +565,12 @@ public class StoryServlet extends HttpServlet {
                     StringWriter sw = new StringWriter();
                     marshaller.marshal(sms, sw);
                     String smsResponse = restClientSms.sendMessage(sw);
-
+                    
+                    //can comment this out, hardcoding to see response from msg server
+                    String x = "Mrs dgvsbskjnl";
+                    request.setAttribute("message", x);
+                    //
+                    
                     rd = request.getRequestDispatcher("Editor.jsp");
                     rd.forward(request, response);
                 } catch (JAXBException ex) {
