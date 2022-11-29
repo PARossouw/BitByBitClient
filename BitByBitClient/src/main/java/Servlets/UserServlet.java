@@ -284,7 +284,7 @@ public class UserServlet extends HttpServlet {
 
             case "Profile":
 
-                List<Category> preferredCategories = restClientCategory.getPreferredCategories((User) loggedInUser);
+             //   List<Category> preferredCategories = restClientCategory.getPreferredCategories((User) loggedInUser);
 
 //                switch (loggedInUser.getRoleID()) {
 //                    case 1:
@@ -297,7 +297,7 @@ public class UserServlet extends HttpServlet {
 //                        preferredCategories = null;
 //                }
 
-                List<Story> likedStories = restClientStory.viewLikedStories((User) loggedInUser);
+               // List<Story> likedStories = restClientStory.viewLikedStories((User) loggedInUser);
 //                switch (loggedInUser.getRoleID()) {
 //                    case 1:
 //                        likedStories = restClientStory.viewLikedStories((Reader) loggedInUser);
@@ -309,8 +309,8 @@ public class UserServlet extends HttpServlet {
 //                        likedStories = null;
 //                }
                 
-                request.setAttribute("preferredCategories", preferredCategories);
-                request.setAttribute("likedStories", likedStories);
+//                request.setAttribute("preferredCategories", preferredCategories);
+//                request.setAttribute("likedStories", likedStories);
                 request.setAttribute("user", loggedInUser);
                 RequestDispatcher rd1 = request.getRequestDispatcher("User.jsp");
                 
