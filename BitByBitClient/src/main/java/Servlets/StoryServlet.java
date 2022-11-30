@@ -80,7 +80,7 @@ public class StoryServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       //  HttpSession session = request.getSession();
+         HttpSession session = request.getSession(false);
 
         switch (request.getParameter("submit")) {
 
@@ -95,9 +95,13 @@ public class StoryServlet extends HttpServlet {
                 break;
                 
             case ("Your Preffered categories"):
+                //checking if this session object is null
+                User userTEST = (User)session.getAttribute("user");
+                
+                
                 List<Story> prefferedStories = new ArrayList<>();
                 HttpSession userSession = request.getSession();
-                Reader reader = (Reader) userSession.getAttribute("loggedInUser");
+                User reader = (User) userSession.getAttribute("user");
                 prefferedStories = restClientStory.searchStoriesByCategories(reader);
                 
                 request.setAttribute("stories", prefferedStories);
@@ -593,7 +597,7 @@ public class StoryServlet extends HttpServlet {
                 String smsResponse = restClientSms.sendMessage(smsXML);
 
                 //hardcoding
-                request.setAttribute("message", smsResponse);
+                request.setAttribute("message", smsXML);
 
 
                 rd = request.getRequestDispatcher("Editor.jsp");

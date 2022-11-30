@@ -37,8 +37,8 @@ public class RestClientStory {
         this.mapper = new ObjectMapper();
     }
 
-    public List<Story> searchStoriesByCategories(Reader reader) throws JsonProcessingException {
-        String uri = url + "/search/categories/{reader}";
+    public List<Story> searchStoriesByCategories(User reader) throws JsonProcessingException {
+        String uri = url + "/search/categories";
         restClient = ClientBuilder.newClient();
 
         webTarget = restClient.target(uri).resolveTemplate("reader", reader);
@@ -46,6 +46,8 @@ public class RestClientStory {
         stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
 
         return stories;
+        
+        
 
 //        Response response = null;
 //        
