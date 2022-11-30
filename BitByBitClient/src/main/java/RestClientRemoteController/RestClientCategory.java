@@ -12,12 +12,15 @@ import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.json.simple.JSONObject;
 
-    public class RestClientCategory {
+public class RestClientCategory {
+
     private String url;
     private Client restClient;
     private WebTarget webTarget;
@@ -32,7 +35,7 @@ import org.json.simple.JSONObject;
         String uri = url + "/displayAll";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
-        
+
         List<Category> allCategories = null;
         allCategories = mapper.readValue(
                 webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<List<Category>>() {
@@ -44,14 +47,14 @@ import org.json.simple.JSONObject;
         String uri = url + "/addToStory";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
-        
+
         JSONObject jsonObject = new JSONObject();
         Map<Story, List> categoriesToAdd = new HashMap();
         categoriesToAdd.put(story, categories);
-        
+
         jsonObject.put("story", story);
         jsonObject.put("categories", categories);
-        
+
         Response response = null;
         //response = webTarget.request().post(Entity.json(toJsonString(categoriesToAdd)));
         response = webTarget.request().post(Entity.json(toJsonString(jsonObject)));
@@ -69,20 +72,24 @@ import org.json.simple.JSONObject;
         });
         return topCategories;
     }
-    
-    public List<Category> getPreferredCategories(Integer readerID) throws JsonProcessingException{
+
+    public List<Category> getPreferredCategories(Integer readerID) throws JsonProcessingException {
         User reader = new User();
         reader.setUserID(readerID);
         String uri = url + "/preferredCategories/{readerID}";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri).resolveTemplate("readerID", reader.getUserID());
-        
-        List<Category> preferredCategories;
-        preferredCategories = mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<List<Category>>() {});
-                
+
+        List<Category> preferredCategories = new ArrayList(
+                Arrays.asList(
+                        mapper.readValue(
+                                webTarget.request().accept(
+                                        MediaType.APPLICATION_JSON).get(
+                                                String.class), Category[].class)));
+
         return preferredCategories;
     }
-    
+
     private String toJsonString(Object o) throws JsonProcessingException {
         return mapper.writeValueAsString(o);
     }

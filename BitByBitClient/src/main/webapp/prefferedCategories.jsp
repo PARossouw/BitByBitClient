@@ -19,31 +19,7 @@
         <section class="banner" background-img src="images/storyOfTheDay.jpg">
 
             <nav>
-                <ul class="clearfix">
-                    <li class="nav_logo">
-                        <img src="images/open-book.png" class="logo_img" alt="Netflix Logo">
-
-                    </li>
-                    <li>
-                        <a href=index.jsp>
-                            <button type="button">Home</button>
-                        </a>
-                    </li>
-                    <li>
-                        <button type="button">Categories</button>
-                    </li>
-                    <li>                       
-                        <button type="button">Refer a Friend</button>
-                    </li>
-                    <li>                       
-                        <button type="button">Contact Us</button>
-                    </li>
-
-                    <li>                       
-                        <button type="button">Login/Register</button>
-                    </li>
-
-                </ul>
+                
 
             </nav>
 
