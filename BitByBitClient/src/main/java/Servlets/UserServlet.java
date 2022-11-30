@@ -242,7 +242,7 @@ this.loggedInUser = new User();
                     request.setAttribute("messageRegister", msg2);
                     request.setAttribute("categoryList", categoryList);
 
-                    RequestDispatcher rd = request.getRequestDispatcher("prefferedCategories.jsp");
+                    RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
                     rd.forward(request, response);
                 }
                 break;
@@ -268,21 +268,27 @@ this.loggedInUser = new User();
                 String chosenCategories = "";
 
                 // For Testing purposes <<
-                for (int i = 0; i < prefferedCategories.size(); i++) {
-                    chosenCategories += prefferedCategories.get(i).getName() + "\n";
-                }
-
-                request.setAttribute("checked", chosenCategories);
-                RequestDispatcher rd3 = request.getRequestDispatcher("index.jsp");
-                rd3.forward(request, response);
-                // >>>>>
-
-                Reader reader = new Reader();
-                reader.setUsername((String) session.getAttribute("user"));
-                reader.setUserID(Integer.parseInt((String) session.getAttribute("userID")));
-                reader.setRoleID(Integer.parseInt((String) session.getAttribute("roleID")));
-
-                restClientUser.addPreferredCategoriesToUser(reader, prefferedCategories);
+//                for (int i = 0; i < prefferedCategories.size(); i++) {
+//                    chosenCategories += prefferedCategories.get(i).getName() + "\n";
+//                }
+//
+//                request.setAttribute("checked", chosenCategories);
+//                RequestDispatcher rd3 = request.getRequestDispatcher("LoginRegister.jsp");
+//                rd3.forward(request, response);
+//                // >>>>>
+//
+//                Reader reader = new Reader();
+//                reader.setUsername((String) session.getAttribute("user"));
+//                reader.setUserID(Integer.parseInt((String) session.getAttribute("userID")));
+//                reader.setRoleID(Integer.parseInt((String) session.getAttribute("roleID")));
+//
+//                restClientUser.addPreferredCategoriesToUser(reader, prefferedCategories);
+               
+                RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
+                    rd.forward(request, response);
+                
+                
+                
                 break;
                 
             case "Block Selected Writers" :

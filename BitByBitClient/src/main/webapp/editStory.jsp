@@ -153,19 +153,12 @@ for(int i = 0; i<std.size() ; i++){
             </table> 
             <hr/>
             
-             <%
-boolean isAnEditor = (Boolean) request.getAttribute("isEditor");
-            %>
-            <%
-                if(isAnEditor) {
-            %>
+
+
 <input class="button2" name="submit" type="submit" value="Approve Story" >
-            <%
-                }else{
-            %>
+
              <input class="button2" name="submit" type="submit" value="Save Changes" >
-             <%}%>
-             
+            
 
             <input class="button1" name="submit" type="submit" value="Submit For Review">
             <br></br>
