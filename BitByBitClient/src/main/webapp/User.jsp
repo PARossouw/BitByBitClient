@@ -2,8 +2,10 @@
 <%@page import="User.Model.Writer"%>
 <%@page import="Story.Model.Story"%>
 <%@page import="User.Model.Editor"%>
+<%@page import="Category.Model.Category"%>
 <%@page import="User.Model.AdminEditor"%>
-<%@page import="java.util.List;"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html> 
 <html>
@@ -17,100 +19,83 @@
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
+
             <section class="banner_common">
 
                 <div class="banner_common">
                     <h2 style="color:black">Welcome to your user homepage</h2>
-                
+                </div>
+            </section>
+
+            <section class="main_content">
+                <div class="side_nav">
+                    <ul class="browse">
+                        <li>
+                            <form action="UserServlet" method="get">
+                                <input class="button1" name="submit" type="submit" value="My Liked Stories">
+                            </form>
+                        </li>
+                        <li>
+                            <form action="UserServlet" method="post">
+                                <input class="button1" name="submit" type="submit" value="My Preferred Categories">
+                            </form>
+                        </li>
+                        <li>
+                            <form action="UserServlet" method="post">
+                                <input class="button1" name="submit" type="submit" value="Become a Writer">
+                            </form>
+                        </li>
+                    </ul>
+                </div>
                 <h4 style="color:black">Your Likes</h4>
-                <%
-                    List<Story> likedStories = (List)request.getAttribute("likedStories");
+            <%
+            List<Story> likedStories = (ArrayList<Story>)request.getAttribute("likedStories");
                         
-                if(likedStories != null) {
-                    for(Story story : likedStories){%>
+            if(likedStories != null) {
+                for(Story story : likedStories) {
+            %>
+            <tr>
+                <td>
+                    <label style="color:black"><%=story.getTitle()%></label><br>
+                </td>
+            </tr>
+            <%
+                }
+            } else {
+            %>
+            <tr>
+                <td>
+                    <label style="color:black">Here you can track all the stories you have liked</label><br>
+                </td>
+            </tr>
+            <%
+            }
+            %>
 
-                    <label for="vehicle3" style="color:black"><%=story.getTitle()%></label><br>
-                
-                <%}%>
-                <form action="UserServlet" method="get">
-                    <input class="button1" name="submit" type="submit" value="My Liked Stories">
-                </form>
-                <form action="UserServlet" method="post">
-                    <input class="button1" name="submit" type="submit" value="My Preferred Categories">
-                    <input class="button1" name="submit" type="submit" value="Become a Writer">
-                </form>    
-
-                <%} else if (request.getAttribute("user") instanceof Reader) {%>
-
-                <div>
-                    <br>   </br>
-                    <h5 style="color:black">Writers Options</h5>
-                    <a href=dailystory.html>
-                        <button class="button1">My Likes</button>
-                    </a>
-                    <a href=viewstory.html>
-                        <button class="button2">My Categories</button>
-                    </a>
-                    <a href=dailystory.html>
-                        <button class="button1">My Drafts</button>
-                    </a>
-                    <a href=viewstory.html>
-                        <button class="button2">Create Story</button>
-                    </a>
-                    <a href=viewstory.html>
-                        <button class="button2">My Approved Stories</button>
-                    </a>
-                    <a href=viewstory.html>
-                        <button class="button2">My Rejected Stories</button>
-                    </a>
-                    <a href=viewstory.html>
-                        <button class="button2">My Pending Stories</button>
-                    </a>
-                </div>
-
-                <%} else if (request.getAttribute("user") instanceof Editor) {%>
-                <div>
-                    <br>   </br>
-                    <h5 style="color:black">Editor Options</h5>
-                    <a href=dailystory.html>
-                        <button class="button1">Pending Stories</button>
-                    </a>
-                    <a href=viewstory.html>
-                        <button class="button2">Approved Stories</button>
-                    </a>
-                    <a href=viewstory.html>
-                        <button class="button2">Rejected Stories</button>
-                    </a>
-                </div>
-                <%} else if (request.getAttribute("user") instanceof AdminEditor) {%>
-                <div>
-                    <br>   </br>
-                    <h5 style="color:black">Admin Editor Options</h5>
-                    <a href=dailystory.html>
-                        <button class="button1">Pending Stories</button>
-                    </a>
-                    <a href=viewstory.html>
-                        <button class="button2">Approved Stories</button>
-                    </a>
-                    <a href=viewstory.html>
-                        <button class="button2">Rejected Stories</button>
-                    </a>
-                    <a href=viewstory.html>
-                        <button class="button2">Create Editor</button>
-                    </a>
-                    <a href=viewstory.html>
-                        <button class="button2">Create Category</button>
-                    </a>
-                    <a href=viewstory.html>
-                        <button class="button2">Statistics</button>
-                    </a>
-                </div>
-                <%}%>
-            </div>
-        </section>
-        <section class="main_content">
-            <div class="side_nav">
-            </div>
+            <h4 style="color:black">Your Preferred Category</h4>
+            <%
+            List<Category> preferredCategories = (ArrayList<Category>)request.getAttribute("preferredCategories");
+                        
+            if(preferredCategories != null) {
+                for(Category category : preferredCategories) {
+            %>
+            <tr>
+                <td>
+                    <label style="color:black"><%=category.getName()%></label><br>
+                </td>
+            </tr>
+            <%
+                }
+            } else {
+            %>
+            <tr>
+                <td>
+                    <label style="color:black">Here you can track all your preferred categories</label><br>
+                </td>
+            </tr>
+            <%
+            }
+            %>
         </section>
         <jsp:include page="footer.jsp"></jsp:include>
     </body>
