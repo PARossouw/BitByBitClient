@@ -31,13 +31,13 @@ public class RestClientSMS {
         this.mapper = new ObjectMapper();
     }
 
-    public String sendMessage(StringWriter sw) throws JsonProcessingException {
+    public String sendMessage(String xmlMessage) throws JsonProcessingException {
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(url);
         Response response = null;
         try {
 
-            String xmlToString = sw.toString();
+            //String xmlToString = sw.toString();
 //            String xmlToString = "<smsreq>"
 //                    + "<datetime>2022/05/14.10:10:10</datetime>"
 //                    + "<user>GROUP2</user>"
@@ -46,7 +46,7 @@ public class RestClientSMS {
 //                    + "<message>Hello Anton, you have successfully sent a msg</message>"
 //                    + "</smsreq>";
 
-            response = webTarget.request().post(Entity.xml(xmlToString));
+            response = webTarget.request().post(Entity.xml(xmlMessage));
         } catch (Exception ex) {
             Logger.getLogger(RestClientSMS.class.getName()).log(Level.SEVERE, null, ex);
         }
