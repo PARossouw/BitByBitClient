@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <%@page import="Story.Model.Story;"%>
+<%@page import="User.Model.User;"%>
 <%@page import="Category.Model.Category;" %>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
@@ -38,6 +39,8 @@
                         <input class="button1" name="submit" type="submit" value="View Story Get">
 
                         <input class="button1" name="submit" type="submit" value="Display Story To Edit">
+                        
+                        <input class="button1" name="submit" type="submit" value="Create Story">
 
                     </form>
 
@@ -87,41 +90,52 @@
             </form>
 
             <div class="vid_list">
-                
+
                 <%
                 RestClientStory rcs = new RestClientStory("http://localhost:8080/RIP/RIP");
                 List<Story> stories = new ArrayList<>();
-                stories = (List<Story>) request.getAttribute("stories");
+                //stories = (List<Story>) request.getAttribute("stories");
                 //List<Story> stories = null;
                 //if(stories == null){
-                    stories = rcs.getStoriesForStoryOfTheDay();
-                //}
-                if(stories.size()<1){
-                    %>
-                    <div>Sorry, no stories were found</div>
-                    <%
+                User user = new User();
+                
+                user = (User)request.getAttribute("loggedInUser");
+                
+                if(user != null){
+                stories = rcs.searchStoriesByCategories(user);
                 }
-                    for(Story story : stories){
+                //}
+                if(stories.size()<1 || user == null){
+                %>
+                <div>Sorry, no stories were found</div>
+                <%
+            } else{
+                %>
+                <h3>Stories by Preferred Categories</h3>
+                <%
+             for(Story story : stories){
                 %>
 
+
                 <div>
-                    <img src=<%=story.getImagePath()%>>
-                    <h3 style="color:black"><%=story.getTitle()%></h3>
-                    <h5 style="color:black">Written by : <%=story.getWriter()%></h5>
-                    <h5 style="color:black">Views : <%=story.getViews()%></h5>
-                    <h5 style="color:black">Likes : <%=story.getLikes()%></h5>
-                    <h5 style="color:black">Rating : <%=story.getAvgRating()%></h5>
-                    <li></li>
-                    <p><%=story.getDescription()%></p>
+                    <li>
+                        <img src=<%=story.getImagePath()%>>
+                        <h3 style="color:black"><%=story.getTitle()%></h3>
+                        <h5 style="color:black">Written by : <%=story.getWriter()%></h5>
+                        <h5 style="color:black">Views : <%=story.getViews()%></h5>
+                        <h5 style="color:black">Likes : <%=story.getLikes()%></h5>
+                        <h5 style="color:black">Rating : <%=story.getAvgRating()%></h5>
+                        <p><%=story.getDescription()%></p>
 
-                    <a href=viewStory.jsp>
-                        <button class="button1">Read now</button>
-                    </a>
-
+                        <a href=viewStory.jsp>
+                            <button class="button1">Read now</button>
+                        </a>
+                    </li>
                 </div>
 
                 <%
-                    }//end for     
+                    }//end for  
+}//end else
                 %>
 
             </div>

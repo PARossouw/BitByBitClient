@@ -38,11 +38,11 @@ public class RestClientStory {
     }
 
     public List<Story> searchStoriesByCategories(User reader) throws JsonProcessingException {
-        String uri = url + "/search/categories";
+        String uri = url + "/search/categories/{reader})";
         restClient = ClientBuilder.newClient();
 
-        webTarget = restClient.target(uri).resolveTemplate("reader", reader);
-        List<Story> stories = null;
+        webTarget = restClient.target(uri).resolveTemplate("reader", reader.getUserID());
+        List<Story> stories = new ArrayList();
         stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
 
         return stories;
