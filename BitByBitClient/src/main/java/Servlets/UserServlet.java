@@ -26,7 +26,7 @@ public class UserServlet extends HttpServlet {
     private static RestClientUser restClientUser;
     private static RestClientCategory restClientCategory;
     private static RestClientStory restClientStory;
-    public static User loggedInUser;
+    public static User loggedInUser ;
     private List<Writer> writersSearched;
 
     public UserServlet() {
@@ -147,8 +147,15 @@ public class UserServlet extends HttpServlet {
 
                 if (userFeedback != null) {
                     session = request.getSession(true);
+                    
+                    
                     session.setAttribute("user", userFeedback);
-                    loggedInUser = (User) session.getAttribute("user");
+                    
+//                    this.loggedInUser = (User) session.getAttribute("user");
+this.loggedInUser = new User();
+                    this.loggedInUser = userFeedback;
+                    
+                    
                     request.setAttribute("loggedInUser", loggedInUser);
                     RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 
@@ -236,7 +243,7 @@ public class UserServlet extends HttpServlet {
                     request.setAttribute("messageRegister", msg2);
                     request.setAttribute("categoryList", categoryList);
 
-                    RequestDispatcher rd = request.getRequestDispatcher("prefferedCategories.jsp");
+                    RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
                     rd.forward(request, response);
                 }
                 break;
@@ -261,15 +268,7 @@ public class UserServlet extends HttpServlet {
                 }
                 String chosenCategories = "";
 
-                // For Testing purposes <<
-                for (int i = 0; i < prefferedCategories.size(); i++) {
-                    chosenCategories += prefferedCategories.get(i).getName() + "\n";
-                }
 
-                request.setAttribute("checked", chosenCategories);
-                RequestDispatcher rd3 = request.getRequestDispatcher("index.jsp");
-                rd3.forward(request, response);
-                // >>>>>
 
                 Reader reader = new Reader();
                 reader.setUsername((String) session.getAttribute("user"));
@@ -277,6 +276,7 @@ public class UserServlet extends HttpServlet {
                 reader.setRoleID(Integer.parseInt((String) session.getAttribute("roleID")));
 
                 restClientUser.addPreferredCategoriesToUser(reader, prefferedCategories);
+
                 break;
                 
             case "Block Selected Writers" :
@@ -298,11 +298,38 @@ public class UserServlet extends HttpServlet {
                 rd2.forward(request, response);
 
                 break;
+                
+            case "ReferFriend" :
+                
+                String phoneNumber = (String) request.getParameter("phoneNumber");
+                
+                //User user = loggedInUser;
+                //String x = loggedInUser.getUsername();
+                
+                User user = (User)session.getAttribute("user");
+                String x = user.getUsername();
+                
+                //String [] reply = new String [2];
+                //reply = restClientUser.referFriend(user, phoneNumber);
+                
+                
+                
+                request.setAttribute("message", x);
+                
+                RequestDispatcher rd4 = request.getRequestDispatcher("ReferFriend.jsp");
+
+                rd4.forward(request, response);
+                
+                
+                
+                
+                
+
+                break;
 
             default:
                 throw new AssertionError();
         }
-
     }
 
     @Override

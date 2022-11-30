@@ -4,8 +4,11 @@
 <%@page import="User_Interactions.Comment.Model.Comment;"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="User.Model.User;"%>
 <!DOCTYPE html> 
 <html>
+
+
 
     <head>
         <title>Edit Story</title>
@@ -149,11 +152,14 @@ for(int i = 0; i<std.size() ; i++){
 
             </table> 
             <hr/>
+            
 
 
+<input class="button2" name="submit" type="submit" value="Approve Story" >
 
+             <input class="button2" name="submit" type="submit" value="Save Changes" >
+            
 
-            <input class="button2" name="submit" type="submit" value="Save Changes" >
             <input class="button1" name="submit" type="submit" value="Submit For Review">
             <br></br>
         </form>
