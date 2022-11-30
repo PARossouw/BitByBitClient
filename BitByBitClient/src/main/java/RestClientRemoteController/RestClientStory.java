@@ -37,22 +37,20 @@ public class RestClientStory {
         this.mapper = new ObjectMapper();
     }
 
-    public List<Story> searchStoriesByCategories(List<Category> categories) throws JsonProcessingException {
-        String uri = url + "/search/categories";
+    public List<Story> searchStoriesByCategories(Reader reader) throws JsonProcessingException {
+        String uri = url + "/search/categories/{reader}";
         restClient = ClientBuilder.newClient();
-        webTarget = restClient.target(uri);
-        List<Story> stories = new ArrayList<>();
 
-        JSONObject jsonObject = new JSONObject();
+        webTarget = restClient.target(uri).resolveTemplate("reader", reader);
+        List<Story> stories = null;
+        stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
+        
+        return stories;
+        
 
-        jsonObject.put("amount", categories.size());
-        for (int i = 0; i < categories.size(); i++) {
-            jsonObject.put("" + i, categories.get(i));
-        }
+       
+        
 
-        Response response = null;
-        response = webTarget.request().post(Entity.json(toJsonString(jsonObject)));
-        return response.readEntity(List.class);
 
 //        Response response = null;
 //        
