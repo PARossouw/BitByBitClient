@@ -36,13 +36,13 @@ public class RestClientUser {
     }
 
     public User login(User user) throws JsonProcessingException {
+    public String login(User user) throws JsonProcessingException {
         String uri = url + "/login";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
 
         Response response = null;
         response = webTarget.request().post(Entity.json(toJsonString(user)));
-        return response.readEntity(User.class);
     }
 
     //@FormParam must be put in the aruguments on the rest controller side

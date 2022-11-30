@@ -33,6 +33,8 @@
                         <input class="button1" name="submit" type="submit" value="View Story Get">
 
                         <input class="button1" name="submit" type="submit" value="Display Story To Edit">
+                        
+                        <input class="button1" name="submit" type="submit" value="Create Story">
 
                     </form>
 

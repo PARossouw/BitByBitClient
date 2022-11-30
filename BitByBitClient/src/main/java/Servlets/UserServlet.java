@@ -27,6 +27,7 @@ public class UserServlet extends HttpServlet {
     private static RestClientCategory restClientCategory;
     private static RestClientStory restClientStory;
     public static User loggedInUser ;
+    public static User loggedInUser;
     private List<Writer> writersSearched;
 
     public UserServlet() {
@@ -148,13 +149,16 @@ public class UserServlet extends HttpServlet {
                     session = request.getSession(true);
                     
                     
+
                     session.setAttribute("user", userFeedback);
                     
+
 //                    this.loggedInUser = (User) session.getAttribute("user");
-this.loggedInUser = new User();
+                    this.loggedInUser = new User();
                     this.loggedInUser = userFeedback;
                     
                     
+
                     request.setAttribute("loggedInUser", loggedInUser);
                     RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 
@@ -242,8 +246,16 @@ this.loggedInUser = new User();
                     request.setAttribute("messageRegister", msg2);
                     request.setAttribute("categoryList", categoryList);
 
-                    RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
-                    rd.forward(request, response);
+                    // Registration was successful. Please log in above.
+                    if (msg2.equals("Registration was successful. Please log in above.")) {
+                        RequestDispatcher rd = request.getRequestDispatcher("prefferedCategories.jsp");
+//                    prefferedCategories.jsp
+                        rd.forward(request, response);
+                    } else {
+                        RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
+//                    prefferedCategories.jsp
+                        rd.forward(request, response);
+                    }
                 }
                 break;
 
@@ -291,13 +303,18 @@ this.loggedInUser = new User();
                 
                 break;
 
+                Reader readerTest = new Reader();
+                readerTest.setUserID(887);
 
+                //  restClientUser.addPreferredCategoriesToUser(readerTest, prefferedCategories);
+                request.setAttribute("messageRegister", "Registration Successful. Please login above.");
+                RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
 
+                rd.forward(request, response);
 
+                break;
 
             case "Profile":
-
-             //   List<Category> preferredCategories = restClientCategory.getPreferredCategories((User) loggedInUser);
 
 //                switch (loggedInUser.getRoleID()) {
 //                    case 1:
@@ -311,6 +328,7 @@ this.loggedInUser = new User();
 //                }
 
                // List<Story> likedStories = restClientStory.viewLikedStories((User) loggedInUser);
+                // List<Story> likedStories = restClientStory.viewLikedStories((User) loggedInUser);
 //                switch (loggedInUser.getRoleID()) {
 //                    case 1:
 //                        likedStories = restClientStory.viewLikedStories((Reader) loggedInUser);
@@ -327,12 +345,16 @@ this.loggedInUser = new User();
                 request.setAttribute("user", loggedInUser);
                 RequestDispatcher rd1 = request.getRequestDispatcher("User.jsp");
                 
+
                 rd1.forward(request, response);
 
                 break;
                 
             case "Block Selected Writers" :
                 String []results = request.getParameterValues("results");
+
+            case "Block Selected Writers":
+                String[] results = request.getParameterValues("results");
 
                 Writer w = new Writer();
                 String writerResults = "";

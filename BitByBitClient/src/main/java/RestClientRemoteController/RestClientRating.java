@@ -21,13 +21,13 @@ public class RestClientRating {
     private ObjectMapper mapper;
 
     public RestClientRating(String url) {
-        this.url = url + "/RIP/Rating";
+        this.url = url + "/Rating";
         this.mapper = new ObjectMapper();
     }
     
     //has 3 args, can use either a map inside a map or a list?
     //@FormParam must be put in the aruguments on the rest controller side
-    public Double rateStory(Story story, Reader reader, Integer rating) throws JsonProcessingException {
+    public String rateStory(Story story, Reader reader, Integer rating) throws JsonProcessingException {
         String uri = url + "/rateStory";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
@@ -35,7 +35,7 @@ public class RestClientRating {
         rateInfo.put(reader, story);
         Response response = null;
         response = webTarget.request().post(Entity.json(toJsonString(rateInfo)));
-        return response.readEntity(Double.class);
+        return response.readEntity(String.class);
     }
     
     private String toJsonString(Object o) throws JsonProcessingException {
