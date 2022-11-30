@@ -24,7 +24,6 @@ import java.util.logging.Logger;
 
 import org.json.simple.JSONObject;
 
-
 public class RestClientStory {
 
     private String url;
@@ -43,18 +42,18 @@ public class RestClientStory {
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
         List<Story> stories = new ArrayList<>();
-        
+
         JSONObject jsonObject = new JSONObject();
-        
+
         jsonObject.put("amount", categories.size());
-        for(int i = 0; i < categories.size(); i++){
-            jsonObject.put(""+i, categories.get(i));
+        for (int i = 0; i < categories.size(); i++) {
+            jsonObject.put("" + i, categories.get(i));
         }
-            
+
         Response response = null;
         response = webTarget.request().post(Entity.json(toJsonString(jsonObject)));
         return response.readEntity(List.class);
-        
+
 //        Response response = null;
 //        
 //        response = webTarget.request().post(Entity.json(toJsonString(categories)));
@@ -63,7 +62,6 @@ public class RestClientStory {
 //        //return stories;
 //        stories = response.readEntity(List.class);
 //        return stories;
-
     }
 
     public List<Story> viewStoriesByWriter(Writer writer) throws JsonProcessingException {
@@ -72,7 +70,7 @@ public class RestClientStory {
         webTarget = restClient.target(uri).resolveTemplate("writer", writer);
         List<Story> stories = null;
         stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
-        
+
         return stories;
     }
 
@@ -81,7 +79,7 @@ public class RestClientStory {
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
         Response response = null;
-        
+
         response = webTarget.request().post(Entity.json(toJsonString(story)));
         return response.readEntity(String.class);
 //        return storyReturn;
@@ -117,26 +115,26 @@ public class RestClientStory {
 //
 //return storyObj;
     }
-    public Story retrieveStoryGet(String storyID)
-    {
-         try {
+
+    public Story retrieveStoryGet(String storyID) {
+        try {
             String uri = url + "/getStory/{storyID}";
             restClient = ClientBuilder.newClient();
             webTarget = restClient.target(uri).resolveTemplate("storyID", storyID);
 
             Story story = new Story();
-           story = (mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story.class));
+            story = (mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story.class));
 //           
 //Response response = null;
 // response = webTarget.request().post(Entity.json(toJsonString(story)));
 // return response.readEntity(Story.class);
-return story;
+            return story;
         } catch (JsonProcessingException ex) {
             Logger.getLogger(RestClientUser.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-    
+
     /*
     public List<Writer> searchWriter(String writerSearch) {
         List<Writer> writers = new ArrayList();
@@ -155,14 +153,7 @@ return story;
     }
     
     
-    */
-    
-    
-    
-    
-    
-    
-
+     */
     public List<Story> searchForStory(String storyParameter) throws JsonProcessingException {
         String uri = url + "/search/";
         restClient = ClientBuilder.newClient();
@@ -171,38 +162,49 @@ return story;
         stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
         return stories;
     }
-    
-    public List<Story> storyReview()throws JsonProcessingException{
+
+    public List<Story> storyReview() throws JsonProcessingException {
         String uri = url + "/getPendingStories";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
         List<Story> stories = new ArrayList();
         stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
-        
+
         return stories;
     }
-    
-    public List<Story> getStoriesForStoryOfTheDay()throws JsonProcessingException{
+
+    public List<Story> getStoriesForStoryOfTheDay() throws JsonProcessingException {
         String uri = url + "/getStoriesForStoryOfTheDay";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
         List<Story> stories = new ArrayList();
         stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
-        
+
         return stories;
     }
-    
+
     public List<Story> viewLikedStories(Integer readerID) throws JsonProcessingException {
         User reader = new User();
         reader.setUserID(readerID);
         String uri = url + "/viewLikedStories/{readerID}";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri).resolveTemplate("readerID", reader.getUserID());
-        
+
         List<Story> stories = null;
         stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
-        
+
         return stories;
+    }
+    
+     public String turnOffComments(Story story) throws JsonProcessingException {
+        String uri = url + "/turnOffComments";
+        restClient = ClientBuilder.newClient();
+        webTarget = restClient.target(uri);
+        Response response = null;
+        response = webTarget.request().post(Entity.json(toJsonString(story)));
+        return response.readEntity(String.class);
+
+
     }
 
     private String toJsonString(Object o) throws JsonProcessingException {
