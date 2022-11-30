@@ -110,7 +110,7 @@ public class StoryServlet extends HttpServlet {
                 List<Story> likedStories = new ArrayList<>();
                 HttpSession userSession2 = request.getSession();
                 User user = (User) userSession2.getAttribute("loggedInUser");
-                featuredStories = restClientStory.viewLikedStories(user);
+                featuredStories = restClientStory.viewLikedStories(user.getUserID());
                 
                 request.setAttribute("stories", likedStories);
                 RequestDispatcher rdLiked = request.getRequestDispatcher("index.jsp");
