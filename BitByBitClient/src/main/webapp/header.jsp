@@ -29,25 +29,25 @@
                     <button type="button">Refer a Friend</button>
                 </li>
                 <li>
-                    <form action="UserServlet" method="post">
+                    <form action="UserServlet" method="get">
                         <input class="button1" name="submit" type="submit" value="Profile">
                     </form>
                 </li>
                 <li>
                     <form action="StoryServlet" method="get">
-                        <a>
-                            <input class="button1" name="submit" type="submit" value="Review Story">
-                        </a>
+                        <input class="button1" name="submit" type="submit" value="Review Story">
                     </form>
+                </li>
+                <li>
                     <form action="StoryServlet" method="get">
-                        <a>
-                            <input class="button1" name="submit" type="submit" value="Choose Story of The Day">
-                        </a>
+                        <input class="button1" name="submit" type="submit" value="Choose Story of The Day">
                     </form>
+                </li>
+                <li>
                     <!--<form action="UserServlet" method="get">-->
-                        <a href="BlockWriter.jsp">
-                            <input class="button1" name="submit" type="submit" value="Block Writer">
-                        </a>
+                    <a href="BlockWriter.jsp">
+                        <input class="button1" name="submit" type="submit" value="Block Writer">
+                    </a>
                     <!--</form>-->
                 </li>
                 <!-- Don't add new buttons below this line it will break the Login button-->
@@ -55,21 +55,7 @@
                 <%
                 User userLoggedIn = (User) session.getAttribute("loggedInUser");
                     
-                if(userLoggedIn != null) {
-                    if(userLoggedIn.getRoleID() < 3) {%>
-                <li class="same">
-                    <form action="UserServlet" method="post">
-                        <input class="button1" name="submit" type="submit" value="Profile">
-                    </form>
-                </li>
-                <li>
-                    <%} else {%>
-                    <form action="StoryServlet" method="get">
-                        <input class="button1" name="submit" type="submit" value="Profile">
-                    </form>
-                </li>
-                <%}
-                } else {
+                if(userLoggedIn == null) {
                 %>
                 <li class="same">
                     <a href=LoginRegister.jsp>
@@ -77,6 +63,22 @@
                     </a>
                 </li>
                 <%
+                } else {
+                    if(userLoggedIn.getRoleID() < 3) {
+                %>
+                <li class="same">
+                    <form action="UserServlet" method="get">
+                        <input class="button1" name="submit" type="submit" value="Profile">
+                    </form>
+                </li>
+                <%} else {%>
+                <li>
+                    <form action="StoryServlet" method="get">
+                        <input class="button1" name="submit" type="submit" value="Profile">
+                    </form>
+                </li>
+                <%
+                    }
                 }
                 %>
             </ul>

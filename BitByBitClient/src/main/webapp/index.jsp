@@ -14,25 +14,42 @@
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
+
             <section class="banner">
                 <div>
                     <h1>Welcome to Readers are Innovators</h1>
                     <p style="color:black">Making reading accessible to all.</p><br>
                     <form action="StoryServlet" method="post">
-                        <input class="button1" name="submit" type="submit" value="View Story">
 
 
-                        <input class="button1" name="submit" type="submit" value="Create Story">
+                        <input class="button1" name="submit" type="submit" value="Edit Story">
 
 
 
                         <input class="button1" name="submit" type="submit" value="Story of the Day">
+
                         <a href=DailyStory.jsp>
                             <button class="button2">View All Stories</button>
                         </a>
                     </form>
+
+                    <form action="StoryServlet" method="get">
+
+                        <input class="button1" name="submit" type="submit" value="View Story Get">
+
+                        <input class="button1" name="submit" type="submit" value="Display Story To Edit">
+
+                    </form>
+
+
+
+
+
+
+
                 </div>
             </section>
+
             <section class="main_content">
                 <div class="side_nav">
                     <nav>
@@ -44,13 +61,13 @@
                                 <input class="button1" name="submit" type="submit" value="Your liked stories"><br><br>
                             </form>
                         </ul>
-
                     </nav>
                 </div>
 
 
             <%
-String createStoryOutcome = (String) request.getAttribute("createStory");
+
+        String createStoryOutcome = (String) request.getAttribute("createStory");
             %>
             <%
                 if(createStoryOutcome != null) {

@@ -15,6 +15,7 @@ import jakarta.ws.rs.core.Response;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import org.json.simple.JSONObject;
 
 public class RestClientLike {
 
@@ -24,7 +25,7 @@ public class RestClientLike {
     private ObjectMapper mapper;
 
     public RestClientLike(String url) {
-        this.url = url + "/RIP/Like";
+        this.url = url + "/Like";
         this.mapper = new ObjectMapper();
     }
 
@@ -33,12 +34,17 @@ public class RestClientLike {
         String uri = url + "/likeStory";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
-        HashMap<Reader, Story> likeInfo = new HashMap();
-        likeInfo.put(reader, story);
+
         Response response = null;
-        response = webTarget.request().post(Entity.json(toJsonString(likeInfo)));
+         JSONObject jObject = new JSONObject();
+        jObject.put("reader", reader);
+        jObject.put("story", story);
+
+        response = webTarget.request().post(Entity.json(toJsonString(jObject)));
         return response.readEntity(String.class);
     }
+
+    
 
     public Map<Story, Integer> getAllLikesInPeriod(Calendar startDate) throws JsonProcessingException {
         String uri = url + "/allLikes";
