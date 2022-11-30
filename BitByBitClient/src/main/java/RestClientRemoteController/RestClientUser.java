@@ -40,8 +40,7 @@ public class RestClientUser {
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
 
-        Response response = null;
-        response = webTarget.request().post(Entity.json(toJsonString(user)));
+        Response response = webTarget.request().post(Entity.json(user));
         return response.readEntity(User.class);
     }
 
