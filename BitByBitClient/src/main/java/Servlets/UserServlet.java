@@ -103,16 +103,17 @@ public class UserServlet extends HttpServlet {
                 reader.setUsername(loggedInUser.getUsername());
                 reader.setEmail(loggedInUser.getEmail());
 
-                List<Category> preferredCategories = reader.getPreferredCategories();
-                List<Story> likedStories = reader.getLikedStories();
+                List<Category> preferredCategories = new ArrayList<>();
+                preferredCategories = restClientCategory.getPreferredCategories(reader.getUserID());
+                List<Story> likedStories = new ArrayList<>();
+                likedStories = restClientStory.viewLikedStories(reader.getUserID());
 
                 request.setAttribute("preferredCategories", preferredCategories);
                 request.setAttribute("likedStories", likedStories);
                 request.setAttribute("user", loggedInUser);
+                
                 RequestDispatcher rd1 = request.getRequestDispatcher("User.jsp");
-
                 rd1.forward(request, response);
-
                 break;
 
             default:
@@ -279,28 +280,15 @@ public class UserServlet extends HttpServlet {
                 }
                 String chosenCategories = "";
 
-                // For Testing purposes <<
-//                for (int i = 0; i < prefferedCategories.size(); i++) {
-//                    chosenCategories += prefferedCategories.get(i).getName() + "\n";
-//                }
-//
-//                request.setAttribute("checked", chosenCategories);
-//                RequestDispatcher rd3 = request.getRequestDispatcher("LoginRegister.jsp");
-//                rd3.forward(request, response);
-//                // >>>>>
-//
-//                Reader reader = new Reader();
-//                reader.setUsername((String) session.getAttribute("user"));
-//                reader.setUserID(Integer.parseInt((String) session.getAttribute("userID")));
-//                reader.setRoleID(Integer.parseInt((String) session.getAttribute("roleID")));
-//
-//                restClientUser.addPreferredCategoriesToUser(reader, prefferedCategories);
-               
-                RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
-                    rd.forward(request, response);
-                
-                
-                
+
+
+                Reader reader = new Reader();
+                reader.setUsername((String) session.getAttribute("user"));
+                reader.setUserID(Integer.parseInt((String) session.getAttribute("userID")));
+                reader.setRoleID(Integer.parseInt((String) session.getAttribute("roleID")));
+
+                restClientUser.addPreferredCategoriesToUser(reader, prefferedCategories);
+
                 break;
 
 
@@ -411,5 +399,4 @@ public class UserServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }
-
 }

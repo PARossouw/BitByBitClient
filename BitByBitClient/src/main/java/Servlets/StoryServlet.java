@@ -97,13 +97,16 @@ public class StoryServlet extends HttpServlet {
                 
             case ("Your Preffered categories"):
                 //checking if this session object is null
-                User userTEST = (User)session.getAttribute("user");
+//                User userTEST = (User)session.getAttribute("user");
+                User userTEST = new User();
+                userTEST = (User)request.getSession(false).getAttribute("user");
                 
                 
                 List<Story> prefferedStories = new ArrayList<>();
                 HttpSession userSession = request.getSession();
-                User reader = (User) userSession.getAttribute("user");
-                prefferedStories = restClientStory.searchStoriesByCategories(reader);
+                //User reader = (User) userSession.getAttribute("user");
+                //reader.getUsername();
+                prefferedStories = restClientStory.searchStoriesByCategories(userTEST);
                 
                 request.setAttribute("stories", prefferedStories);
                 RequestDispatcher rdPreffered = request.getRequestDispatcher("index.jsp");
@@ -115,7 +118,9 @@ public class StoryServlet extends HttpServlet {
                 List<Story> likedStories = new ArrayList<>();
                 HttpSession userSession2 = request.getSession();
                 User user = (User) userSession2.getAttribute("loggedInUser");
+
                 likedStories = restClientStory.viewLikedStories(user.getUserID());
+
                 
                 request.setAttribute("stories", likedStories);
                 RequestDispatcher rdLiked = request.getRequestDispatcher("index.jsp");
@@ -541,9 +546,9 @@ public class StoryServlet extends HttpServlet {
                 int storyID = Integer.parseInt((String) request.getParameter("story_id"));
                 storyView2.setStoryID(storyID);
                 this.storyView = restClientStory.retrieveStory(storyView2);
-
+                
                 reader = (Reader) session.getAttribute("user");
-
+                
                 restClientLike.likeStory(reader, this.storyView);
                 request.setAttribute("story", this.storyView);
                 request.setAttribute("likes", "You have liked the story ");
