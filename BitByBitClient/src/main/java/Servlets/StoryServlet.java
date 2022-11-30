@@ -99,13 +99,15 @@ public class StoryServlet extends HttpServlet {
                 //checking if this session object is null
 //                User userTEST = (User)session.getAttribute("user");
                 User userTEST = new User();
-                userTEST = (User)request.getSession(false).getAttribute("user");
-                
+                //userTEST = (User)request.getSession(false).getAttribute("user");
+                userTEST.setUsername(UserServlet.loggedInUser.getUsername());
                 
                 List<Story> prefferedStories = new ArrayList<>();
                 HttpSession userSession = request.getSession();
                 //User reader = (User) userSession.getAttribute("user");
                 //reader.getUsername();
+                
+                
                 prefferedStories = restClientStory.searchStoriesByCategories(userTEST);
                 
                 request.setAttribute("stories", prefferedStories);
