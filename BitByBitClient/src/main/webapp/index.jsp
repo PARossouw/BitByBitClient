@@ -93,9 +93,9 @@
                 List<Story> stories = new ArrayList<>();
                 stories = (List<Story>) request.getAttribute("stories");
                 //List<Story> stories = null;
-                //if(stories == null){
+                if(stories == null){
                     stories = rcs.getStoriesForStoryOfTheDay();
-                //}
+                }
                 if(stories.size()<1){
                     %>
                     <div>Sorry, no stories were found</div>

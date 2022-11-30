@@ -30,6 +30,8 @@ public class RestClientStory_Transaction {
     
     
      public String approvePendingStory(User editor, Story story) throws JsonProcessingException {
+         
+        editor.setDateAdded(null);
         String uri = url + "/approve";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
