@@ -290,46 +290,6 @@ this.loggedInUser = new User();
                 
                 
                 break;
-
-
-
-
-
-            case "Profile":
-
-             //   List<Category> preferredCategories = restClientCategory.getPreferredCategories((User) loggedInUser);
-
-//                switch (loggedInUser.getRoleID()) {
-//                    case 1:
-//                        preferredCategories = restClientCategory.getPreferredCategories((Reader) loggedInUser);
-//                        break;
-//                    case 2:
-//                        preferredCategories = restClientCategory.getPreferredCategories((Writer) loggedInUser);
-//                        break;
-//                    default:
-//                        preferredCategories = null;
-//                }
-
-               // List<Story> likedStories = restClientStory.viewLikedStories((User) loggedInUser);
-//                switch (loggedInUser.getRoleID()) {
-//                    case 1:
-//                        likedStories = restClientStory.viewLikedStories((Reader) loggedInUser);
-//                        break;
-//                    case 2:
-//                        likedStories = restClientStory.viewLikedStories((Writer) loggedInUser);
-//                        break;
-//                    default:
-//                        likedStories = null;
-//                }
-                
-//                request.setAttribute("preferredCategories", preferredCategories);
-//                request.setAttribute("likedStories", likedStories);
-                request.setAttribute("user", loggedInUser);
-                RequestDispatcher rd1 = request.getRequestDispatcher("User.jsp");
-                
-                rd1.forward(request, response);
-
-                break;
                 
             case "Block Selected Writers" :
                 String []results = request.getParameterValues("results");
@@ -348,6 +308,34 @@ this.loggedInUser = new User();
                 RequestDispatcher rd2 = request.getRequestDispatcher("BlockWriter.jsp");
 
                 rd2.forward(request, response);
+
+                break;
+                
+            case "ReferFriend" :
+                
+                String phoneNumber = (String) request.getParameter("phoneNumber");
+                
+                //User user = loggedInUser;
+                //String x = loggedInUser.getUsername();
+                
+                User user = (User)session.getAttribute("user");
+                String x = user.getUsername();
+                
+                //String [] reply = new String [2];
+                //reply = restClientUser.referFriend(user, phoneNumber);
+                
+                
+                
+                request.setAttribute("message", x);
+                
+                RequestDispatcher rd4 = request.getRequestDispatcher("ReferFriend.jsp");
+
+                rd4.forward(request, response);
+                
+                
+                
+                
+                
 
                 break;
 

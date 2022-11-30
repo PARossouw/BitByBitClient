@@ -26,7 +26,9 @@
                     </form>
                 </li>
                 <li>
-                    <button type="button">Refer a Friend</button>
+                    <a href="ReferFriend.jsp">
+                        <input class="button1" name="submit" type="submit" value="Refer a Friend">
+                    </a>
                 </li>
                 <li>
                     <form action="UserServlet" method="get">
@@ -48,6 +50,10 @@
                     <a href="BlockWriter.jsp">
                         <input class="button1" name="submit" type="submit" value="Block Writer">
                     </a>
+                    <form action="StoryServlet" method="post">
+                        <input class="button1" name="submit" type="submit" value="Turn Off Comments">
+                        </a>
+                    </form>
                     <!--</form>-->
                 </li>
                 <!-- Don't add new buttons below this line it will break the Login button-->

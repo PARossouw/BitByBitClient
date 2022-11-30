@@ -8,8 +8,8 @@ public class smsreq {
 
     //private Date datetime;
     private String datetime;
-    private String user;
-    private String pass;
+    private String user = "GROUP2";
+    private String pass = "2group";
     private String msisdn;
     private String message;
 
@@ -18,8 +18,8 @@ public class smsreq {
 
     public smsreq(String datetime, String user, String pass, String msisdn, String message) {
         this.datetime = datetime;
-        this.user = "GROUP2";
-        this.pass = "2group";
+        this.user = user;
+        this.pass = pass;
         this.msisdn = msisdn;
         this.message = message;
     }

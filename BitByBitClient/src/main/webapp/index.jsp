@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<%@page import="Story.Model.Story;"%>
+<%@page import="Category.Model.Category;" %>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="RestClientRemoteController.RestClientStory"%>
 <html>
     <head>
         <title>Readers Are Innovators</title>
@@ -50,13 +55,15 @@
                     <nav>
                         <ul class="browse">
                             <li class="bbh">Browse</li>
-                            <li class="active">Editors Picks</li>
-                            <li>RIP Originals</li>
-                            <li>Trending</li>
-                            <li>Latest</li>
+                            <form action="StoryServlet" method="get">      
+                                <input class="button1" name="submit" type="submit" value="Refresh Stories"><br><br>
+                                <input class="button1" name="submit" type="submit" value="Your Preffered categories"><br><br>
+                                <input class="button1" name="submit" type="submit" value="Your liked stories"><br><br>
+                            </form>
                         </ul>
                     </nav>
                 </div>
+
 
             <%
 
@@ -72,73 +79,53 @@
                 }
             %>
 
+            <form action="StoryServlet" method="post">
 
+                <input type="text" class="form" placeholder="Story title or author">
+                <input class="button1" name="submit" type="submit" value=" Search for Story">
+
+            </form>
 
             <div class="vid_list">
-                <form action="StoryServlet" method="post">
-                    <div>
-                        <input type="text" class="form" placeholder="Search input">
-                        <input class="button1" name="submit" type="submit" value="Search for Story">
-                    </div>
-                </form>
+                
+                <%
+                RestClientStory rcs = new RestClientStory("http://localhost:8080/RIP/RIP");
+                List<Story> stories = new ArrayList<>();
+                stories = (List<Story>) request.getAttribute("stories");
+                //List<Story> stories = null;
+                if(stories == null){
+                    stories = rcs.getStoriesForStoryOfTheDay();
+                }
+                if(stories.size()<1){
+                    %>
+                    <div>Sorry, no stories were found</div>
+                    <%
+                }
+                    for(Story story : stories){
+                %>
+
                 <div>
-                    <img src=images/title.png>
-                    <h3>Harry Potter</h3>
-                    <p>The boy who survived</br> and printing em ipsum is  layout, and printin</p>
-                    <button>Read now</button>
-                    <button>My List</button>
-                </div>
-                <div>
-                    <img src=images/title.png>
-                    <h3>Lord of the Rings</h3>
-                    <p>Lorem ipsum is  layout,</br> and printing em ipsum is  layout, and printin</p>
-                    <button>Read now</button>
-                    <button>Like Story</button>
-                </div>
-                <div>
-                    <img src=images/title.png>
-                    <h3>Goosebumps</h3>
-                    <p>Lorem ipsum is  layout,</br> and printing em ipsum is  layout, and printin</p>
-                    <button>Read now</button>
-                    <button>Like Story</button>
-                </div>
-                <div>
-                    <img src=images/title.png>
-                    <h3>Star Wars</h3>
-                    <p>Lorem ipsum is  layout,</br> and printing em ipsum is  layout, and printin</p>
-                    <button>Read now</button>
-                    <button>Like Story</button>
-                </div>
-                <div>
-                    <img src=images/title.png>
-                    <h3>50 Shades of Grey</h3>
-                    <p>Lorem ipsum is  layout,</br> and printing em ipsum is  layout, and printin</p>
-                    <button>Read now</button>
-                    <button>Like Story</button>
-                </div>
-                <div>
-                    <img src=images/title.png>
-                    <h3>Software Concepts for Dummies</h3>
-                    <p>Lorem ipsum is  layout,</br> and printing em ipsum is  layout, and printin</p>
-                    <button>Read now</button>
-                    <button>Like Story</button>
-                </div>
-                <div>
-                    <img src=images/title.png>
-                    <h3>The Jungle Book</h3>
-                    <p>Lorem ipsum is  layout,</br> and printing em ipsum is  layout, and printin</p>
-                    <button>Read now</button>
-                    <button>Like Story</button>
-                </div>
-                <div>
-                    <img src=images/title.png>
-                    <h3>The boy from Pretoria</h3>
-                    <p>Lorem ipsum is  layout,</br> and printing em ipsum is  layout, and printin</p>
-                    <button>Read now</button>
-                    <button>Like Story</button>
+                    <img src=<%=story.getImagePath()%>>
+                    <h3 style="color:black"><%=story.getTitle()%></h3>
+                    <h5 style="color:black">Written by : <%=story.getWriter()%></h5>
+                    <h5 style="color:black">Views : <%=story.getViews()%></h5>
+                    <h5 style="color:black">Likes : <%=story.getLikes()%></h5>
+                    <h5 style="color:black">Rating : <%=story.getAvgRating()%></h5>
+                    <li></li>
+                    <p><%=story.getDescription()%></p>
+
+                    <a href=viewStory.jsp>
+                        <button class="button1">Read now</button>
+                    </a>
+
                 </div>
 
+                <%
+                    }//end for     
+                %>
+
             </div>
+
 
         </section>
     </body>
