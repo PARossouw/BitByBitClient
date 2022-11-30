@@ -29,7 +29,7 @@ public class RestClientStory_Transaction {
     
     
     
-     public smsreq approvePendingStory(User editor, Story story) throws JsonProcessingException {
+     public String approvePendingStory(User editor, Story story) throws JsonProcessingException {
         String uri = url + "/approve";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
@@ -42,7 +42,7 @@ public class RestClientStory_Transaction {
         
         
         
-        return response.readEntity(smsreq.class);
+        return response.readEntity(String.class);
         
         
 
