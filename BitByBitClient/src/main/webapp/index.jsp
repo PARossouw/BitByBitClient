@@ -55,8 +55,8 @@
                     <nav>
                         <ul class="browse">
                             <li class="bbh">Browse</li>
-                            <form action="Story.jsp" method="get">      
-                                <input class="button1" name="submit" type="submit" value="Featured"><br><br>
+                            <form action="StoryServlet" method="get">      
+                                <input class="button1" name="submit" type="submit" value="Refresh Stories"><br><br>
                                 <input class="button1" name="submit" type="submit" value="Your Preffered categories"><br><br>
                                 <input class="button1" name="submit" type="submit" value="Your liked stories"><br><br>
                             </form>
@@ -90,10 +90,12 @@
                 
                 <%
                 RestClientStory rcs = new RestClientStory("http://localhost:8080/RIP/RIP");
-                List<Story> stories = (List<Story>) request.getAttribute("Stories");
-                if(stories == null){
+                List<Story> stories = new ArrayList<>();
+                stories = (List<Story>) request.getAttribute("stories");
+                //List<Story> stories = null;
+                //if(stories == null){
                     stories = rcs.getStoriesForStoryOfTheDay();
-                }
+                //}
                 if(stories.size()<1){
                     %>
                     <div>Sorry, no stories were found</div>
