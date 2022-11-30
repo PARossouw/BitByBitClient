@@ -20,7 +20,7 @@
     <body>
         <jsp:include page="header.jsp"></jsp:include>
 
-        <body style="background-color:aquamarine;">
+    <body style="background-color:#666666;">
             <form action="StoryServlet" method="post" enctype="multipart/form-data">
                 <h1 style="color:black">Edit a short story</h1>
 
@@ -55,7 +55,7 @@ String createStoryOutcome = (String) request.getAttribute("createStory");
 
             <label for="text">Story Title</label>
             <br>
-            <textarea id="text" name="StoryTitle" rows="2" cols="80" ><%=title%></textarea >
+            <textarea id="text" name="StoryTitle" rows="2" cols="80"  ><%=title%></textarea >
             <br/>
 
             <label for="text">Story Description</label>
