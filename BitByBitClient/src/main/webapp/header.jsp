@@ -1,4 +1,5 @@
 <%@page import="User.Model.User"%>
+<%@page import="jakarta.servlet.http.HttpSession"%>
 <html>
     <head>
         <title>Readers Are Innovators</title>
@@ -29,11 +30,6 @@
                     <button type="button">Refer a Friend</button>
                 </li>
                 <li>
-                    <form action="UserServlet" method="get">
-                        <input class="button1" name="submit" type="submit" value="Profile">
-                    </form>
-                </li>
-                <li>
                     <form action="StoryServlet" method="get">
                         <input class="button1" name="submit" type="submit" value="Review Story">
                     </form>
@@ -53,8 +49,8 @@
                 <!-- Don't add new buttons below this line it will break the Login button-->
 
                 <%
-                User userLoggedIn = (User) session.getAttribute("loggedInUser");
-                    
+                User userLoggedIn = (User) session.getAttribute("user");
+                
                 if(userLoggedIn == null) {
                 %>
                 <li class="same">
@@ -72,7 +68,7 @@
                     </form>
                 </li>
                 <%} else {%>
-                <li>
+                <li class="same">
                     <form action="StoryServlet" method="get">
                         <input class="button1" name="submit" type="submit" value="Profile">
                     </form>

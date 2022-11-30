@@ -199,8 +199,12 @@ return story;
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri).resolveTemplate("readerID", reader.getUserID());
         
-        List<Story> stories = null;
-        stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
+        List<Story> stories = new ArrayList(
+                Arrays.asList(
+                        mapper.readValue(
+                                webTarget.request().accept(
+                                        MediaType.APPLICATION_JSON).get(
+                                                String.class), Story[].class)));
         
         return stories;
     }
