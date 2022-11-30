@@ -303,6 +303,7 @@ public class UserServlet extends HttpServlet {
                 
                 break;
 
+
                 Reader readerTest = new Reader();
                 readerTest.setUserID(887);
 
@@ -349,7 +350,7 @@ public class UserServlet extends HttpServlet {
                 rd1.forward(request, response);
 
                 break;
-                
+     
             case "Block Selected Writers" :
                 String []results = request.getParameterValues("results");
 
@@ -370,6 +371,34 @@ public class UserServlet extends HttpServlet {
                 RequestDispatcher rd2 = request.getRequestDispatcher("BlockWriter.jsp");
 
                 rd2.forward(request, response);
+
+                break;
+                
+            case "ReferFriend" :
+                
+                String phoneNumber = (String) request.getParameter("phoneNumber");
+                
+                //User user = loggedInUser;
+                //String x = loggedInUser.getUsername();
+                
+                User user = (User)session.getAttribute("user");
+                String x = user.getUsername();
+                
+                //String [] reply = new String [2];
+                //reply = restClientUser.referFriend(user, phoneNumber);
+                
+                
+                
+                request.setAttribute("message", x);
+                
+                RequestDispatcher rd4 = request.getRequestDispatcher("ReferFriend.jsp");
+
+                rd4.forward(request, response);
+                
+                
+                
+                
+                
 
                 break;
 
