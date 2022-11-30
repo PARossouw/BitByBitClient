@@ -84,11 +84,11 @@ public class StoryServlet extends HttpServlet {
 
         switch (request.getParameter("submit")) {
 
-            case ("Featured"):
-                List<Story> featuredStories = new ArrayList<>();
-                featuredStories = restClientStory.getStoriesForStoryOfTheDay();
-                
-                request.setAttribute("stories", featuredStories);
+            case ("Refresh Stories"):
+//                List<Story> featuredStories = new ArrayList<>();
+//                featuredStories = restClientStory.getStoriesForStoryOfTheDay();
+//                
+//                request.setAttribute("stories", featuredStories);
                 RequestDispatcher rdFeatured = request.getRequestDispatcher("index.jsp");
                 rdFeatured.forward(request, response);
                 
@@ -98,7 +98,7 @@ public class StoryServlet extends HttpServlet {
                 List<Story> prefferedStories = new ArrayList<>();
                 HttpSession userSession = request.getSession();
                 Reader reader = (Reader) userSession.getAttribute("loggedInUser");
-                featuredStories = restClientStory.searchStoriesByCategories(reader);
+                prefferedStories = restClientStory.searchStoriesByCategories(reader);
                 
                 request.setAttribute("stories", prefferedStories);
                 RequestDispatcher rdPreffered = request.getRequestDispatcher("index.jsp");
@@ -110,7 +110,7 @@ public class StoryServlet extends HttpServlet {
                 List<Story> likedStories = new ArrayList<>();
                 HttpSession userSession2 = request.getSession();
                 User user = (User) userSession2.getAttribute("loggedInUser");
-                featuredStories = restClientStory.viewLikedStories(user);
+                likedStories = restClientStory.viewLikedStories(user.getUserID());
                 
                 request.setAttribute("stories", likedStories);
                 RequestDispatcher rdLiked = request.getRequestDispatcher("index.jsp");

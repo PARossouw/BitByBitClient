@@ -44,13 +44,8 @@ public class RestClientStory {
         webTarget = restClient.target(uri).resolveTemplate("reader", reader);
         List<Story> stories = null;
         stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
-        
+
         return stories;
-        
-
-       
-        
-
 
 //        Response response = null;
 //        
@@ -193,15 +188,14 @@ public class RestClientStory {
 
         return stories;
     }
-    
-     public String turnOffComments(Story story) throws JsonProcessingException {
+
+    public String turnOffComments(Story story) throws JsonProcessingException {
         String uri = url + "/turnOffComments";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
         Response response = null;
         response = webTarget.request().post(Entity.json(toJsonString(story)));
         return response.readEntity(String.class);
-
 
     }
 
