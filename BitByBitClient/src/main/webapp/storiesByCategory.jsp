@@ -13,11 +13,7 @@
         <link rel="stylesheet" href="custom.css">
     </head>
     <body>
-        <jsp:include page="header.jsp"></jsp:include>
-            <section class="banner" background-img src="images/h_bg1.jpg">
-
-            </section>
-
+            
             <section class="main_content">
 
                 <div>

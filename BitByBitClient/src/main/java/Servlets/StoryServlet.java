@@ -84,6 +84,40 @@ public class StoryServlet extends HttpServlet {
 
         switch (request.getParameter("submit")) {
 
+            case ("Featured"):
+                List<Story> featuredStories = new ArrayList<>();
+                featuredStories = restClientStory.getStoriesForStoryOfTheDay();
+                
+                request.setAttribute("stories", featuredStories);
+                RequestDispatcher rdFeatured = request.getRequestDispatcher("index.jsp");
+                rdFeatured.forward(request, response);
+                
+                break;
+                
+            case ("Your Preffered categories"):
+                List<Story> prefferedStories = new ArrayList<>();
+                HttpSession userSession = request.getSession();
+                Reader reader = (Reader) userSession.getAttribute("loggedInUser");
+                featuredStories = restClientStory.searchStoriesByCategories(reader);
+                
+                request.setAttribute("stories", prefferedStories);
+                RequestDispatcher rdPreffered = request.getRequestDispatcher("index.jsp");
+                rdPreffered.forward(request, response);
+                
+                break;
+                
+            case ("Your liked stories"):
+                List<Story> likedStories = new ArrayList<>();
+                HttpSession userSession2 = request.getSession();
+                User user = (User) userSession2.getAttribute("loggedInUser");
+                featuredStories = restClientStory.viewLikedStories(user);
+                
+                request.setAttribute("stories", likedStories);
+                RequestDispatcher rdLiked = request.getRequestDispatcher("index.jsp");
+                rdLiked.forward(request, response);
+                
+                break;
+                  
             case ("Review Story"):
 
                 storyReviewList = restClientStory.storyReview();
@@ -475,6 +509,18 @@ public class StoryServlet extends HttpServlet {
                 rdRate.forward(request, response);
                 break;
 
+            case ("Search for Story"):
+                
+                List<Story> stories = new ArrayList<>();
+                String searchText = request.getParameter("Search for Story");
+                stories = restClientStory.searchForStory(searchText);
+                
+                request.setAttribute("stories", stories);
+                RequestDispatcher rdSearch = request.getRequestDispatcher("index.jsp");
+                rdSearch.forward(request, response);
+                
+                break;
+                
             case ("Search"):
 
                 List<Category> allCategories = new ArrayList<>();
@@ -488,8 +534,12 @@ public class StoryServlet extends HttpServlet {
                     for (int i = 0; i < checkedBoxes.length; i++) {
                         searchByCategories.add(allCategories.get(Integer.parseInt((String) checkedBoxes[i])));
                     }
+                    
+                    Reader reader1 = new Reader();
+                    reader1.setPreferredCategories(searchByCategories);
+                    
                     List<Story> retrievedStories = new ArrayList<>();
-                    retrievedStories = restClientStory.searchStoriesByCategories(searchByCategories);
+                    retrievedStories = restClientStory.searchStoriesByCategories(reader1);
                     request.setAttribute("stories", retrievedStories);
                     RequestDispatcher rd2 = request.getRequestDispatcher("storiesByCategory.jsp");
                     rd2.forward(request, response);
