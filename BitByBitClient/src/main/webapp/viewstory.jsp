@@ -15,7 +15,7 @@
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-        <body style="background-color:aquamarine;">
+    <body style="background-color:whitesmoke">
 
         <%
                     Story story = (Story) request.getAttribute("story");
@@ -48,7 +48,7 @@
 
 
 
-        <h2 style="color:black"><%=title%></h2>
+         <p align="center"><h2 style="color:black"><%=title%></h2><p>
 
 
         <img src="book-stack.png" alt="Story of the day image">
@@ -56,13 +56,14 @@
 
 
 
+        <p align="center">
 
         <h5 style="color:black">Author : <%=writer%></h5>
         <h5 style="color:black"><%=rating%></h5>
         <h5 style="color:black"><%=views%></h5>
         <h5 style="color:black"><%=likes%></h5>
         <h5 style="color:black"><%=description%></h5>
-
+ <p>
 
         <%
  String responseMessageRegister = (String) request.getAttribute("likes");
@@ -106,6 +107,8 @@ String userToComment = (String) request.getAttribute("optsToComment");
             if(userToComment != null) {
         %>
         <div>
+            <p align="center">
+            
             <form action="StoryServlet" method="post">
                 <input class="button1" name="story_id" type="hidden" value="<%=storyID%>">
                 <label for="text">Please enter a comment below</label>
@@ -114,6 +117,7 @@ String userToComment = (String) request.getAttribute("optsToComment");
                 <br/>
                 <input class="button1" name="submit" type="submit" value="SubmitComment">
             </form>
+            <p>
 
         </div>
         <%
@@ -125,22 +129,15 @@ String userToComment = (String) request.getAttribute("optsToComment");
 
 
         <form action="StoryServlet" method="post">
-
             <input class="button1" name="story_id" type="hidden" value="<%=storyID%>">
             <input class="button1" name="submit" type="submit" value="Like">
             <input class="button1" name="submit" type="submit" value="Comment">
-           
-
-
         </form>
 
 
         <form action="StoryServlet" method="get">
-
             <input class="button1" name="story_id" type="hidden" value="<%=storyID%>">
             <input class="button1" name="submit" type="submit" value="View Previous Comments">
-
-
         </form>
 
 

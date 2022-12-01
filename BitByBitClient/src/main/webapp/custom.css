@@ -31,6 +31,21 @@ body{
     background-color: #f2f2f2;
 }
 
+#outer_wrapper {
+            overflow: scroll;
+            width:100%;
+        }
+        #outer_wrapper #inner_wrapper {
+            width:20000px; /* If you have more elements, increase the width accordingly */
+        }
+        #outer_wrapper #inner_wrapper div.box { /* Define the properties of inner block */
+            width: 400px;
+            height:300px;
+            float: left;
+            margin: 0 4px 0 0;
+            border:1px grey solid;
+        }
+
 .nav_logo{
     width: 30px;
     height: 30px;

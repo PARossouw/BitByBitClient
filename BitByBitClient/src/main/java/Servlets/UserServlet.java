@@ -131,6 +131,7 @@ public class UserServlet extends HttpServlet {
                 User userCheck = new User();
                 User userFeedback = new User();
 
+              
                 String usernameOrEmail = (String) request.getParameter("UsernameOrEmail");
                 String password = (String) request.getParameter("Password");
 
@@ -140,25 +141,20 @@ public class UserServlet extends HttpServlet {
                 } else {
                     userCheck.setUsername(usernameOrEmail);
                 }
-
                 userCheck.setPassword(password);
-
                 userFeedback = restClientUser.login(userCheck);
 
                 if (userFeedback != null) {
                     session = request.getSession(true);
-
                     session.setAttribute("user", userFeedback);
 
 //                    this.loggedInUser = (User) session.getAttribute("user");
                     this.loggedInUser = new User();
                     this.loggedInUser = userFeedback;
-
                     request.setAttribute("loggedInUser", loggedInUser);
                     RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-
                     rd.forward(request, response);
-
+                    
                 } else {
                     String msg2 = "Login failed, please try again.";
                     request.setAttribute("message", msg2);
@@ -175,10 +171,6 @@ public class UserServlet extends HttpServlet {
 
                 List<Category> categoryList = new ArrayList<>();
                 categoryList = restClientCategory.displayAllCategories();
-
-                //categoryList.add("Horror");
-                //categoryList.add("Comedy");
-                //categoryList.add("Fiction");
                 String usernameRegister = (String) request.getParameter("Username");
                 String emailRegister = (String) request.getParameter("Email");
                 String phoneRegister = (String) request.getParameter("PhoneNumber");

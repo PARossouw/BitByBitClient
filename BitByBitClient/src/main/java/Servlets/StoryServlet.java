@@ -141,10 +141,13 @@ public class StoryServlet extends HttpServlet {
                 rd.forward(request, response);
                 break;
 
-            case ("View Story Get"):
+            case ("Read Story"):
                 storyBeingRead = new Story();
 
-                String storyIDToGet = "4";
+                String storyIDCommentSubmit = (String) request.getParameter("story_id");
+                //String storyIDToGet = "4";
+                String storyIDToGet = storyIDCommentSubmit;
+
                 storyBeingRead = restClientStory.retrieveStoryGet(storyIDToGet);
                 //story.setStoryID(22);
                 request.setAttribute("story", this.storyBeingRead);
@@ -462,10 +465,6 @@ public class StoryServlet extends HttpServlet {
 
                 request.setAttribute("story", storyBeingRead);
 
-//                Story storyView3 = new Story();
-//                int storyIDComment = Integer.parseInt((String) request.getParameter("story_id"));
-//                storyView3.setStoryID(storyIDComment);
-                //this.storyView = restClientStory.retrieveStory(storyView3);
                 request.setAttribute("story", this.storyBeingRead);
 
                 session.getAttribute("user");

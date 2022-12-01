@@ -25,9 +25,12 @@
         <jsp:include page="header.jsp"></jsp:include>
 
         <body style="background-color:whitesmoke">
+            
             <p style="text-align:center;">  <img class="center" src="images/pexels-lisa-fotios-851213.jpg" alt="Contribute a story" width="700" height="300"> </p>
+            
+            
             <form action="StoryServlet" method="post" enctype="multipart/form-data">
-                <p style="text-align:center;">>  <h1 style="color:black" style="font-family:'Aileron'" >Edit a short story</h1> </p>
+                <p style="text-align:center;">  <h1 style="color:black" style="font-family:'Aileron'" >Edit a short story</h1> </p>
 
 
 
