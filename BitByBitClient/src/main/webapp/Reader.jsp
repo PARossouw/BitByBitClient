@@ -17,6 +17,10 @@
             <a href="ReferFriend.jsp">
                 <input class="button1" name="submit" type="submit" value="Refer a Friend">
             </a>
+            <form action="StoryServlet" method="get">
+                <input class="button1" name="submit" type="submit" value="Create Story">
+                <input class="button1" name="submit" type="submit" value="View Story Get">
+            </form>
             <div class="login-form">
                 <h4 style="color:black">Your Likes</h4>
                 <%
