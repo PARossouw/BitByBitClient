@@ -77,7 +77,8 @@
                 }
             %>
 
-            <form action="StoryServlet" method="post" style="inline-blockwidth: 75%">
+            <form action="StoryServlet" method="post" style="inline-block width: 75%">
+
                 <input type="text" class="form" placeholder="Story title or author">
                 <input class="button1" name="submit" type="submit" value=" Search for Story">
             </form>
@@ -151,6 +152,7 @@
                 </div>
 
             </div>
+
             <%
                 }//end else
             %>
