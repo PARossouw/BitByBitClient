@@ -2,7 +2,7 @@
     content: "";
     display: table;
     clear: both;
-    inline-block;
+    inline-block
 }
 
 div.scrollmenu {
@@ -45,6 +45,8 @@ body{
     width: 100%;
     height: 10%;
 }
+
+
 
 .header ul{
     margin: 0;
@@ -192,6 +194,46 @@ body{
     margin: 0;
     background-image: url(images/gradient.png);
 }
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.horizontal-scroll-wrapper {
+  width: 100px;
+  height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.horizontal-scroll-wrapper > div {
+  width: 100px;
+  height: 100px;
+}
+
+.horizontal-scroll-wrapper {
+  
+  transform: rotate(-90deg);
+  transform-origin: right top;
+}
+
+.horizontal-scroll-wrapper > div {
+  
+  transform: rotate(90deg);
+  transform-origin: right top;
+}
+
+.horizontal-scroll-wrapper {
+  
+  transform:rotate(-90deg) translateY(-100px);
+  
+}
+
+
+
 
 .main_content{
     height: 75%;
