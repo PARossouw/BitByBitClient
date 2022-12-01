@@ -38,7 +38,7 @@ public class RestClientStory {
     }
 
     public List<Story> searchStoriesByCategories(User reader) throws JsonProcessingException {
-        String uri = url + "/search/categories/{reader})";
+        String uri = url + "/search/categories/{reader}";
         restClient = ClientBuilder.newClient();
 
         webTarget = restClient.target(uri).resolveTemplate("reader", reader.getUserID());
@@ -204,6 +204,16 @@ public class RestClientStory {
 
     }
 
+    public List<Story> getTop20StoriesForMonth() throws JsonProcessingException {
+        String uri = url + "/getTop20StoriesForMonth";
+        restClient = ClientBuilder.newClient();
+        webTarget = restClient.target(uri);
+        List<Story> stories = new ArrayList();
+        stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
+
+        return stories;
+    }
+    
     private String toJsonString(Object o) throws JsonProcessingException {
         return mapper.writeValueAsString(o);
     }
