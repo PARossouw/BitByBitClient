@@ -78,7 +78,7 @@
                 }
             %>
 
-            <form action="StoryServlet" method="post" style="inline-block;width: 75%">
+            <form action="StoryServlet" method="post" style="inline-block width: 75%">
                 <input type="text" class="form" placeholder="Story title or author">
                 <input class="button1" name="submit" type="submit" value=" Search for Story">
             </form>
@@ -134,11 +134,11 @@
             </div>
             
 
-            <div class="vid_list">
+            <div >
 
                 <%
-                RestClientStory rcs = new RestClientStory("http://localhost:8080/RIP/RIP");
-                List<Story> stories = new ArrayList<>();
+                rcs = new RestClientStory("http://localhost:8080/RIP/RIP");
+                stories = new ArrayList<>();
                 //List<Story> storiesMostRated = new ArrayList<>();
                 //stories = (List<Story>) request.getAttribute("stories");
                 //List<Story> stories = null;
