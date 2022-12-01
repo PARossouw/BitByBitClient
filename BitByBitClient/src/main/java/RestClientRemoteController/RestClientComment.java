@@ -62,7 +62,8 @@ List<Comment> comments;
             restClient = ClientBuilder.newClient();
             webTarget = restClient.target(uri).resolveTemplate("storySearch", storySearch);
 
-            comments = new ArrayList(Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Comment[].class)));
+            comments = new ArrayList(Arrays.asList(
+                    mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Comment[].class)));
 
             return comments;
         } catch (JsonProcessingException ex) {
