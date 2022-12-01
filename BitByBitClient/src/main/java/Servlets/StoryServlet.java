@@ -85,47 +85,6 @@ public class StoryServlet extends HttpServlet {
 
         switch (request.getParameter("submit")) {
 
-            case ("Refresh Stories"):
-//                List<Story> featuredStories = new ArrayList<>();
-//                featuredStories = restClientStory.getStoriesForStoryOfTheDay();
-//                
-//                request.setAttribute("stories", featuredStories);
-                RequestDispatcher rdFeatured = request.getRequestDispatcher("index.jsp");
-                rdFeatured.forward(request, response);
-                
-                break;
-                
-            case ("Your Preffered categories"):
-                //checking if this session object is null
-//                User userTEST = (User)session.getAttribute("user");
-                User userTEST = new User();
-                userTEST = (User)request.getSession(false).getAttribute("user");
-                
-                
-                List<Story> prefferedStories = new ArrayList<>();
-                HttpSession userSession = request.getSession();
-                //User reader = (User) userSession.getAttribute("user");
-                //reader.getUsername();
-                prefferedStories = restClientStory.searchStoriesByCategories(userTEST);
-                
-                request.setAttribute("stories", prefferedStories);
-                RequestDispatcher rdPreffered = request.getRequestDispatcher("index.jsp");
-                rdPreffered.forward(request, response);
-                
-                break;
-                
-            case ("Your liked stories"):
-                List<Story> likedStories = new ArrayList<>();
-                HttpSession userSession2 = request.getSession();
-                User user = (User) userSession2.getAttribute("loggedInUser");
-                likedStories = restClientStory.viewLikedStories(user.getUserID());
-                
-                request.setAttribute("stories", likedStories);
-                RequestDispatcher rdLiked = request.getRequestDispatcher("index.jsp");
-                rdLiked.forward(request, response);
-                
-                break;
-                  
             case ("Review Story"):
 
                 storyReviewList = restClientStory.storyReview();
@@ -199,7 +158,7 @@ public class StoryServlet extends HttpServlet {
                 //storyBeingRead = new Story();
 
                // this.storyToReview.getStoryID();
-                String storyIDToGet1 = "4";
+                String storyIDToGet1 = "8";
                 this.storyBeingRead = restClientStory.retrieveStoryGet(storyIDToGet1);
 
                
@@ -243,13 +202,8 @@ public class StoryServlet extends HttpServlet {
                 categoryList = restClientCategory.displayAllCategories();
                 request.setAttribute("categoryList", categoryList);
                 
-
                 Category categoryCreate = new Category();
-
                 categoryCreate.setName("Horror");
-
-                
-
                 List<Category> categoryUserListCreate = new ArrayList<>();
                 //categoryUserList = this.storyBeingRead.getCategoryList();
                 
@@ -434,10 +388,8 @@ public class StoryServlet extends HttpServlet {
                     }
 
                 }
-               
-               newStoryToSave.setCategoryList(chosenNewCategoriesByUser);
-               
-                
+              
+               newStoryToSave.setCategoryList(chosenNewCategoriesByUser); 
                 newStoryToSave.setIsDraft(true);
                 newStoryToSave.setIsApproved(false);
                 newStoryToSave.setViews(0);
@@ -445,10 +397,7 @@ public class StoryServlet extends HttpServlet {
                 newStoryToSave.setAvgRating(0D);
    
                 String saveNewChanges = restClientStory.saveStory(newStoryToSave);
-                
-
                 request.setAttribute("createStory", saveNewChanges);
-
                 
 
                 // For Editor edits, this should direct to the Editor Approvval page again
@@ -460,22 +409,64 @@ public class StoryServlet extends HttpServlet {
                 
 
             case ("Submit For Review"):
-                Story storyToReview = new Story();
-                storyToReview.setStoryID(this.storyBeingRead.getStoryID());
-                storyToReview.setTitle((String) request.getParameter("StoryTitle"));
-                storyToReview.setDescription((String) request.getParameter("StoryDescription"));
-                storyToReview.setImagePath((String) request.getParameter("ImagePath"));
-                storyToReview.setBody((String) request.getParameter("StoryBody"));
-                storyToReview.setIsDraft(false);  // Not sure about this
-                storyToReview.setIsApproved(false);
+                Story storyToSubmit = new Story();
+                storyToSubmit.setStoryID(this.storyBeingRead.getStoryID());
+                storyToSubmit.setTitle((String) request.getParameter("StoryTitle"));
+                storyToSubmit.setDescription((String) request.getParameter("StoryDescription"));
+                storyToSubmit.setImagePath((String) request.getParameter("ImagePath"));
+                storyToSubmit.setBody((String) request.getParameter("StoryBody"));
+              
+                List<Category> chosenCategoriesByUserSubmit = new ArrayList<>();
+                
+                
+              
+                //adds user chosen categories to a list. 
+                String[] checkedBoxesSubmit = request.getParameterValues("category");
+
+                if (checkedBoxesSubmit.length > 0) {
+                    for (int i = 0; i < checkedBoxesSubmit.length; i++) {
+                        String chosenName = this.categoryList.get(Integer.parseInt((String) checkedBoxesSubmit[i])).getName();
+                        Category category = new Category();
+                        category.setName(chosenName);
+                        category.setCategoryID(Integer.parseInt((String) checkedBoxesSubmit[i]));
+                        chosenCategoriesByUserSubmit.add(category);
+
+                    }
+
+                }
+               
+               storyToSubmit.setCategoryList(chosenCategoriesByUserSubmit);
+               
+                
+                storyToSubmit.setIsDraft(false);
+                storyToSubmit.setIsApproved(false);
+                storyToSubmit.setViews(0);
+                storyToSubmit.setLikes(0);
+                storyToSubmit.setAvgRating(0D);
+   
+                String saveChangessubmit = restClientStory.saveStory(storyToSubmit);
+
+                request.setAttribute("createStory", saveChangessubmit);
+
+                
+                // For Editor edits, this should direct to the Editor Approvval page again
+                RequestDispatcher rdSaveChangesSubmit = request.getRequestDispatcher("index.jsp");
+                rdSaveChangesSubmit.forward(request, response);
+                break;
+                
+                
+                
+               /* 
 
                 // Getting the image data 
                 Part part = request.getPart("file");
                 String fileName = part.getSubmittedFileName();
 
                 String path = "/Users/tarunsing/Documents/Van Zyl /Files/" + fileName;
-                //String path = getServletContext().getRealPath("/"+"files"+File.separator+fileName);
                 InputStream is = part.getInputStream();
+                // End of getting the image **
+
+                String reviewMessage = restClientStory.saveStory(storyToReview);
 
              
                 String reviewMessage = restClientStory.submitCompletedStory(storyToReview);
@@ -494,6 +485,7 @@ public class StoryServlet extends HttpServlet {
                 RequestDispatcher rdSubmitForReview = request.getRequestDispatcher("index.jsp");
                 rdSubmitForReview.forward(request, response);
                 break;
+*/
 
             case ("Like"):
 
@@ -524,9 +516,6 @@ public class StoryServlet extends HttpServlet {
 
             case ("Comment"):
 
-//                Story storyView2 = new Story();
-//                String storyIDComment = (String) request.getParameter("story_id"); 
-                // storyView2 = restClientStory.retrieveStoryGet(storyIDComment);
                 request.setAttribute("story", storyBeingRead);
 
                 Story storyView3 = new Story();
@@ -539,24 +528,7 @@ public class StoryServlet extends HttpServlet {
                 request.setAttribute("optsToComment", "add a comment");
 
                 List<Comment> allStoryComments = new ArrayList<>();
-// 
 
-                // Test Data
-//                Comment testComment = new Comment();
-//                testComment.setCommentBody("Good StoryLine");
-//
-//                Comment testComment2 = new Comment();
-//                testComment2.setCommentBody("Nice Plot twist");
-//
-//                Comment testComment3 = new Comment();
-//                testComment3.setCommentBody("Long and insightful");
-//
-//                allStoryComments.add(testComment);
-//                allStoryComments.add(testComment2);
-//                allStoryComments.add(testComment3);
-                //>> End of Test Data 
-                //allStoryComments = restClientComment.getAllComments(storyView2);
-//                request.setAttribute("comment", allStoryComments);
                 RequestDispatcher rdComment = request.getRequestDispatcher("viewstory.jsp");
                 rdComment.forward(request, response);
                 break;
@@ -591,11 +563,17 @@ public class StoryServlet extends HttpServlet {
                 int storyIDRate = Integer.parseInt((String) request.getParameter("story_id"));
                 storyViewRate.setStoryID(storyIDRate);
                 //  this.storyView = restClientStory.retrieveStory(storyViewRate);
-                Reader loggedInReader = (Reader) session.getAttribute("user");
-                // restClientRating.rateStory(this.storyView, loggedInReader, userRating);
+                //Reader loggedInReader1 = (Reader) session.getAttribute("user");
+                Reader readerLikeTest = new Reader();
+                readerLikeTest.setUserID(627);
+                
+                
+                restClientRating.rateStory(this.storyView, readerLikeTest, userRating);
 
                 request.setAttribute("story", this.storyView);
-                request.setAttribute("likes", "You have Rated the story " + userRating + " Star");
+                request.setAttribute("likes", "You have rated the story.");
+                
+                
                 RequestDispatcher rdRate = request.getRequestDispatcher("viewstory.jsp");
                 rdRate.forward(request, response);
                 break;

@@ -241,8 +241,16 @@ public class UserServlet extends HttpServlet {
                     request.setAttribute("messageRegister", msg2);
                     request.setAttribute("categoryList", categoryList);
 
-                    RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
-                    rd.forward(request, response);
+                    // Registration was successful. Please log in above.
+                    if (msg2.equals("Registration was successful. Please log in above.")) {
+                        RequestDispatcher rd = request.getRequestDispatcher("prefferedCategories.jsp");
+//                    prefferedCategories.jsp
+                        rd.forward(request, response);
+                    } else {
+                        RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
+//                    prefferedCategories.jsp
+                        rd.forward(request, response);
+                    }
                 }
                 break;
 
