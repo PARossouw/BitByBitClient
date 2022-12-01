@@ -2,34 +2,6 @@
 <%@page import="Story.Model.Story;"%>
 <!DOCTYPE html>
 <html>
-    
-
-    
-    
-    
-    <%
-        String message = (String) request.getAttribute("message");
-        Story story = (Story) request.getAttribute("storyReview");
-        
-        if(message != null){
-        
-    %>
-    <h3 style = "color:green"><%=message%></h3>
-    <%
-        
-    }if(story != null){
-    
-    String writer = story.getWriter();
-    String title = story.getTitle();
-    String body = story.getBody();
-        
-    
-    
-    
-    
-    %>
-
-
     <head>
         <title>Readers Are Innovators</title>
         <link rel="stylesheet" href="normalized.css">
@@ -38,19 +10,42 @@
     </head>
 
     <body>
-        <jsp:include page="header.jsp"></jsp:include>
-            <section class="header" background-img src="images/storyOfTheDay.jpg">
+        <%
+        String message = (String) request.getAttribute("message");
+        Story story = (Story) request.getAttribute("storyReview");
+        if(message != null){
+        %>
+        <h3 style = "color:green"><%=message%></h3>
+        <%
+        }if(story != null){
+        String writer = story.getWriter();
+        String title = story.getTitle();
+        String body = story.getBody();
+        %>
 
-                <div class="h_div">
-            <h1>Approve and Reject Stories</h1>
+        <section class="banner_common">
 
-                    <section class="main_content">
-                        <div class="side_nav">
-                        </div>
+            <form action="StoryServlet" method="get">
+                <input class="button1" name="submit" type="submit" value="Review Story">
+            </form>
+            <form action="StoryServlet" method="get">
+                <input class="button1" name="submit" type="submit" value="Choose Story of The Day">
+            </form>
+            <!--<form action="UserServlet" method="get">-->
+            <a href="BlockWriter.jsp">
+                <input class="button1" name="submit" type="submit" value="Block Writer">
+            </a>
+            <!--</form>-->
+            <div class="h_div">
+                <h1>Approve and Reject Stories</h1>
 
-                        <div>
-                            <img src=images/title.png>
-                            <h3 style = "color:black"> Writer: <%=writer%></h3>
+                <section class="main_content">
+                    <div class="side_nav">
+                    </div>
+
+                    <div>
+                        <img src=images/title.png>
+                        <h3 style = "color:black"> Writer: <%=writer%></h3>
                         <p style = "color:black">Title: <%=title%></br> </p>
                         <p style = "color:black">Story body: <%=body%></br> </p>
 
@@ -79,9 +74,9 @@
 
 
                         %>
-<!--                        <br>
-                        <h1>Choose a Story of the day</h1>-->
-                        
+                        <!--                        <br>
+                                                <h1>Choose a Story of the day</h1>-->
+
                     </div>
 
 

@@ -15,41 +15,24 @@
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-
             <section class="banner">
                 <div>
                     <h1>Welcome to Readers are Innovators</h1>
                     <p style="color:black">Making reading accessible to all.</p><br>
                     <form action="StoryServlet" method="post">
-
-
                         <input class="button1" name="submit" type="submit" value="Edit Story">
-
-
-
                         <input class="button1" name="submit" type="submit" value="Story of the Day">
-
                         <a href=DailyStory.jsp>
                             <button class="button2">View All Stories</button>
                         </a>
                     </form>
-
                     <form action="StoryServlet" method="get">
-
                         <input class="button1" name="submit" type="submit" value="View Story Get">
-
                         <input class="button1" name="submit" type="submit" value="Display Story To Edit">
 
                         <input class="button1" name="submit" type="submit" value="Create Story">
 
                     </form>
-
-
-
-
-
-
-
                 </div>
             </section>
 
@@ -71,11 +54,9 @@
                 }
             %>
 
-            <form action="StoryServlet" method="post">
-
+            <form action="StoryServlet" method="post" style="inline-block;width: 75%">
                 <input type="text" class="form" placeholder="Story title or author">
                 <input class="button1" name="submit" type="submit" value=" Search for Story">
-
             </form>
 
             <div class="vid_list">
@@ -209,8 +190,7 @@
 
 
 </section>
+<jsp:include page="footer.jsp"></jsp:include>
 </body>
 
 </html>
-
-
