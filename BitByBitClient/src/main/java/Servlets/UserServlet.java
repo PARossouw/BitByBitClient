@@ -27,7 +27,6 @@ public class UserServlet extends HttpServlet {
     private static RestClientCategory restClientCategory;
     private static RestClientStory restClientStory;
     public static User loggedInUser ;
-    public static User loggedInUser;
     private List<Writer> writersSearched;
 
     public UserServlet() {
@@ -289,7 +288,6 @@ public class UserServlet extends HttpServlet {
 
                 restClientUser.addPreferredCategoriesToUser(reader, prefferedCategories);
 
-                break;
 
 
                 Reader readerTest = new Reader();
@@ -342,8 +340,6 @@ public class UserServlet extends HttpServlet {
             case "Block Selected Writers" :
                 String []results = request.getParameterValues("results");
 
-            case "Block Selected Writers":
-                String[] results = request.getParameterValues("results");
 
                 Writer w = new Writer();
                 String writerResults = "";

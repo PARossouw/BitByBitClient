@@ -210,7 +210,7 @@ public class RestClientStory {
         webTarget = restClient.target(uri);
         List<Story> stories = new ArrayList();
         stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
-
+        
         return stories;
     }
     
