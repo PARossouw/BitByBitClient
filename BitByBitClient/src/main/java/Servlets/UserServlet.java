@@ -281,7 +281,22 @@ public class UserServlet extends HttpServlet {
 
                 restClientUser.addPreferredCategoriesToUser(reader, prefferedCategories);
 
+
+                Reader readerTest = new Reader();
+                readerTest.setUserID(887);
+
+                //  restClientUser.addPreferredCategoriesToUser(readerTest, prefferedCategories);
+                request.setAttribute("messageRegister", "Registration Successful. Please login above.");
+                RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
+
+                rd.forward(request, response);
+
+
+                
+
                 break;
+
+
 
             case "Block Selected Writers":
                 String[] results = request.getParameterValues("results");

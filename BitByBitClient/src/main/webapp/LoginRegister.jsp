@@ -59,8 +59,14 @@
                 <input type="text" class="form" name ="Username" placeholder="Username">
                 <br></br>
 
+
+
+                
+  
+
                 <input type="text" class="form" name ="Email" placeholder="Email">
                 <br></br>
+
 
                 <input type="text" class="form" name ="PhoneNumber" placeholder="Phone Number">
                 <br></br>
