@@ -27,6 +27,7 @@
 
             <form action="StoryServlet" method="get">
                 <input class="button1" name="submit" type="submit" value="Review Story">
+                <input class="button1" name="submit" type="submit" value="Display Story To Edit">
             </form>
             <form action="StoryServlet" method="get">
                 <input class="button1" name="submit" type="submit" value="Choose Story of The Day">

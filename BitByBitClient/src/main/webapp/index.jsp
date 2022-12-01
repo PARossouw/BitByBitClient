@@ -13,28 +13,6 @@
         <link rel="stylesheet" href="custom.css">
     </head>
 
-    <style type="text/css">
-        #outer_wrapper {
-            overflow: scroll;
-            width:100%;
-            
-        }
-        #outer_wrapper #inner_wrapper {
-            width:20000px; /* If you have more elements, increase the width accordingly */
-        }
-        #outer_wrapper #inner_wrapper div.box { /* Define the properties of inner block */
-            width: 400px;
-            height:300px;
-            float: left;
-            margin: 0 4px 0 0;
-            border:1px grey solid;
-        }
-    </style>
-
-
-
-
-
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
@@ -51,9 +29,6 @@
 -->                    </form>
                     <form action="StoryServlet" method="get">
                         <input class="button1" name="submit" type="submit" value="Story of the Day">
-                        <input class="button1" name="submit" type="submit" value="Display Story To Edit">
-
-                        <input class="button1" name="submit" type="submit" value="Create Story">
 
                     </form>
                 </div>
