@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<%@page import="Story.Model.Story;"%>
-<%@page import="User.Model.User;"%>
-<%@page import="Category.Model.Category;" %>
+<%@page import="Story.Model.Story"%>
+<%@page import="User.Model.User"%>
+<%@page import="Category.Model.Category" %>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="RestClientRemoteController.RestClientStory"%>
 <html>
-    <head>
+    <head>c
         <title>Readers Are Innovators</title>
         <link rel="stylesheet" href="normalized.css">
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
@@ -19,9 +19,11 @@
             width:100%;
         }
         #outer_wrapper #inner_wrapper {
+
             width:20000px; /* If you have more elements, increase the width accordingly /
         }
         #outer_wrapper #inner_wrapper div.box { / Define the properties of inner block */
+
             width: 400px;
             height:300px;
             float: left;
@@ -32,47 +34,28 @@
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-
             <section class="banner">
                 <div>
                     <h1>Welcome to Readers are Innovators</h1>
                     <p style="color:black">Making reading accessible to all.</p><br>
                     <form action="StoryServlet" method="post">
-
-
                         <input class="button1" name="submit" type="submit" value="Edit Story">
-
-
-
                         <input class="button1" name="submit" type="submit" value="Story of the Day">
-
                         <a href=DailyStory.jsp>
                             <button class="button2">View All Stories</button>
                         </a>
                     </form>
-
                     <form action="StoryServlet" method="get">
-
                         <input class="button1" name="submit" type="submit" value="View Story Get">
-
                         <input class="button1" name="submit" type="submit" value="Display Story To Edit">
 
                         <input class="button1" name="submit" type="submit" value="Create Story">
 
                     </form>
-
-
-
-
-
-
-
                 </div>
             </section>
 
             <section class="main_content">
-
-
 
             <%
 
@@ -88,11 +71,9 @@
                 }
             %>
 
-            <form action="StoryServlet" method="post">
-
+            <form action="StoryServlet" method="post" style="inline-block;width: 75%">
                 <input type="text" class="form" placeholder="Story title or author">
                 <input class="button1" name="submit" type="submit" value=" Search for Story">
-
             </form>
             <div id="outer_wrapper">
                 <div id="inner_wrapper">
@@ -153,8 +134,13 @@
 
                 </div>
             </div>
+
+			
                 <%----------------------------------------------------------------------------------------------------------------------------%>
-                <h3>Top 20 rated stories of the month</h3>
+				<div id="outer_wrapper">
+                <div id="inner_wrapper">
+
+			  <h3>Top 20 rated stories of the month</h3>
                 <%
                     if(storiesMostRated.size()<1){
                 %>
@@ -164,7 +150,8 @@
              for(Story story : storiesMostRated){
                 %>
 
-                <div>
+                <div class="box">
+
                     <li>
                         <img src=<%=story.getImagePath()%>>
                         <h3 style="color:black"><%=story.getTitle()%></h3>
@@ -178,13 +165,12 @@
                             <button class="button1">Read now</button>
                         </a>
                     </li>
-                </div>
 
                 <%
                     }//end for  
     }//end else
                 %>
-
+		</div>
             </div>
             <%----------------------------------------------------------------------------------------------------------------------------%>
 
@@ -192,5 +178,3 @@
     </body>
 
 </html>
-
-

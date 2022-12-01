@@ -38,7 +38,7 @@ public class RestClientStory {
     }
 
     public List<Story> searchStoriesByCategories(User reader) throws JsonProcessingException {
-        String uri = url + "/search/categories/{reader})";
+        String uri = url + "/search/categories/{reader}";
         restClient = ClientBuilder.newClient();
 
         webTarget = restClient.target(uri).resolveTemplate("reader", reader.getUserID());
