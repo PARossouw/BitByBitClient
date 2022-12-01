@@ -17,6 +17,9 @@
             <a href="ReferFriend.jsp">
                 <input class="button1" name="submit" type="submit" value="Refer a Friend">
             </a>
+            <form action="StoryServlet" method="post">
+                <input class="button1" name="submit" type="submit" value="Turn Off Comments">
+            </form>
             <div class="login-form">
                 <h4 style="color:black">Your Likes</h4>
                 <%
@@ -45,6 +48,32 @@
             </div>
             <div class="login-form">
                 <h4 style="color:black">Your Preferred Category</h4>
+                <%
+                List<Category> preferredCategories = (ArrayList<Category>)request.getAttribute("preferredCategories");
+                        
+                if(preferredCategories != null) {
+                    for(Category category : preferredCategories) {
+                %>
+                <tr>
+                    <td>
+                        <label style="color:black"><%=category.getName()%></label><br>
+                    </td>
+                </tr>
+                <%
+                    }
+                } else {
+                %>
+                <tr>
+                    <td>
+                        <label style="color:black">Here you can track all your preferred categories</label><br>
+                    </td>
+                </tr>
+                <%
+                }
+                %>
+            </div>
+            <div class="login-form">
+                <h4 style="color:black">Your Stories</h4>
                 <%
                 List<Category> preferredCategories = (ArrayList<Category>)request.getAttribute("preferredCategories");
                         

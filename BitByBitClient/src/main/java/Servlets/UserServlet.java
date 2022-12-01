@@ -26,7 +26,7 @@ public class UserServlet extends HttpServlet {
     private static RestClientUser restClientUser;
     private static RestClientCategory restClientCategory;
     private static RestClientStory restClientStory;
-    public static User loggedInUser ;
+    public static User loggedInUser;
     private List<Writer> writersSearched;
 
     public UserServlet() {
@@ -110,7 +110,7 @@ public class UserServlet extends HttpServlet {
                 request.setAttribute("preferredCategories", preferredCategories);
                 request.setAttribute("likedStories", likedStories);
                 request.setAttribute("user", loggedInUser);
-                
+
                 RequestDispatcher rd1 = request.getRequestDispatcher("User.jsp");
                 rd1.forward(request, response);
                 break;
@@ -147,15 +147,13 @@ public class UserServlet extends HttpServlet {
 
                 if (userFeedback != null) {
                     session = request.getSession(true);
-                    
-                    
+
                     session.setAttribute("user", userFeedback);
-                    
+
 //                    this.loggedInUser = (User) session.getAttribute("user");
-this.loggedInUser = new User();
+                    this.loggedInUser = new User();
                     this.loggedInUser = userFeedback;
-                    
-                    
+
                     request.setAttribute("loggedInUser", loggedInUser);
                     RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 
@@ -268,8 +266,6 @@ this.loggedInUser = new User();
                 }
                 String chosenCategories = "";
 
-
-
                 Reader reader = new Reader();
                 reader.setUsername((String) session.getAttribute("user"));
                 reader.setUserID(Integer.parseInt((String) session.getAttribute("userID")));
@@ -278,9 +274,9 @@ this.loggedInUser = new User();
                 restClientUser.addPreferredCategoriesToUser(reader, prefferedCategories);
 
                 break;
-                
-            case "Block Selected Writers" :
-                String []results = request.getParameterValues("results");
+
+            case "Block Selected Writers":
+                String[] results = request.getParameterValues("results");
 
                 Writer w = new Writer();
                 String writerResults = "";
@@ -291,39 +287,29 @@ this.loggedInUser = new User();
 //                }
                 writerResults = restClientUser.blockWriter(writersSearched.get(Integer.parseInt(results[0])));
 
-
                 request.setAttribute("writerResults", writerResults);
                 RequestDispatcher rd2 = request.getRequestDispatcher("BlockWriter.jsp");
 
                 rd2.forward(request, response);
 
                 break;
-                
-            case "ReferFriend" :
-                
+
+            case "ReferFriend":
+
                 String phoneNumber = (String) request.getParameter("phoneNumber");
-                
+
                 //User user = loggedInUser;
                 //String x = loggedInUser.getUsername();
-                
-                User user = (User)session.getAttribute("user");
+                User user = (User) session.getAttribute("user");
                 String x = user.getUsername();
-                
+
                 //String [] reply = new String [2];
                 //reply = restClientUser.referFriend(user, phoneNumber);
-                
-                
-                
                 request.setAttribute("message", x);
-                
+
                 RequestDispatcher rd4 = request.getRequestDispatcher("ReferFriend.jsp");
 
                 rd4.forward(request, response);
-                
-                
-                
-                
-                
 
                 break;
 
