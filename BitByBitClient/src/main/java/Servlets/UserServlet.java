@@ -290,15 +290,13 @@ public class UserServlet extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
 
                 rd.forward(request, response);
-
-
-                
-
                 break;
 
 
 
-
+            case "Block Selected Writers":
+                String[] results = request.getParameterValues("results");
+                
                 Writer w = new Writer();
                 String writerResults = "";
 //                for (int i = 0; i < writersSearched.size(); i++) {
