@@ -36,7 +36,7 @@ public class RestClientUser {
     }
 
     public User login(User user) throws JsonProcessingException {
-    public String login(User user) throws JsonProcessingException {
+    
         String uri = url + "/login";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
