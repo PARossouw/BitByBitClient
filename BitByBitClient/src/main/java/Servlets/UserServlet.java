@@ -26,7 +26,8 @@ public class UserServlet extends HttpServlet {
     private static RestClientUser restClientUser;
     private static RestClientCategory restClientCategory;
     private static RestClientStory restClientStory;
-    public static User loggedInUser;
+
+    public static User loggedInUser ;
     private List<Writer> writersSearched;
 
     public UserServlet() {
@@ -273,7 +274,6 @@ public class UserServlet extends HttpServlet {
 
                 restClientUser.addPreferredCategoriesToUser(reader, prefferedCategories);
 
-
                 Reader readerTest = new Reader();
                 readerTest.setUserID(887);
 
@@ -282,17 +282,13 @@ public class UserServlet extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
 
                 rd.forward(request, response);
-
-
-                
-
                 break;
 
 
 
             case "Block Selected Writers":
                 String[] results = request.getParameterValues("results");
-
+                
                 Writer w = new Writer();
                 String writerResults = "";
 //                for (int i = 0; i < writersSearched.size(); i++) {
