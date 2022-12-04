@@ -12,15 +12,19 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
         <link rel="stylesheet" href="custom.css">
     </head>
+    
+     <body style="background-color:#1c1c1c">
     <body>
+           <jsp:include page="header.jsp"></jsp:include>
+
+        <section class="main_content">
+<div>
             
-            <section class="main_content">
+                <p style="text-align:center;">  <img  src="images/pexels-steve-johnson-1269968.jpg" alt="Contribute a story" width="100%" height="400"> </p>
 
-                <div>
-
-                    <form action="StoryServlet" method="post">
-                        <div>
-                            <label for="Categories">Select the categories you wish to search by.</label>
+                <form action="StoryServlet" method="post">
+                    <div>
+                        <label for="Categories" style="color:white">Select the categories you wish to search by.</label>
 
                         <%
                             List<Category> categories = (ArrayList<Category>) request.getAttribute("categories");
@@ -40,7 +44,7 @@
                                 %>
                                 <td>
                                     <input type="checkbox" name="category" value="<%=i%>">
-                                    <label for="category" style="color:black"><%=categories.get(i).getName()%></label>
+                                    <label for="category" style="color:white"><%=categories.get(i).getName()%></label>
                                 </td>
 
                                 <%
@@ -52,46 +56,68 @@
                             %>
                         </table>
 
-                        <input class="button1" name="submit" type="submit" value="Search">
+                        <input class="buttonMainGreen" name="submit" type="submit" value="Search">
 
 
                     </div>
                 </form>
+
+</div>
+                
+                           
+                
+                
+                
+
                 <%
-                    List<Story> stories = (ArrayList<Story>) request.getAttribute("stories");
+                
+                    
+ 
+                                List<Story> stories = (ArrayList<Story>) request.getAttribute("storiesCat");
+                            
+                                if(stories != null && stories.size()>0){
+                                
+                                %>
+
+                                <div id="outer_wrapper">
+                
+                <div id="inner_wrapper">
+                                
+                                
+                                <%
+                                
+                                
+                                
+                                
+                                
+                                
+            for (Story story : stories){       
                 %>
 
-                <li></li>
-                <div class="story_list">
-                    <%
-                if(stories != null && stories.size()>0){
-                    for(Story story : stories){
-                    %>
-
-                    <div>
-                        <img src=<%=story.getImagePath()%>>
-                        <h3 style="color:black"><%=story.getTitle()%></h3>
-                        <h5 style="color:black">Written by : <%=story.getWriter()%></h5>
-                        <h5 style="color:black">Views : <%=story.getViews()%></h5>
-                        <h5 style="color:black">Likes : <%=story.getLikes()%></h5>
-                        <h5 style="color:black">Rating : <%=story.getAvgRating()%></h5>
-                        <li></li>
-                        <p><%=story.getDescription()%></p>
-
-                        <a href=viewStory.jsp>
-                            <button class="button1">Read now</button>
-                        </a>
-
-                    </div>
-
+                <div class="box">
+                     <p style="text-align:center;">  <img  src="images/pexels-pixabay-267586.jpg" alt="Contribute a story" width="365" height="170"> </p>
+                    <h3 style="color:white"><%=story.getTitle()%></h3>
+                    <h5 style="color:white">Written by : <%=story.getWriter()%></h5>
+                    <h5 style="color:white"><%=story.getDescription()%></h5>
+                    <form action="StoryServlet" method="get">
+                        <input class="buttonMain" name="story_id" type="hidden" value="<%=story.getStoryID()%>">
+                        <input class="buttonMain" name="submit" type="submit" value="Story Info">
+                    </form>
                 </div>
-                <%
-            }
-        }
-                %>
+
+                        <%}}%>
+
+                 </div>
+ </div>
+
+
+
+
+
 
 
 
         </section>
+                         <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>

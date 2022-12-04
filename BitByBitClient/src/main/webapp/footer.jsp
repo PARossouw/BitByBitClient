@@ -7,7 +7,7 @@
 </head>
 <footer class="footer">
     <div>
-        <p>
+        <p style="color:white">
             Copyright &copy; 2022 Readers Are Innovators<br>
             Created BitByBit
         </p>

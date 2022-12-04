@@ -16,13 +16,13 @@
                 </li>
                 <li>
                     <a href=index.jsp>
-                        <button class="button3">Home</button>
+                        <button class="buttonMainHeader">Home</button>
                     </a>
                 </li>
                 <li>
                     <form action="CategoryServlet" method="get">
                         <a href="storiesByCategories.jsp">
-                            <input class="button1" name="submit" type="submit" value="View stories by categories">
+                            <input class="buttonMainHeader" name="submit" type="submit" value="View stories by categories">
                         </a>
                     </form>
                 </li>
@@ -41,7 +41,7 @@
                 %>
                 <li class="same">
                     <a href=LoginRegister.jsp>
-                        <button type="button">Login/Register</button>
+                        <button type="button" class="buttonMainHeader">Login/Register</button>
                     </a>
                 </li>
                 <%
@@ -50,13 +50,13 @@
                 %>
                 <li class="same">
                     <form action="UserServlet" method="get">
-                        <input class="button1" name="submit" type="submit" value="Profile">
+                        <input class="buttonMainHeader" name="submit" type="submit" value="Profile">
                     </form>
                 </li>
                 <%} else {%>
                 <li class="same">
-                    <form action="StoryServlet" method="get">
-                        <input class="button1" name="submit" type="submit" value="Profile">
+                    <form action="UserServlet" method="get">
+                        <input class="buttonMainHeader" name="submit" type="submit" value="Profile">
                     </form>
                 </li>
                 <%

@@ -16,13 +16,16 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
         <link rel="stylesheet" href="custom.css">
     </head>
+    
+   
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
+         <p style="text-align:center;">  <img  src="images/pexels-steve-johnson-1843716.jpg" alt="Create a story" width="100%" height="400"> </p>
 
-        <body style="background-color:aquamarine;">
+    <body style="background-color:#1c1c1c">
             <form action="StoryServlet" method="post" enctype="multipart/form-data">
-                <h1 style="color:black">Edit a short story</h1>
+                
 
             <%
 String createStoryOutcome = (String) request.getAttribute("createStory");
@@ -37,37 +40,39 @@ String createStoryOutcome = (String) request.getAttribute("createStory");
                 }
             %>
 
-
-            <label for="text">Story Title</label>
+<p align="center">
+            <label for="text" style="color:white">Story Title</label>
             <br>
             <textarea id="text" name="StoryTitle" rows="2" cols="80" ></textarea >
             <br/>
 
-            <label for="text">Story Description</label>
+            <p align="center">
+            <label for="text"style="color:white" >Story Description</label>
             <br>
             <textarea id="text" name="StoryDescription" rows="5" cols="80"></textarea>
             <br/>
 
-
-            <label for="photo">Choose a photo!</label>
+<p align="center">
+            <label for="photo" style="color:white" >Choose a photo!</label>
 
             <input 
                 type="file"
                 id="photo" 
                 name="file"
                 accept ="image/*"
-                 >
+                 class = "buttonMainGreen">
+           
 
             <br>
 
-
-            <label for="text">Body of Story</label>
+<p align="center">
+            <label for="text" style="color:white" >Body of Story</label>
             <br>
             <textarea id="text" name="StoryBody" rows="60" cols="80"></textarea>
             <br/>
 
-
-            <h4 style="color:black">Please select the categories of which the story falls under.</h4>
+<p align="center">
+            <h4 style="color:white">Please select the categories of which the story falls under.</h4>
             <table border ="1" width="500" align="center">
                 <tr bgcolor="00FF7F">
 
@@ -95,7 +100,7 @@ String createStoryOutcome = (String) request.getAttribute("createStory");
       
 
                         <input type="checkbox" value ="<%=variableName%>" name ="category">
-                        <label for="vehicle3" style="color:black"><%=std.get(i).getName()%></label><br>
+                        <label for="vehicle3" style="color:white"><%=std.get(i).getName()%></label><br>
                         <%
                             }%>
                     </td>
@@ -115,10 +120,10 @@ String createStoryOutcome = (String) request.getAttribute("createStory");
 
 
 
-             <input class="button2" name="submit" type="submit" value="Save Changes For New Story" >
+             <input class="buttonMain" name="submit" type="submit" value="Save Changes For New Story" >
             
 
-            <input class="button1" name="submit" type="submit" value="Submit For Review">
+            <input class="buttonMainGreen" name="submit" type="submit" value="Submit For Review">
             <br></br>
         </form>
 
@@ -138,6 +143,7 @@ String createStoryOutcome = (String) request.getAttribute("createStory");
 
 
     </section>
+    <jsp:include page="footer.jsp"></jsp:include>
 </body>
 
 </html>

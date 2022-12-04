@@ -14,18 +14,16 @@
 
     <body>
         <section class="main_content">
-            <a href="ReferFriend.jsp">
-                <input class="button1" name="submit" type="submit" value="Refer a Friend">
-            </a>
-            <form action="StoryServlet" method="get">
-                <input class="button1" name="submit" type="submit" value="View Story Get">
-                <input class="button1" name="submit" type="submit" value="Display Story To Edit">
-                <input class="button1" name="submit" type="submit" value="Create Story">
-            </form>
-            <form action="StoryServlet" method="post">
-                <input class="button1" name="submit" type="submit" value="Turn Off Comments">
-            </form>
-            <div class="login-form">
+            <div class="side_nav">
+                <nav class="browse">
+                    <ul class="bbh">
+                        <b><lh>Options</lh></b>
+                        <a href="ReferFriend.jsp" name="submit" type="submit" value="Refer a Friend"><li>Refer a Friend</li></a>
+                        <form action="StoryServlet" method="get"><a href="createNewStory.jsp" name="submit" type="submit" value="Create Story"><li>Write a Story</li></a></form>
+                    </ul>
+                </nav>
+            </div>
+            <div class="story-list">
                 <h4 style="color:black">Your Likes</h4>
                 <%
                 List<Story> likedStories = (ArrayList<Story>)request.getAttribute("likedStories");
@@ -51,7 +49,7 @@
                 }
                 %>
             </div>
-            <div class="login-form">
+            <div class="category-list">
                 <h4 style="color:black">Your Preferred Category</h4>
                 <%
                 List<Category> preferredCategories = (ArrayList<Category>)request.getAttribute("preferredCategories");
@@ -77,17 +75,56 @@
                 }
                 %>
             </div>
-            <div class="login-form">
-                <h4 style="color:black">Your Stories</h4>
+            <table class="stats">
+                <tr id="title">
+                    <th>Your Stories</th>
+                </tr>
+                <tr>
+                    <th>Title</th>
+                    <th>Likes</th>
+                    <th>Views</th>
+                    <th>Avg. Rating</th>
+                    <th>Comments Allowed</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
                 <%
-                List<Category> preferredCategories = (ArrayList<Category>)request.getAttribute("preferredCategories");
+                List<Story> writerStories = (ArrayList<Story>)request.getAttribute("writerStories");
                         
-                if(preferredCategories != null) {
-                    for(Category category : preferredCategories) {
+                if(writerStories != null) {
+                    for(Story story : writerStories) {
                 %>
                 <tr>
+                    <td><%=story.getTitle()%></td>
+                    <td><%=story.getLikes()%></td>
+                    <td><%=story.getViews()%></td>
+                    <td><%=story.getAvgRating()%></td>
+                    <%
+                        if(story.getAllowComments()) {
+                    %>
+                    <td>Yes</td>
+                    <%} else {%>
+                    <td>No</td>
+                    <%}%>
+                    <%
+                        if(story.getIsDraft()) {
+                    %>
+                    <td>Draft</td>
+                    <%} else if(!(story.getIsDraft()) && !(story.getIsApproved())) {%>
+                    <td>Pending</td>
+                    <%} else if(!(story.getIsDraft()) && story.getIsApproved()) {%>
+                    <td>Approved</td>
+                    <%} else {%>
+                    <td>Rejected</td>
+                    <%}%>
                     <td>
-                        <label style="color:black"><%=category.getName()%></label><br>
+                        <form action="StoryServlet" method="post">
+                            <input name="submit" type="submit" value="Disable Comments">
+                        </form>
+                        <form action="StoryServlet" method="get">
+                            <input name="submit" type="submit" value="View Story Get">
+                            <input name="submit" type="submit" value="Display Story To Edit">
+                        </form>
                     </td>
                 </tr>
                 <%
@@ -96,13 +133,13 @@
                 %>
                 <tr>
                     <td>
-                        <label style="color:black">Here you can track all your preferred categories</label><br>
+                        <label style="color:black">Here you can track all your stories.</label><br>
                     </td>
                 </tr>
                 <%
                 }
                 %>
-            </div>
+            </table>
         </section>
     </body>
 </html>
