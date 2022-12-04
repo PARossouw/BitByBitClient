@@ -40,24 +40,48 @@ public class RestClientStory {
     public List<Story> searchStoriesByCategories(User reader) throws JsonProcessingException {
         String uri = url + "/search/categories/{reader}";
         restClient = ClientBuilder.newClient();
-
         webTarget = restClient.target(uri).resolveTemplate("reader", reader.getUserID());
         List<Story> stories = new ArrayList();
         stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
+        return stories;
+    }
+    
+    
+       public List<Story> searchStoriesByRandomCategoriesChosen(String categoryStr) throws JsonProcessingException {
+        String uri = url + "/search/categories/random/{categoryStr}";
+        restClient = ClientBuilder.newClient();
+        webTarget = restClient.target(uri).resolveTemplate("categoryStr", categoryStr);
+        List<Story> stories = new ArrayList();
+        stories = new ArrayList(Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class)));
+        return stories;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    public List<Story> searchStoriesByTitleorAuthor(String searchText) throws JsonProcessingException {
+        String uri = url + "/search/stories/{searchText}";
+        restClient = ClientBuilder.newClient();
+
+        webTarget = restClient.target(uri).resolveTemplate("searchText", searchText);
+        List<Story> stories = new ArrayList();
+        stories = new ArrayList(Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class)));
 
         return stories;
-        
-        
 
-//        Response response = null;
-//        
-//        response = webTarget.request().post(Entity.json(toJsonString(categories)));
-//        //stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
-//        //stories = mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<List<Story>>(){});
-//        //return stories;
-//        stories = response.readEntity(List.class);
-//        return stories;
+
+        
     }
+    
+    
+    
+    
+    
 
     public List<Story> viewStoriesByWriter(Writer writer) throws JsonProcessingException {
         String uri = url + "/viewByWriter/{writer}";
@@ -150,10 +174,10 @@ public class RestClientStory {
     
      */
     public List<Story> searchForStory(String storyParameter) throws JsonProcessingException {
-        String uri = url + "/search/";
+        String uri = url + "/search";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri + storyParameter);
-        List<Story> stories = null;
+        List<Story> stories = new ArrayList();
         stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
         return stories;
     }
@@ -213,6 +237,19 @@ public class RestClientStory {
         
         return stories;
     }
+    
+        public List<Story> getRandomApprovedStories() throws JsonProcessingException {
+        String uri = url + "/getRandomApprovedStories";
+        restClient = ClientBuilder.newClient();
+        webTarget = restClient.target(uri);
+        List<Story> storiesNew = new ArrayList();
+        storiesNew = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
+        
+        return storiesNew;
+    }
+    
+    
+    
     
     private String toJsonString(Object o) throws JsonProcessingException {
         return mapper.writeValueAsString(o);

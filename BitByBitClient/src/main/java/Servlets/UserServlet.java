@@ -28,6 +28,7 @@ public class UserServlet extends HttpServlet {
     private static RestClientStory restClientStory;
 
     public static User loggedInUser ;
+    public static Reader registeredUser; 
     private List<Writer> writersSearched;
 
     public UserServlet() {
@@ -152,7 +153,8 @@ public class UserServlet extends HttpServlet {
 //                    this.loggedInUser = (User) session.getAttribute("user");
                     this.loggedInUser = new User();
                     this.loggedInUser = userFeedback;
-                    request.setAttribute("loggedInUser", loggedInUser);
+
+                     request.setAttribute("loggedInUser", this.loggedInUser);
                     RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
                     rd.forward(request, response);
                     
@@ -220,8 +222,9 @@ public class UserServlet extends HttpServlet {
                         }
                     }
                     // Sending data to the database 
+                    User userCheck2 = new User();
                     if (sendToDatabase) {
-                        User userCheck2 = new User();
+                        
                         User userFeedback2 = new User();
 
                         userCheck2.setUsername(usernameRegister);
@@ -236,12 +239,21 @@ public class UserServlet extends HttpServlet {
 
                     // Registration was successful. Please log in above.
                     if (msg2.equals("Registration was successful. Please log in above.")) {
+                        
+                        this.registeredUser = new Reader();
+                        //registeredUser =(Reader) restClientUser.login(userCheck2);
+                        int registeredUserID = restClientUser.login(userCheck2).getUserID();
+                        this.registeredUser.setUserID(registeredUserID);
+                        
+                        
+                        
+                        
                         RequestDispatcher rd = request.getRequestDispatcher("prefferedCategories.jsp");
 //                    prefferedCategories.jsp
                         rd.forward(request, response);
                     } else {
                         RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
-//                    prefferedCategories.jsp
+                
                         rd.forward(request, response);
                     }
                 }
@@ -259,26 +271,29 @@ public class UserServlet extends HttpServlet {
                 if (checkedBoxes.length > 0) {
                     for (int i = 0; i < checkedBoxes.length; i++) {
                         String chosenName = myList.get(Integer.parseInt((String) checkedBoxes[i])).getName();
+                        int categoryID =  myList.get(Integer.parseInt((String) checkedBoxes[i])).getCategoryID();
                         Category category = new Category();
                         category.setName(chosenName);
+                        category.setCategoryID(categoryID);
                         prefferedCategories.add(category);
                     }
 
                 }
                 String chosenCategories = "";
 
-                Reader reader = new Reader();
-                reader.setUsername((String) session.getAttribute("user"));
-                reader.setUserID(Integer.parseInt((String) session.getAttribute("userID")));
-                reader.setRoleID(Integer.parseInt((String) session.getAttribute("roleID")));
+//                Reader readerTest = new Reader();
+//                readerTest.setUserID(887);
+//                readerTest.setPreferredCategories(prefferedCategories);
 
-                restClientUser.addPreferredCategoriesToUser(reader, prefferedCategories);
 
-                Reader readerTest = new Reader();
-                readerTest.setUserID(887);
-
+                this.registeredUser.setPreferredCategories(prefferedCategories);
+                
+                
+                restClientUser.addPreferredCategoriesToNewUser(this.registeredUser);
+                 
+                 
                 //  restClientUser.addPreferredCategoriesToUser(readerTest, prefferedCategories);
-                request.setAttribute("messageRegister", "Registration Successful. Please login above.");
+                request.setAttribute("messageRegister", "Thank you for registering! Please login to access your account.");
                 RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
 
                 rd.forward(request, response);

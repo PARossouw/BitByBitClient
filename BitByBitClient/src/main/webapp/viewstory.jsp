@@ -51,7 +51,8 @@
          <p align="center"><h2 style="color:black"><%=title%></h2><p>
 
 
-        <img src="book-stack.png" alt="Story of the day image">
+<!--        <img src="book-stack.png" alt="Story of the day image">-->
+<p style="text-align:center;">  <img  src="images/pexels-pixabay-267586.jpg" alt="Contribute a story" width="100%" height="400"> </p>
 
 
 
@@ -78,7 +79,7 @@
             }
         %>
 
-        <h3 style="color:purple">Previous Comments</h3>
+  
         <%
                     
             List<Comment> allComments = 
@@ -129,16 +130,19 @@ String userToComment = (String) request.getAttribute("optsToComment");
 
 
         <form action="StoryServlet" method="post">
-            <input class="button1" name="story_id" type="hidden" value="<%=storyID%>">
-            <input class="button1" name="submit" type="submit" value="Like">
-            <input class="button1" name="submit" type="submit" value="Comment">
+            <input class="buttonMain" name="story_id" type="hidden" value="<%=storyID%>">
+            <input class="buttonMain" name="submit" type="submit" value="Like">
+            <input class="buttonMain" name="submit" type="submit" value="Comment">
         </form>
-
+            <br>
+            <br>
 
         <form action="StoryServlet" method="get">
-            <input class="button1" name="story_id" type="hidden" value="<%=storyID%>">
-            <input class="button1" name="submit" type="submit" value="View Previous Comments">
+            <input class="buttonMain" name="story_id" type="hidden" value="<%=storyID%>">
+            <input class="buttonMain" name="submit" type="submit" value="View Previous Comments">
         </form>
+            
+        
 
 
 
@@ -160,8 +164,15 @@ String userToComment = (String) request.getAttribute("optsToComment");
             <input name="submit" type="submit" value="Rate">
             <br></br>
         </form> 
+            
+            
+        <form action="StoryServlet" method="post">
+            
+            <input class="buttonMain" name="submit" type="submit" value="Read Full Story">
+        </form>     
+       
 
-        <h4 style="color:black"><%=storyBody%></h4>
+       
 
 
 
@@ -175,6 +186,7 @@ String userToComment = (String) request.getAttribute("optsToComment");
 </div>
 
 </section>
+<jsp:include page="footer.jsp"></jsp:include>
 </body>
 
 </html>

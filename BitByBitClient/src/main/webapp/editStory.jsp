@@ -24,13 +24,14 @@
     <body>
         <jsp:include page="header.jsp"></jsp:include>
 
-        <body style="background-color:whitesmoke">
+    <body style="background-color:#151515">
+            <p style="text-align:center;">  <img  src="images/pexels-pixabay-267586.jpg" alt="Contribute a story" width="100%" height="400"> </p>
             
-            <p style="text-align:center;">  <img class="center" src="images/pexels-lisa-fotios-851213.jpg" alt="Contribute a story" width="700" height="300"> </p>
+            
             
             
             <form action="StoryServlet" method="post" enctype="multipart/form-data">
-                <p style="text-align:center;">  <h1 style="color:black" style="font-family:'Aileron'" >Edit a short story</h1> </p>
+          
 
 
 
@@ -66,14 +67,14 @@ String createStoryOutcome = (String) request.getAttribute("createStory");
         
         <p align="center">
 
-            <label for="text">Story Title</label>
+            <label for="text" style="color:white">Story Title</label>
             <br>
             <textarea id="text" name="StoryTitle" rows="2" cols="80"  ><%=title%></textarea >
             <br>
         <p style="line-height:3.5em;"></p>
 
         <p align="center">
-            <label for="text">Story Description</label>
+            <label for="text" style="color:white">Story Description</label>
             <br>
             <textarea id="text" name="StoryDescription" rows="5" cols="80"><%=description%></textarea>
             <br>
@@ -84,26 +85,27 @@ String createStoryOutcome = (String) request.getAttribute("createStory");
 
 
 
-            <label for="text">Body of Story</label>
+            <label for="text" style="color:white">Body of Story</label>
             <br>
-            <textarea id="text" name="StoryBody" rows="60" cols="80"><%=storyBody%></textarea>
+            <textarea id="text" name="StoryBody" rows="60" cols="80" style="color:white"><%=storyBody%></textarea>
             <br>
         <p style="line-height:3.5em;"></p>
         <p align="center">
-            <label for="photo">Choose a photo!</label>
+            <label for="photo" style="color:white">Choose a photo!</label>
 
             <input 
                 type="file"
                 id="photo" 
                 name="file"
                 accept ="image/*"
+                class ="buttonMainGreen"
                 >
 
             <br>
         <p style="line-height:3.5em;"></p>
 
 
-        <h4 style="color:black" align="center">Please select the categories of which the story falls under.</h4>
+        <h4 style="color:white" align="center">Please select the categories of which the story falls under.</h4>
     </p>
     <table border ="1" width="500" align="center">
         <tr bgcolor="00FF7F">
@@ -134,14 +136,14 @@ String createStoryOutcome = (String) request.getAttribute("createStory");
                     {
                 %>
                 <input type="checkbox" value ="<%=variableName%>" name ="category" checked>
-                <label for="vehicle3" style="color:black"><%=std.get(i).getName()%></label><br>
+                <label for="vehicle3" style="color:white"><%=std.get(i).getName()%></label><br>
                 <%}
 
                     else{
                 %>
 
                 <input type="checkbox" value ="<%=variableName%>" name ="category">
-                <label for="vehicle3" style="color:black"><%=std.get(i).getName()%></label><br>
+                <label for="vehicle3" style="color:white"><%=std.get(i).getName()%></label><br>
                 <%
                             }%>
             </td>
@@ -164,7 +166,7 @@ for(int i = 0; i<std.size() ; i++){
                 %>
 
                 <input type="checkbox" value ="<%=variableName%>" name ="category">
-                <label for="vehicle3" style="color:black"><%=std.get(i).getName()%></label><br>
+                <label for="vehicle3" style="color:white"><%=std.get(i).getName()%></label><br>
                 <%
                             }}%>
             </td>
@@ -177,12 +179,13 @@ for(int i = 0; i<std.size() ; i++){
 
 
 
-    <input class="button2" name="submit" type="submit" value="Approve Story" >
+    <input class="buttonMainGreen" name="submit" type="submit" value="Approve Story" >
+    <input class="buttonMainYellow" name="submit" type="submit" value="Reject Story" >
+<br>
+    <input class="buttonMain" name="submit" type="submit" value="Save Changes" >
 
-    <input class="button2" name="submit" type="submit" value="Save Changes" >
 
-
-    <input class="button1" name="submit" type="submit" value="Submit For Review">
+    <input class="buttonMainGreen" name="submit" type="submit" value="Submit For Review">
     <br></br>
 </form>
 

@@ -10,11 +10,11 @@
     width:100%;
 }
 #outer_wrapper #inner_wrapper {
-    width:20000px; /* If you have more elements, increase the width accordingly */
+    width:10000px; /* If you have more elements, increase the width accordingly */
 }
 #outer_wrapper #inner_wrapper div.box { /* Define the properties of inner block */
     width: 400px;
-    height:300px;
+    height:400px;
     float: left;
     margin: 0 4px 0 0;
     border:1px grey solid;
@@ -55,10 +55,12 @@ body{
         }
         #outer_wrapper #inner_wrapper div.box { /* Define the properties of inner block */
             width: 400px;
-            height:300px;
+            height:400px;
             float: left;
             margin: 0 4px 0 0;
-            border:1px grey solid;
+            background-color: #1c1c1c;
+            
+            border:1px transparent;
         }
 
 .nav_logo{
@@ -80,7 +82,7 @@ body{
 
 .header ul{
     margin: 0;
-    background-image: url(images/gradient.png);
+    background-color: #171717;
 }
 
 .header li{
@@ -261,6 +263,71 @@ body{
     transform:rotate(-90deg) translateY(-100px);
 
 }
+
+.buttonMain{
+    background-color: red;
+    color:white;
+    border:none;
+    outline: none;
+    width:25%;
+    padding: 3.5px;
+    border-radius: 3px;
+}
+
+
+.buttonMainBig{
+    background-color: red;
+    color:white;
+    border:none;
+    outline: none;
+    width:50%;
+    padding: 8.5px;
+    border-radius: 10px;
+}
+
+
+
+.buttonMainGreen{
+    background-color: #2fb848;
+    color:white;
+    border:none;
+    outline: none;
+    width:25%;
+    padding: 3.5px;
+    border-radius: 3px;
+}
+
+.buttonMainYellow{
+    background-color: #c5b700;
+    color:white;
+    border:none;
+    outline: none;
+    width:25%;
+    padding: 3.5px;
+    border-radius: 3px;
+}
+
+.buttonMainHeader{
+    background-color: transparent;
+    color:white;
+    border:none;
+    outline: none;
+    width:100%;
+    padding: 3.5px;
+    border-radius: 3px;
+}
+
+
+.buttonTransparent{
+    background-color: red;
+    color:white;
+    border:none;
+    outline: none;
+    width:25%;
+    padding: 3.5px;
+    border-radius: 3px;
+}
+
 
 
 

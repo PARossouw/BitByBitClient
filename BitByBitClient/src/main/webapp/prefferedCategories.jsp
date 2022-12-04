@@ -16,8 +16,8 @@
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-        <section class="banner" background-img src="images/storyOfTheDay.jpg">
-
+       <p style="text-align:center;">  <img  src="images/pexels-steve-johnson-1843716.jpg" alt="Choose Preffered Categories" width="100%" height="400"> </p>
+<body style="background-color:black">
             <nav>
                 
 
@@ -39,8 +39,8 @@
 
 
             <form action="UserServlet" method="post">
-                <h3 style="color:black">Displaying Category List</h3>
-                <h4 style="color:black">Please select your preferred categories</h4>
+                <h3 style="color:white">Displaying Category List</h3>
+                <h4 style="color:white">Please select your preferred categories</h4>
                 <table border ="1" width="500" align="center">
                     <tr bgcolor="00FF7F">
 
@@ -63,7 +63,7 @@
                             %>
 
                             <input type="checkbox" value ="<%=variableName%>" name ="category" >
-                            <label for="vehicle3" style="color:black"><%=std.get(i).getName()%></label><br>
+                            <label for="vehicle3" style="color:white"><%=std.get(i).getName()%></label><br>
 
                         </td>
 
@@ -73,7 +73,7 @@
 
                 </table> 
                 <hr/>
-                <input class="button1" name="submit" type="submit" value="submitCategories">
+                <input class="buttonMain" name="submit" type="submit" value="submitCategories">
             </form>
 
             <%
@@ -95,18 +95,7 @@
 
 
 
-        <section class="main_content">
-            <div class="side_nav">
-            </div>
-
-            <div>
-                <p style="color:black" >Brought to you Bit by Bit<p>
-            </div>
-
-
-
-
-        </section>
+<jsp:include page="footer.jsp"></jsp:include>
     </body>
 
 </html>
