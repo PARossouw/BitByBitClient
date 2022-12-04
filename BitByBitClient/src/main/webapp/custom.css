@@ -172,13 +172,11 @@ body{
 }
 
 .browse{
+    display: inline-block;
     margin: 35px;
     padding: 0px;
-    width: 190px;
-    max-width: 190px;
-    max-height: 160px;
-    border: solid 1px;
-    border-radius: 5px;
+    width: 350px;
+    max-height: 250px;
     text-decoration: none;
 }
 
@@ -350,6 +348,7 @@ body{
 }
 
 .stats{
+    margin-top: 5%;
     display: inline-table;
     width: 100%;
 }

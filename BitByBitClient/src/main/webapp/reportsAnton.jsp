@@ -20,33 +20,7 @@
     <body>
 
 
-        <a href=Top10MostViewedBookesInACertainPeriod.jsp>
-            <button class="button3">top 10 most viewed books in a certain period</button>
-        </a>
-        <br></br>
-        <a href=Top20MostRatedBooksOfTheMonth.jsp>
-            <button class="button3">top 20 most rated books in month</button>
-        </a>
-        <br></br>
-        <a href=Top20LikedBooksInAMonth.jsp>
-            <button class="button3">top 20 liked books in a month</button>
-        </a>
-        <br></br>
-        <a href=Top3CategoriesInAMonth.jsp>
-            <button class="button3">top 3 categories in a month</button>
-        </a>
-        <br></br>
-        <a href=Top30Writers.jsp>
-            <button class="button3">Top30Writers</button>
-        </a>
-        <br></br>
-        <a href=Top5WritersWithHighestRejections.jsp>
-            <button class="button3">Top 5 Writers Rejected Writers for the current month</button>
-        </a>
-        <br></br>
-        <a href=Top3HighestApprovingEditors.jsp>
-            <button class="button3">Top 3 Highest Approving Editors</button>
-        </a>
+        
         <br></br>
         <a href=PieChartPractice.jsp>
             <button class="button3">Pie Chart Practice</button>

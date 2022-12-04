@@ -26,13 +26,6 @@
                         </a>
                     </form>
                 </li>
-                <li>
-                    
-                        <a href=reportsAnton.jsp>
-                            <button class="button3">Reporting</button>
-                        </a>
-                    
-                </li>
                 <!-- Don't add new buttons below this line it will break the Login button-->
                 <%
                 User userLoggedIn = (User) session.getAttribute("user");
