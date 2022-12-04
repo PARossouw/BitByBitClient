@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="custom.css">
     </head>
 
+
     <body>
         <jsp:include page="header.jsp"></jsp:include>
             <section class="banner">
@@ -30,6 +31,7 @@
 -->
                     <form action="StoryServlet" method="get">
                         <input class="button1" name="submit" type="submit" value="Story of the Day">
+
                     </form>
                 </div>
             </section>
