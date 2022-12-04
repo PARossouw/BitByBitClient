@@ -19,7 +19,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet(name = "UserServlet", urlPatterns = {"/UserServlet"})
 public class UserServlet extends HttpServlet {
@@ -28,7 +30,8 @@ public class UserServlet extends HttpServlet {
     private static RestClientCategory restClientCategory;
     private static RestClientStory restClientStory;
 
-    public static User loggedInUser;
+    public static User loggedInUser ;
+    public static Reader registeredUser; 
     private List<Writer> writersSearched;
 
     public UserServlet() {
@@ -59,6 +62,54 @@ public class UserServlet extends HttpServlet {
 //        processRequest(request, response);
 
         switch (request.getParameter("submit")) {
+            
+            case "Top 3 Highest Approving Editors":
+                
+                Map<String, Integer> editorsMap = new HashMap<>();
+                
+                editorsMap = restClientUser.topApprovingEditors();
+                
+                request.setAttribute("editorsMap", editorsMap);
+                
+                RequestDispatcher rdisp104 = request.getRequestDispatcher("Top3HighestApprovingEditors.jsp");
+
+                rdisp104.forward(request, response);
+                
+                
+                
+                break;
+            
+            case "Top 5 Writers":
+                
+                Map<String, Integer> rejectedWritersMap = new HashMap<>();
+                
+                rejectedWritersMap = restClientUser.topRejectedWritersForMonth();
+                
+                request.setAttribute("rejectedWritersMap", rejectedWritersMap);
+                
+                RequestDispatcher rdisp103 = request.getRequestDispatcher("Top5WritersWithHighestRejections.jsp");
+
+                rdisp103.forward(request, response);
+                
+                
+                
+                break;
+            
+            case "Top 30 Writers"://if we were to give a full writer object here it would expose the details of the writer so we just use the username over here
+                
+                Map<String, Integer> writersMap = new HashMap<>();
+                
+                writersMap = restClientUser.topWriters();
+                request.setAttribute("writersMap", writersMap);
+                
+                RequestDispatcher rdisp102 = request.getRequestDispatcher("Top30Writers.jsp");
+
+                rdisp102.forward(request, response);
+                
+                break;
+            
+            
+            
             case "Likes":
                 String likes = "This is my likes";
                 request.setAttribute("likes", likes);
@@ -152,6 +203,7 @@ public class UserServlet extends HttpServlet {
                 User userCheck = new User();
                 User userFeedback = new User();
 
+              
                 String usernameOrEmail = (String) request.getParameter("UsernameOrEmail");
                 String password = (String) request.getParameter("Password");
 
@@ -161,25 +213,21 @@ public class UserServlet extends HttpServlet {
                 } else {
                     userCheck.setUsername(usernameOrEmail);
                 }
-
                 userCheck.setPassword(password);
-
                 userFeedback = restClientUser.login(userCheck);
 
                 if (userFeedback != null) {
                     session = request.getSession(true);
-
                     session.setAttribute("user", userFeedback);
 
 //                    this.loggedInUser = (User) session.getAttribute("user");
                     this.loggedInUser = new User();
                     this.loggedInUser = userFeedback;
 
-                    request.setAttribute("loggedInUser", loggedInUser);
+                     request.setAttribute("loggedInUser", this.loggedInUser);
                     RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-
                     rd.forward(request, response);
-
+                    
                 } else {
                     String msg2 = "Login failed, please try again.";
                     request.setAttribute("message", msg2);
@@ -196,10 +244,6 @@ public class UserServlet extends HttpServlet {
 
                 List<Category> categoryList = new ArrayList<>();
                 categoryList = restClientCategory.displayAllCategories();
-
-                //categoryList.add("Horror");
-                //categoryList.add("Comedy");
-                //categoryList.add("Fiction");
                 String usernameRegister = (String) request.getParameter("Username");
                 String emailRegister = (String) request.getParameter("Email");
                 String phoneRegister = (String) request.getParameter("PhoneNumber");
@@ -248,8 +292,9 @@ public class UserServlet extends HttpServlet {
                         }
                     }
                     // Sending data to the database 
+                    User userCheck2 = new User();
                     if (sendToDatabase) {
-                        User userCheck2 = new User();
+                        
                         User userFeedback2 = new User();
 
                         userCheck2.setUsername(usernameRegister);
@@ -264,12 +309,21 @@ public class UserServlet extends HttpServlet {
 
                     // Registration was successful. Please log in above.
                     if (msg2.equals("Registration was successful. Please log in above.")) {
+                        
+                        this.registeredUser = new Reader();
+                        //registeredUser =(Reader) restClientUser.login(userCheck2);
+                        int registeredUserID = restClientUser.login(userCheck2).getUserID();
+                        this.registeredUser.setUserID(registeredUserID);
+                        
+                        
+                        
+                        
                         RequestDispatcher rd = request.getRequestDispatcher("prefferedCategories.jsp");
 //                    prefferedCategories.jsp
                         rd.forward(request, response);
                     } else {
                         RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
-//                    prefferedCategories.jsp
+                
                         rd.forward(request, response);
                     }
                 }
@@ -287,26 +341,29 @@ public class UserServlet extends HttpServlet {
                 if (checkedBoxes.length > 0) {
                     for (int i = 0; i < checkedBoxes.length; i++) {
                         String chosenName = myList.get(Integer.parseInt((String) checkedBoxes[i])).getName();
+                        int categoryID =  myList.get(Integer.parseInt((String) checkedBoxes[i])).getCategoryID();
                         Category category = new Category();
                         category.setName(chosenName);
+                        category.setCategoryID(categoryID);
                         prefferedCategories.add(category);
                     }
 
                 }
                 String chosenCategories = "";
 
-                Reader reader = new Reader();
-                reader.setUsername((String) session.getAttribute("user"));
-                reader.setUserID(Integer.parseInt((String) session.getAttribute("userID")));
-                reader.setRoleID(Integer.parseInt((String) session.getAttribute("roleID")));
+//                Reader readerTest = new Reader();
+//                readerTest.setUserID(887);
+//                readerTest.setPreferredCategories(prefferedCategories);
 
-                restClientUser.addPreferredCategoriesToUser(reader, prefferedCategories);
 
-                Reader readerTest = new Reader();
-                readerTest.setUserID(887);
-
+                this.registeredUser.setPreferredCategories(prefferedCategories);
+                
+                
+                restClientUser.addPreferredCategoriesToNewUser(this.registeredUser);
+                 
+                 
                 //  restClientUser.addPreferredCategoriesToUser(readerTest, prefferedCategories);
-                request.setAttribute("messageRegister", "Registration Successful. Please login above.");
+                request.setAttribute("messageRegister", "Thank you for registering! Please login to access your account.");
                 RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
 
                 rd.forward(request, response);

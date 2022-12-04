@@ -3,6 +3,7 @@ package RestClientRemoteController;
 import Story.Model.Story;
 import User.Model.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
@@ -12,7 +13,15 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+
+import java.util.List;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,24 +41,48 @@ public class RestClientStory {
     public List<Story> searchStoriesByCategories(User reader) throws JsonProcessingException {
         String uri = url + "/search/categories/{reader}";
         restClient = ClientBuilder.newClient();
-
         webTarget = restClient.target(uri).resolveTemplate("reader", reader.getUserID());
         List<Story> stories = new ArrayList();
         stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
+        return stories;
+    }
+    
+    
+       public List<Story> searchStoriesByRandomCategoriesChosen(String categoryStr) throws JsonProcessingException {
+        String uri = url + "/search/categories/random/{categoryStr}";
+        restClient = ClientBuilder.newClient();
+        webTarget = restClient.target(uri).resolveTemplate("categoryStr", categoryStr);
+        List<Story> stories = new ArrayList();
+        stories = new ArrayList(Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class)));
+        return stories;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    public List<Story> searchStoriesByTitleorAuthor(String searchText) throws JsonProcessingException {
+        String uri = url + "/search/stories/{searchText}";
+        restClient = ClientBuilder.newClient();
+
+        webTarget = restClient.target(uri).resolveTemplate("searchText", searchText);
+        List<Story> stories = new ArrayList();
+        stories = new ArrayList(Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class)));
 
         return stories;
-        
-        
 
-//        Response response = null;
-//        
-//        response = webTarget.request().post(Entity.json(toJsonString(categories)));
-//        //stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
-//        //stories = mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<List<Story>>(){});
-//        //return stories;
-//        stories = response.readEntity(List.class);
-//        return stories;
+
+        
     }
+    
+    
+    
+    
+    
 
     public List<Story> viewStoriesByWriter(Integer writerID) throws JsonProcessingException {
         User writer = new User();
@@ -149,10 +182,10 @@ public class RestClientStory {
     
      */
     public List<Story> searchForStory(String storyParameter) throws JsonProcessingException {
-        String uri = url + "/search/";
+        String uri = url + "/search";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri + storyParameter);
-        List<Story> stories = null;
+        List<Story> stories = new ArrayList();
         stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
         return stories;
     }
@@ -203,15 +236,30 @@ public class RestClientStory {
 
     }
 
-    public List<Story> getTop20StoriesForMonth() throws JsonProcessingException {
-        String uri = url + "/getTop20StoriesForMonth";
+    public Map<String, Integer> getTop20StoriesForMonth(String month) throws JsonProcessingException {
+        String uri = url + "/getTop20StoriesForMonth/{month}";
+        restClient = ClientBuilder.newClient();
+        webTarget = restClient.target(uri).resolveTemplate("month", month);
+        Map<String, Integer> topStories = new HashMap<>();
+        
+        topStories = mapper.readValue(
+                webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<HashMap<String, Integer>>() {
+        });
+        return topStories;
+    }
+    
+        public List<Story> getRandomApprovedStories() throws JsonProcessingException {
+        String uri = url + "/getRandomApprovedStories";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
-        List<Story> stories = new ArrayList();
-        stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
+        List<Story> storiesNew = new ArrayList();
+        storiesNew = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
         
-        return stories;
+        return storiesNew;
     }
+    
+    
+    
     
     public List<Story> viewPendingStories() throws JsonProcessingException {
         String uri = url + "/getPendingStories";

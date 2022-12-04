@@ -15,7 +15,7 @@
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-        <body style="background-color:aquamarine;">
+    <body style="background-color:whitesmoke">
 
         <%
                     Story story = (Story) request.getAttribute("story");
@@ -48,21 +48,23 @@
 
 
 
-        <h2 style="color:black"><%=title%></h2>
+         <p align="center"><h2 style="color:black"><%=title%></h2><p>
 
 
-        <img src="book-stack.png" alt="Story of the day image">
+<!--        <img src="book-stack.png" alt="Story of the day image">-->
+<p style="text-align:center;">  <img  src="images/pexels-pixabay-267586.jpg" alt="Contribute a story" width="100%" height="400"> </p>
 
 
 
 
+        <p align="center">
 
         <h5 style="color:black">Author : <%=writer%></h5>
         <h5 style="color:black"><%=rating%></h5>
         <h5 style="color:black"><%=views%></h5>
         <h5 style="color:black"><%=likes%></h5>
         <h5 style="color:black"><%=description%></h5>
-
+ <p>
 
         <%
  String responseMessageRegister = (String) request.getAttribute("likes");
@@ -77,7 +79,7 @@
             }
         %>
 
-        <h3 style="color:purple">Previous Comments</h3>
+  
         <%
                     
             List<Comment> allComments = 
@@ -106,6 +108,8 @@ String userToComment = (String) request.getAttribute("optsToComment");
             if(userToComment != null) {
         %>
         <div>
+            <p align="center">
+            
             <form action="StoryServlet" method="post">
                 <input class="button1" name="story_id" type="hidden" value="<%=storyID%>">
                 <label for="text">Please enter a comment below</label>
@@ -114,6 +118,7 @@ String userToComment = (String) request.getAttribute("optsToComment");
                 <br/>
                 <input class="button1" name="submit" type="submit" value="SubmitComment">
             </form>
+            <p>
 
         </div>
         <%
@@ -125,23 +130,19 @@ String userToComment = (String) request.getAttribute("optsToComment");
 
 
         <form action="StoryServlet" method="post">
-
-            <input class="button1" name="story_id" type="hidden" value="<%=storyID%>">
-            <input class="button1" name="submit" type="submit" value="Like">
-            <input class="button1" name="submit" type="submit" value="Comment">
-           
-
-
+            <input class="buttonMain" name="story_id" type="hidden" value="<%=storyID%>">
+            <input class="buttonMain" name="submit" type="submit" value="Like">
+            <input class="buttonMain" name="submit" type="submit" value="Comment">
         </form>
-
+            <br>
+            <br>
 
         <form action="StoryServlet" method="get">
-
-            <input class="button1" name="story_id" type="hidden" value="<%=storyID%>">
-            <input class="button1" name="submit" type="submit" value="View Previous Comments">
-
-
+            <input class="buttonMain" name="story_id" type="hidden" value="<%=storyID%>">
+            <input class="buttonMain" name="submit" type="submit" value="View Previous Comments">
         </form>
+            
+        
 
 
 
@@ -163,8 +164,15 @@ String userToComment = (String) request.getAttribute("optsToComment");
             <input name="submit" type="submit" value="Rate">
             <br></br>
         </form> 
+            
+            
+        <form action="StoryServlet" method="post">
+            
+            <input class="buttonMain" name="submit" type="submit" value="Read Full Story">
+        </form>     
+       
 
-        <h4 style="color:black"><%=storyBody%></h4>
+       
 
 
 
@@ -178,6 +186,7 @@ String userToComment = (String) request.getAttribute("optsToComment");
 </div>
 
 </section>
+<jsp:include page="footer.jsp"></jsp:include>
 </body>
 
 </html>

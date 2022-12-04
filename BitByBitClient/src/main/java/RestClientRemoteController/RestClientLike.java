@@ -12,6 +12,7 @@ import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.time.YearMonth;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,14 +47,14 @@ public class RestClientLike {
 
     
 
-    public Map<Story, Integer> getAllLikesInPeriod(Calendar startDate) throws JsonProcessingException {
-        String uri = url + "/allLikes";
+    public Map<String, Integer> getAllLikesInPeriod(String yearMonth) throws JsonProcessingException {
+        String uri = url + "/allLikes/{yearMonth}";
         restClient = ClientBuilder.newClient();
-        webTarget = restClient.target(uri);
+        webTarget = restClient.target(uri).resolveTemplate("yearMonth", yearMonth);
 
-        Map<Story, Integer> stories = null;
+        Map<String, Integer> stories = null;
         stories = mapper.readValue(
-                webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<Map<Story, Integer>>() {
+                webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<Map<String, Integer>>() {
         });
         return stories;
     }
