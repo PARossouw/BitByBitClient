@@ -1,12 +1,8 @@
 package RestClientRemoteController;
 
-import Category.Model.Category;
 import Story.Model.Story;
-import User.Model.Reader;
 import User.Model.User;
-import User.Model.Writer;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
@@ -16,13 +12,9 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.json.simple.JSONObject;
 
 public class RestClientStory {
 
@@ -83,13 +75,20 @@ public class RestClientStory {
     
     
 
-    public List<Story> viewStoriesByWriter(Writer writer) throws JsonProcessingException {
-        String uri = url + "/viewByWriter/{writer}";
+    public List<Story> viewStoriesByWriter(Integer writerID) throws JsonProcessingException {
+        User writer = new User();
+        writer.setUserID(writerID);
+        
+        String uri = url + "/viewByWriter/{writerID}";
         restClient = ClientBuilder.newClient();
-        webTarget = restClient.target(uri).resolveTemplate("writer", writer);
-        List<Story> stories = null;
-        stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
+        webTarget = restClient.target(uri).resolveTemplate("writerID", writer.getUserID());
 
+        List<Story> stories = new ArrayList(
+                Arrays.asList(
+                        mapper.readValue(
+                                webTarget.request().accept(
+                                        MediaType.APPLICATION_JSON).get(
+                                                String.class), Story[].class)));
         return stories;
     }
 
@@ -250,6 +249,20 @@ public class RestClientStory {
     
     
     
+    
+    public List<Story> viewPendingStories() throws JsonProcessingException {
+        String uri = url + "/getPendingStories";
+        restClient = ClientBuilder.newClient();
+        webTarget = restClient.target(uri);
+
+        List<Story> pendingStories = new ArrayList(
+                Arrays.asList(
+                        mapper.readValue(
+                                webTarget.request().accept(
+                                        MediaType.APPLICATION_JSON).get(
+                                                String.class), Story[].class)));
+        return pendingStories;
+    }
     
     private String toJsonString(Object o) throws JsonProcessingException {
         return mapper.writeValueAsString(o);

@@ -48,7 +48,7 @@
                 </li>
                 <%} else {%>
                 <li class="same">
-                    <form action="StoryServlet" method="get">
+                    <form action="UserServlet" method="get">
                         <input class="buttonMainHeader" name="submit" type="submit" value="Profile">
                     </form>
                 </li>

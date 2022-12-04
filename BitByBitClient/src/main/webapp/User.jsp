@@ -19,35 +19,34 @@
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-
-            <section class="banner_common">
-                <div class="banner_common">
-                    <h2 style="color:black">Welcome to your user homepage</h2>
-                </div>
-            </section>
-
-            <section>
-            <%
+        <%
             User userLoggedIn = (User) session.getAttribute("user");
-                
+        %>
+
+        <section class="banner_common">
+            <div>
+                <h2 style="color:black">Welcome to your user homepage</h2>
+            </div>
+        </section>
+
+        <section>
+            <%
             if(userLoggedIn.getRoleID() == 1) {
             %>
             <jsp:include page="Reader.jsp"></jsp:include>
             <%
-                } else if (userLoggedIn.getRoleID() == 2) {
+            } else if (userLoggedIn.getRoleID() == 2) {
             %>
             <jsp:include page="Writer.jsp"></jsp:include>
             <%
-                } else if (userLoggedIn.getRoleID() == 3) {
+            } else if (userLoggedIn.getRoleID() == 3) {
             %>
             <jsp:include page="Editor.jsp"></jsp:include>
             <%
-                } else {
+            } else {
             %>
-            <jsp:include page="AdminEditor.jsp"></jsp:include>
-            <%
-                }
-            %>
+            <jsp:include page="Editor.jsp"></jsp:include>
+            <%}%>
         </section>
         <jsp:include page="footer.jsp"></jsp:include>
     </body>

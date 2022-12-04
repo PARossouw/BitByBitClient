@@ -78,8 +78,6 @@ body{
     height: 10%;
 }
 
-
-
 .header ul{
     margin: 0;
     background-color: #171717;
@@ -106,7 +104,7 @@ body{
 .banner{
     background: url(images/wallhaven-book.png) no-repeat;
     width: 100%;
-    height: 500px;
+    height: 660px;
     background-attachment: fixed;
     background-size:cover;
     color:black;
@@ -161,16 +159,27 @@ body{
     border-radius: 3px;
 }
 
-.banner ul{
-    margin: 0;
-    background-image: url(images/gradient.png);
-}
-
 .browse li{
     list-style-type: none;
-    padding: 15px;
-    margin-left: 5px;
-    margin-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 15px;
+}
+
+.browse li:hover{
+    color:red;
+    font-size: 19px;
+}
+
+.browse{
+    margin: 35px;
+    padding: 0px;
+    width: 190px;
+    max-width: 190px;
+    max-height: 160px;
+    border: solid 1px;
+    border-radius: 5px;
+    text-decoration: none;
 }
 
 .banner_common{
@@ -180,6 +189,10 @@ body{
     background-attachment: fixed;
     background-size:cover;
     color:black;
+}
+
+.banner_common ul{
+    background: whitesmoke;
 }
 
 .banner_common div{
@@ -222,11 +235,6 @@ body{
     border-radius: 3px;
 }
 
-.banner_common ul{
-    margin: 0;
-    background-image: url(images/gradient.png);
-}
-
 .center {
     display: block;
     margin-left: auto;
@@ -259,9 +267,7 @@ body{
 }
 
 .horizontal-scroll-wrapper {
-
     transform:rotate(-90deg) translateY(-100px);
-
 }
 
 .buttonMain{
@@ -341,13 +347,75 @@ body{
 .main_content div{
     float: left;
     margin-left: 25px;
-    padding:10px;
+}
+
+.stats{
+    display: inline-table;
+    width: 100%;
+}
+
+.stats tr{
+    display: inline-table;
+    width: 100%;
+    border: solid 1px;
+    background-color: lightgrey;
+}
+
+.stats tr:first-of-type:hover{
+    display: inline-table;
+    background-color: lightgrey;
+}
+
+.stats tr:nth-of-type(2):hover{
+    display: inline-table;
+    background-color: lightgrey;
+}
+
+.stats tr:hover{
+    background-color: grey;
+}
+
+.stats #title{
+    width: 100%;
+    background-color: lightgrey;
+}
+
+.stats #title th{
+    text-align: center;
+    border: solid 1px;
+}
+
+.stats td{
+    text-align: center;
+    width: 12%;
+}
+
+.stats th{
+    text-align: center;
+    width: 12%;
+}
+.stats td:first-of-type:last-of-type{
+    width: 20%;
+}
+
+.stats th:first-of-type:last-of-type{
+    width: 20%;
 }
 
 .login-form,.register-form{
     display:inline-block;
     width: 30%;
     margin-left: 15%;
+    height: 450px;
+}
+
+.story-list,.category-list{
+    border: solid 1px;
+    border-radius: 3px;
+    display: inline-block;
+    width: 20%;
+    margin-top: 35px;
+    margin-left: 5%;
     height: 450px;
 }
 
@@ -392,27 +460,33 @@ body{
     width: 45%;
 }
 
-.browse li{
-    margin-top:15px;
-}
 .bbh{
     color: black;
     padding: 15px;
     margin-left: 5px;
     margin-right: 5px;
-    font-size: 21px;
+    font-size: 18px;
     display: inline-block;
     margin-top: 5px;
 }
-.browse li.active{
-    color:red;
+
+.bbh a:link {
+  text-decoration: none;
 }
 
-.browse{
-    margin: 0px;
-    padding: 0px;
-    box-shadow: 0px 0px 15px 5px lightgrey;
+/* visited link */
+.bbh a:visited {
+  text-decoration: none;
+}
 
+/* mouse over link */
+.bbh a:hover {
+  text-decoration: none;
+}
+
+/* selected link */
+.bbh a:active {
+  text-decoration: none;
 }
 
 .btn {

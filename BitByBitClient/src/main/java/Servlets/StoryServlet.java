@@ -81,7 +81,7 @@ public class StoryServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-         HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(false);
 
         switch (request.getParameter("submit")) {
 
@@ -163,7 +163,6 @@ public class StoryServlet extends HttpServlet {
                 this.categoryList = new ArrayList<>();
                 categoryList = restClientCategory.displayAllCategories();
                 request.setAttribute("categoryList", categoryList);
-                
 
                 Category category3 = new Category();
                 category3.setName("Horror");
@@ -177,7 +176,7 @@ public class StoryServlet extends HttpServlet {
                 RequestDispatcher rdCreate = request.getRequestDispatcher("editStory.jsp");
                 rdCreate.forward(request, response);
                 break;
-                
+
             case ("Create Story"):
                 storyBeingRead = new Story();
                 String storyIDToGet2 = "4";
@@ -185,7 +184,7 @@ public class StoryServlet extends HttpServlet {
                 this.categoryList = new ArrayList<>();
                 categoryList = restClientCategory.displayAllCategories();
                 request.setAttribute("categoryList", categoryList);
-                
+
                 Category categoryCreate = new Category();
                 categoryCreate.setName("Horror");
                 List<Category> categoryUserListCreate = new ArrayList<>();
@@ -200,11 +199,7 @@ public class StoryServlet extends HttpServlet {
                 RequestDispatcher rdCreateNew = request.getRequestDispatcher("createNewStory.jsp");
                 rdCreateNew.forward(request, response);
 
-                
                 break;
-                
-  
-
 
             case ("View Previous Comments"):
                 List<Comment> allStoryComments = new ArrayList<>();
@@ -216,8 +211,6 @@ public class StoryServlet extends HttpServlet {
 rdPrevComments.forward(request, response);
 
                 break;
-
-            
 
         }
 
@@ -232,7 +225,6 @@ rdPrevComments.forward(request, response);
 
         switch (request.getParameter("submit")) {
 
-
             case ("Save Changes"):
                 Story storyToSave = new Story();
                 storyToSave.setStoryID(this.storyBeingRead.getStoryID());
@@ -240,11 +232,9 @@ rdPrevComments.forward(request, response);
                 storyToSave.setDescription((String) request.getParameter("StoryDescription"));
                 storyToSave.setImagePath((String) request.getParameter("ImagePath"));
                 storyToSave.setBody((String) request.getParameter("StoryBody"));
-              
+
                 List<Category> chosenCategoriesByUser = new ArrayList<>();
-                
-                
-              
+
                 //adds user chosen categories to a list. 
                 String[] checkedBoxes1 = request.getParameterValues("category");
 
@@ -259,28 +249,25 @@ rdPrevComments.forward(request, response);
                     }
 
                 }
-               
-               storyToSave.setCategoryList(chosenCategoriesByUser);
-               
-                
+
+                storyToSave.setCategoryList(chosenCategoriesByUser);
+
                 storyToSave.setIsDraft(true);
                 storyToSave.setIsApproved(false);
                 storyToSave.setViews(0);
                 storyToSave.setLikes(0);
                 storyToSave.setAvgRating(0D);
 
-   
                 String saveChanges = restClientStory.saveStory(storyToSave);
 
                 request.setAttribute("createStory", saveChanges);
 
-                
                 // For Editor edits, this should direct to the Editor Approvval page again
                 RequestDispatcher rdSaveChanges = request.getRequestDispatcher("index.jsp");
                 rdSaveChanges.forward(request, response);
                 break;
-                //Save Changes For New Story
-                
+            //Save Changes For New Story
+
             case ("Save Changes For New Story"):
                 Story newStoryToSave = new Story();
                 newStoryToSave.setStoryID(-1);  // Default for new stories
@@ -289,11 +276,9 @@ rdPrevComments.forward(request, response);
                 newStoryToSave.setDescription((String) request.getParameter("StoryDescription"));
                 newStoryToSave.setImagePath((String) request.getParameter("ImagePath"));
                 newStoryToSave.setBody((String) request.getParameter("StoryBody"));
-              
+
                 List<Category> chosenNewCategoriesByUser = new ArrayList<>();
-                
-                
-              
+
                 //adds user chosen categories to a list. 
                 String[] checkedBoxesNew = request.getParameterValues("category");
 
@@ -308,25 +293,21 @@ rdPrevComments.forward(request, response);
                     }
 
                 }
-              
-               newStoryToSave.setCategoryList(chosenNewCategoriesByUser); 
+
+                newStoryToSave.setCategoryList(chosenNewCategoriesByUser);
                 newStoryToSave.setIsDraft(true);
                 newStoryToSave.setIsApproved(false);
                 newStoryToSave.setViews(0);
                 newStoryToSave.setLikes(0);
                 newStoryToSave.setAvgRating(0D);
-   
+
                 String saveNewChanges = restClientStory.saveStory(newStoryToSave);
                 request.setAttribute("createStory", saveNewChanges);
-                
 
                 // For Editor edits, this should direct to the Editor Approvval page again
                 RequestDispatcher rdSaveNewChanges = request.getRequestDispatcher("index.jsp");
                 rdSaveNewChanges.forward(request, response);
                 break;
-                
-                
-                
 
             case ("Submit For Review"):
                 Story storyToSubmit = new Story();
@@ -339,9 +320,7 @@ rdPrevComments.forward(request, response);
                 
               
                 List<Category> chosenCategoriesByUserSubmit = new ArrayList<>();
-                
-                
-              
+
                 //adds user chosen categories to a list. 
                 String[] checkedBoxesSubmit = request.getParameterValues("category");
 
@@ -356,24 +335,29 @@ rdPrevComments.forward(request, response);
                     }
 
                 }
-               
-               storyToSubmit.setCategoryList(chosenCategoriesByUserSubmit);
-               
-                
+
+                storyToSubmit.setCategoryList(chosenCategoriesByUserSubmit);
+
                 storyToSubmit.setIsDraft(false);
                 storyToSubmit.setIsApproved(false);
                 storyToSubmit.setViews(0);
                 storyToSubmit.setLikes(0);
                 storyToSubmit.setAvgRating(0D);
-   
+
                 String saveChangessubmit = restClientStory.saveStory(storyToSubmit);
 
                 request.setAttribute("createStory", saveChangessubmit);
 
-                
                 // For Editor edits, this should direct to the Editor Approvval page again
+
 //                RequestDispatcher rdSaveChangesSubmit = request.getRequestDispatcher("index.jsp");
 //                rdSaveChangesSubmit.forward(request, response);
+
+
+                break;
+
+            /* 
+
 
 
                  //---------------------------------------------------
@@ -429,12 +413,29 @@ rdPrevComments.forward(request, response);
                 break;
 
 
+
+
+             */
+
             case ("Like"):
 
                 Reader reader = new Reader();
                 reader.setUserID(53);
                 reader.setUsername("Mike");
-                
+
+
+                String storyLike = restClientLike.likeStory(reader, storyBeingRead);
+                request.setAttribute("story", storyBeingRead);
+                request.setAttribute("likes", storyLike);
+
+                Story storyView2 = new Story();
+                int storyID = Integer.parseInt((String) request.getParameter("story_id"));
+                storyView2.setStoryID(storyID);
+                this.storyView = restClientStory.retrieveStory(storyView2);
+
+                reader = (Reader) session.getAttribute("user");
+
+
                 restClientLike.likeStory(reader, this.storyView);
                 request.setAttribute("story", this.storyBeingRead);
                 request.setAttribute("likes", "You have liked the story ");
@@ -491,14 +492,12 @@ rdPrevComments.forward(request, response);
                 //Reader loggedInReader1 = (Reader) session.getAttribute("user");
                 Reader readerLikeTest = new Reader();
                 readerLikeTest.setUserID(627);
-                
-                
+
                 restClientRating.rateStory(this.storyView, readerLikeTest, userRating);
 
                 request.setAttribute("story", this.storyView);
                 request.setAttribute("likes", "You have rated the story.");
-                
-                
+
                 RequestDispatcher rdRate = request.getRequestDispatcher("viewstory.jsp");
                 rdRate.forward(request, response);
                 break;
@@ -519,7 +518,7 @@ rdPrevComments.forward(request, response);
                 
 
             case ("Search for Story"):
-                
+
                 List<Story> stories = new ArrayList<>();
                 //String searchText = request.getParameter("Search for Story");
                 
@@ -532,9 +531,9 @@ rdPrevComments.forward(request, response);
                 request.setAttribute("storiesSearchedFor", stories);
                 RequestDispatcher rdSearch = request.getRequestDispatcher("index.jsp");
                 rdSearch.forward(request, response);
-                
+
                 break;
-                
+
             case ("Search"):
 
                 List<Category> allCategories = new ArrayList<>();
@@ -550,7 +549,7 @@ rdPrevComments.forward(request, response);
                         searchByCategories.add(allCategories.get(Integer.parseInt((String) checkedBoxes[i])));
                         chosenCat += allCategories.get(Integer.parseInt((String) checkedBoxes[i])).getCategoryID()+":";
                     }
-                    
+
                     Reader reader1 = new Reader();
                     reader1.setUserID(8778);  // To remove
                     reader1.setPreferredCategories(searchByCategories);
@@ -569,7 +568,6 @@ rdPrevComments.forward(request, response);
 
                 this.user = (User) session.getAttribute("user");
                 this.storyToApprove = this.storyToReview;
-
 
                 //this should send back a string in the form of an xml and then just put that string in as an argument instead of the sw
                 String smsXML = restClientStory_Transaction.approvePendingStory(user, this.storyToReview);
@@ -592,12 +590,10 @@ rdPrevComments.forward(request, response);
                     }
                 }
 
-
                 String smsResponse = restClientSms.sendMessage(smsXML);
 
                 //hardcoding
                 request.setAttribute("message", smsXML);
-
 
                 rd = request.getRequestDispatcher("Editor.jsp");
                 rd.forward(request, response);
@@ -645,7 +641,6 @@ rdPrevComments.forward(request, response);
 
                     smsResponse = restClientSms.sendMessage("");
 
-
                     //can comment this out, hardcoding to see response from msg server
                     String x = "Mrs dgvsbskjnl";
                     request.setAttribute("message", x);
@@ -669,8 +664,8 @@ rdPrevComments.forward(request, response);
                 rd.forward(request, response);
 
                 break;
-                
-                case ("Turn Off Comments"):
+
+            case ("Turn Off Comments"):
 
                 Story story = new Story();
                 story.setAllowComments(true);

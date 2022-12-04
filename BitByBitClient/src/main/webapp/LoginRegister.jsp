@@ -31,6 +31,8 @@
                     String responseMessage = (String) request.getAttribute("message");
                     String userLoggedIn = (String) request.getAttribute("user");
                      session.setAttribute("user", userLoggedIn);
+                %>
+                <%
                     if(responseMessage != null) {
                     session.setAttribute("user", userLoggedIn);
                 %>
@@ -49,7 +51,6 @@
             </form>
 
             <form action="UserServlet" method="post" class="register-form">
-
                 <%
                     String responseMessageRegister = (String) request.getAttribute("messageRegister");
                     if(responseMessageRegister != null) {
@@ -67,13 +68,9 @@
 
                 <input type="text" class="form" name ="Email" placeholder="Email">
                 <br></br>
-
-
                 <input type="text" class="form" name ="PhoneNumber" placeholder="Phone Number">
                 <br></br>
-
                 <input type="text" class="form" name ="Password" placeholder="Password">
-
                 <input type="text" class="form" name ="ConfirmPassword" placeholder="Confirm Password">
                 <br></br>
 
