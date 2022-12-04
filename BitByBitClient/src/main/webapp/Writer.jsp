@@ -18,8 +18,13 @@
                 <nav class="browse">
                     <ul class="bbh">
                         <b><lh>Options</lh></b>
-                        <a href="ReferFriend.jsp" name="submit" type="submit" value="Refer a Friend"><li>Refer a Friend</li></a>
-                        <form action="StoryServlet" method="get"><a href="createNewStory.jsp" name="submit" type="submit" value="Create Story"><li>Write a Story</li></a></form>
+                        <a href="ReferFriend.jsp" name="submit" type="submit" value="Refer a Friend">
+                            <li>Refer a Friend</li>
+                        </a>
+                        <form action="StoryServlet" method="get">
+                            <input class="button1" name="story_id" type="hidden" value="-1">
+                            <input class="button" name="submit" type="submit" value="Create Story">
+                        </form>
                     </ul>
                 </nav>
             </div>
@@ -75,7 +80,7 @@
                 }
                 %>
             </div>
-            
+
             <table class="stats">
                 <tr id="title">
                     <th>Your Stories</th>
@@ -118,15 +123,17 @@
                     <%} else {%>
                     <td>Rejected</td>
                     <%}%>
-                    
+
                     <td>
                         <form action="StoryServlet" method="post">
                             <input name="submit" type="submit" value="Turn Off Comments">
                             <input class="buttonMain"  name="story_id" type="hidden" value="<%=story.getStoryID()%>"> 
                         </form>
                         <form action="StoryServlet" method="get">
-                            <input name="submit" type="submit" value="View Story Get">
+                            <input name="submit" type="submit" value="Story Info">
                             <input name="submit" type="submit" value="Display Story To Edit">
+                            <input class="buttonMain"  name="story_id" type="hidden" value="<%=story.getStoryID()%>">
+
                         </form>
                     </td>
                 </tr>
