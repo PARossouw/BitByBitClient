@@ -217,6 +217,7 @@ for (Story story : searchedStories){
                    userTop.setUsername("Mike");
                    userTop.setRoleID(1);
                    
+//                   storiesTryNewStories = rcs.getRandomApprovedStories();
                    storiesTopStories = rcsTop.getTop20StoriesForMonth();
                    
                     

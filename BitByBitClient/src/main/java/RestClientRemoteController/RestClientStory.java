@@ -248,6 +248,18 @@ public class RestClientStory {
         return topStories;
     }
     
+    public List<Story> getTop20StoriesForMonth() throws JsonProcessingException {
+        String uri = url + "/getTop20StoriesForMonth";
+        restClient = ClientBuilder.newClient();
+        webTarget = restClient.target(uri)  ;
+        List<Story> topStories = new ArrayList<>();
+        
+        topStories = mapper.readValue(
+                webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<List<Story>>() {
+        });
+        return topStories;
+    }
+    
         public List<Story> getRandomApprovedStories() throws JsonProcessingException {
         String uri = url + "/getRandomApprovedStories";
         restClient = ClientBuilder.newClient();
