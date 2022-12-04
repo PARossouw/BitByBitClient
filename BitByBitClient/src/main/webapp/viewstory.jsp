@@ -15,7 +15,7 @@
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-    <body style="background-color:whitesmoke">
+        <body style="background-color:whitesmoke">
 
         <%
                     Story story = (Story) request.getAttribute("story");
@@ -48,11 +48,11 @@
 
 
 
-         <p align="center"><h2 style="color:black"><%=title%></h2><p>
+        <p align="center"><h2 style="color:black"><%=title%></h2><p>
 
 
-<!--        <img src="book-stack.png" alt="Story of the day image">-->
-<p style="text-align:center;">  <img  src="images/pexels-pixabay-267586.jpg" alt="Contribute a story" width="100%" height="400"> </p>
+            <!--        <img src="book-stack.png" alt="Story of the day image">-->
+        <p style="text-align:center;">  <img  src="images/pexels-pixabay-267586.jpg" alt="Contribute a story" width="100%" height="400"> </p>
 
 
 
@@ -64,14 +64,14 @@
         <h5 style="color:black"><%=views%></h5>
         <h5 style="color:black"><%=likes%></h5>
         <h5 style="color:black"><%=description%></h5>
- <p>
+        <p>
 
-        <%
- String responseMessageRegister = (String) request.getAttribute("likes");
-        %>
-        <%
-            if(responseMessageRegister != null) {
-        %>
+            <%
+     String responseMessageRegister = (String) request.getAttribute("likes");
+            %>
+            <%
+                if(responseMessageRegister != null) {
+            %>
         <div>
             <h3 style="color:red"><%=responseMessageRegister%></h3>
         </div>
@@ -79,7 +79,7 @@
             }
         %>
 
-  
+
         <%
                     
             List<Comment> allComments = 
@@ -109,7 +109,7 @@ String userToComment = (String) request.getAttribute("optsToComment");
         %>
         <div>
             <p align="center">
-            
+
             <form action="StoryServlet" method="post">
                 <input class="button1" name="story_id" type="hidden" value="<%=storyID%>">
                 <label for="text">Please enter a comment below</label>
@@ -134,15 +134,15 @@ String userToComment = (String) request.getAttribute("optsToComment");
             <input class="buttonMain" name="submit" type="submit" value="Like">
             <input class="buttonMain" name="submit" type="submit" value="Comment">
         </form>
-            <br>
-            <br>
+        <br>
+        <br>
 
         <form action="StoryServlet" method="get">
             <input class="buttonMain" name="story_id" type="hidden" value="<%=storyID%>">
             <input class="buttonMain" name="submit" type="submit" value="View Previous Comments">
         </form>
-            
-        
+
+
 
 
 
@@ -164,15 +164,15 @@ String userToComment = (String) request.getAttribute("optsToComment");
             <input name="submit" type="submit" value="Rate">
             <br></br>
         </form> 
-            
-            
+
+
         <form action="StoryServlet" method="post">
-            
+
             <input class="buttonMain" name="submit" type="submit" value="Read Full Story">
         </form>     
-       
 
-       
+
+
 
 
 
