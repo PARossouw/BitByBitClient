@@ -622,7 +622,7 @@ rdPrevComments.forward(request, response);
                 this.user = (User) session.getAttribute("user");
                 this.storyToApprove = this.storyToReview;
 
-                //this should send back a string in the form of an xml and then just put that string in as an argument instead of the sw
+                
                 String smsXML = restClientStory_Transaction.approvePendingStory(user, this.storyToReview);
 
                 this.rd = request.getRequestDispatcher("Editor.jsp");
@@ -658,12 +658,10 @@ rdPrevComments.forward(request, response);
                 this.user = (User) session.getAttribute("user");
                 this.storyToApprove = this.storyToReview;
 
-                this.sms = restClientStory_Transaction.rejectPendingStory(user, this.storyToReview);
-                //message = sms.getMessage();
-//                request.setAttribute("message", message);
+                String smsXMLReject = restClientStory_Transaction.rejectPendingStory(user, this.storyToReview);
 
-                //this.rd = request.getRequestDispatcher("Editor.jsp");
-                //getting the next story
+                this.rd = request.getRequestDispatcher("Editor.jsp");
+
                 for (int i = 0; i < storyReviewList.size(); i++) {
 
                     if (i == storyReviewList.size() - 1) {
@@ -678,32 +676,18 @@ rdPrevComments.forward(request, response);
                         this.storyToReview = storyReviewList.get(i + 1);
                         request.setAttribute("storyReview", this.storyToReview);
                         rd = request.getRequestDispatcher("Editor.jsp");
-                        //rd.forward(request, response);
+
                         break;
                     }
 
                 }
-                try {
-                    JAXBContext jaxBContext = JAXBContext.newInstance(smsreq.class);
+                smsXMLReject = restClientSms.sendMessage(smsXMLReject);
 
-                    Marshaller marshaller = jaxBContext.createMarshaller();
+                //hardcoding
+                request.setAttribute("message", smsXMLReject);
 
-                    marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-                    StringWriter sw = new StringWriter();
-                    marshaller.marshal(sms, sw);
-
-                    smsResponse = restClientSms.sendMessage("");
-
-                    //can comment this out, hardcoding to see response from msg server
-                    String x = "Mrs dgvsbskjnl";
-                    request.setAttribute("message", x);
-                    //
-
-                    rd = request.getRequestDispatcher("Editor.jsp");
-                    rd.forward(request, response);
-                } catch (JAXBException ex) {
-                    Logger.getLogger(StoryServlet.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                rd = request.getRequestDispatcher("Editor.jsp");
+                rd.forward(request, response);
 
                 break;
             case ("Make Story of the Day"):
@@ -721,16 +705,18 @@ rdPrevComments.forward(request, response);
             case ("Turn Off Comments"):
 
                 Story story = new Story();
-                story.setAllowComments(true);
-                story.setStoryID(1);
-                story.setTitle("test title");
-
+                String ID = (String) request.getParameter("story_id");
+                story.setStoryID(Integer.parseInt(ID));
+                
+                story = restClientStory.retrieveStory(story);
+                
+                
                 message = restClientStory.turnOffComments(story);
                 //message = "test";
 
-                request.setAttribute("message", message);
+                request.setAttribute("commentMessage", message);
 
-                RequestDispatcher rdisp1 = request.getRequestDispatcher("TESTturnOffComments.jsp");
+                RequestDispatcher rdisp1 = request.getRequestDispatcher("Writer.jsp");
 
                 rdisp1.forward(request, response);
 

@@ -75,6 +75,7 @@
                 }
                 %>
             </div>
+            
             <table class="stats">
                 <tr id="title">
                     <th>Your Stories</th>
@@ -117,9 +118,11 @@
                     <%} else {%>
                     <td>Rejected</td>
                     <%}%>
+                    
                     <td>
                         <form action="StoryServlet" method="post">
-                            <input name="submit" type="submit" value="Disable Comments">
+                            <input name="submit" type="submit" value="Turn Off Comments">
+                            <input class="buttonMain"  name="story_id" type="hidden" value="<%=story.getStoryID()%>"> 
                         </form>
                         <form action="StoryServlet" method="get">
                             <input name="submit" type="submit" value="View Story Get">
@@ -140,6 +143,13 @@
                 }
                 %>
             </table>
+            <%
+                    String commentMessage = (String)request.getAttribute("commentMessage");
+                    
+                    if(commentMessage != null){
+            %>
+            <h4><%=commentMessage%></h4>
+            <%}%>
         </section>
     </body>
 </html>
