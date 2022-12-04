@@ -12,7 +12,7 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
         <link rel="stylesheet" href="custom.css">
     </head>
-    
+
     <body style="background-color:#1c1c1c">
 
 
@@ -39,21 +39,21 @@ int userLoggedInRoleID = userLoggedInRole.getRoleID();
                 }
 
 
-                    %>
-                    <form action="StoryServlet" method="get">
-                         <input class="button1" name="role_id" type="hidden" value="3">
-                        <input class="button1" name="story_id" type="hidden" value="4">
-                        <input class="buttonMainBig" name="submit" type="submit" value="Display Story To Edit">
-                    </form>
-                    
-                    
-                    
-                    
-                    
-                </div>
-            </section>
+                %>
+                <form action="StoryServlet" method="get">
+                    <input class="button1" name="role_id" type="hidden" value="3">
+                    <input class="button1" name="story_id" type="hidden" value="4">
+                    <input class="buttonMainBig" name="submit" type="submit" value="Display Story To Edit">
+                </form>
 
-            <section class="main_content">
+
+
+
+
+            </div>
+        </section>
+
+        <section class="main_content">
 
 
 
@@ -137,30 +137,31 @@ for (Story story : searchedStories){
 
 
             <%--<div class="vid_list">--%>
+            <%
+            RestClientStory rcs = new RestClientStory("http://localhost:8080/RIP/RIP");
+            List<Story> stories = new ArrayList<>();
+            User user = new User();
+                
+       User userLoggedIn = (User)request.getAttribute("loggedInUser");
+       String username = "";
+       
+       if(userLoggedIn != null) {
+       username = userLoggedIn.getUsername();
+               
+            %>
             <div id="outer_wrapper">
-                <h3 style="color:white">Stories Based On Your Preffered Categories</h3>
+                <h3 style="color:white">Stories Based On Your Preferred Categories</h3>
                 <div id="inner_wrapper">
                     <%
-                    RestClientStory rcs = new RestClientStory("http://localhost:8080/RIP/RIP");
-                    List<Story> stories = new ArrayList<>();
-                    User user = new User();
-                
-               User userLoggedIn = (User)request.getAttribute("loggedInUser");
-               String username = "";
-               if(userLoggedIn != null)
-               {
-               username = userLoggedIn.getUsername();
                
-                    }
-               
-                   user.setUserID(8778);
-                   user.setUsername("Mike");
-                   user.setRoleID(1);
+//                   user.setUserID(8778);
+//                   user.setUsername("Mike");
+//                   user.setRoleID(1);
                 
                 //storiesMostRated = rcs.getTop20StoriesForMonth();
                 
                 if(1<2){
-                stories = rcs.searchStoriesByCategories(user);
+                stories = rcs.searchStoriesByCategories(userLoggedIn);
                 }
             
             
@@ -189,7 +190,7 @@ for (Story story : searchedStories){
                             <input class="buttonMain"  name="story_id" type="hidden" value="<%=story.getStoryID()%>">
                             <input class="buttonMain"   name="submit" type="submit" value="Story Info">
                         </form>
-                        
+
                     </div>
 
 
@@ -201,34 +202,31 @@ for (Story story : searchedStories){
 
 
             </div>
-
+            <%}%>
 
             <div id="outer_wrapper">
                 <h3 style="color:white">Top Rated Stories</h3>
                 <div id="inner_wrapper">
 
 
-                  <%      RestClientStory rcsTop = new RestClientStory("http://localhost:8080/RIP/RIP");
-                    List<Story> storiesTopStories = new ArrayList<>();
-                    User userTop = new User();
+                    <%      RestClientStory rcsTop = new RestClientStory("http://localhost:8080/RIP/RIP");
+                      List<Story> storiesTopStories = new ArrayList<>();
+                      User userTop = new User();
                 
-               // userTop = (User)request.getAttribute("loggedInUser");
-                                   userTop.setUserID(8778);
-                   userTop.setUsername("Mike");
-                   userTop.setRoleID(1);
+                 // userTop = (User)request.getAttribute("loggedInUser");
+//                                     userTop.setUserID(8778);
+//                     userTop.setUsername("Mike");
+//                     userTop.setRoleID(1);
                    
-                  // storiesTopStories = rcsTop.getTop20StoriesForMonth();   This is what we originally had and should get back !
-                  
-storiesTopStories = rcsTop.getRandomApprovedStories();
-                  
-
+  //                   storiesTryNewStories = rcs.getRandomApprovedStories();
+                     storiesTopStories = rcsTop.getTop20StoriesForMonth();
                    
                     
                     
                     
                     %>
-                    
-      
+
+
                     <%----------------------------------------------------------------------------------------------------------------------------%>
 
                     <%
@@ -238,7 +236,7 @@ storiesTopStories = rcsTop.getRandomApprovedStories();
                     <%}
                         if(storiesTopStories.size()<1 || user == null){
                     %>
-            
+
 
 
                     <%
@@ -253,7 +251,7 @@ storiesTopStories = rcsTop.getRandomApprovedStories();
                         <h3 style="color:white"><%=story.getTitle()%></h3>
                         <h5 style="color:white">Author : <%=story.getWriter()%></h5>
                         <p style="color:white"><%=story.getDescription()%></p>
-                        
+
 
                         <form action="StoryServlet" method="get">
                             <input class="buttonMain" name="story_id" type="hidden" value="<%=story.getStoryID()%>">
@@ -270,7 +268,7 @@ storiesTopStories = rcsTop.getRandomApprovedStories();
             </div>
 
             <div id="outer_wrapper">
-                <h3 style="color:white">Try Something New</h3>
+                <h3 style="color:white">Recommended Reads</h3>
                 <div id="inner_wrapper">
 
                     <%
@@ -279,9 +277,9 @@ storiesTopStories = rcsTop.getRandomApprovedStories();
                     User user2 = new User();
                 
                // user = (User)request.getAttribute("loggedInUser");
-                                   user2.setUserID(8778);
-                   user2.setUsername("Mike");
-                   user2.setRoleID(1);
+//                                   user2.setUserID(8778);
+//                   user2.setUsername("Mike");
+//                   user2.setRoleID(1);
                    
                    storiesTryNewStories = rcs3.getRandomApprovedStories();
 
@@ -295,13 +293,13 @@ storiesTopStories = rcsTop.getRandomApprovedStories();
 
 
                     <div class="box">
-                                                <p style="text-align:center;">  <img  src="images/pexels-stas-knop-1340588.jpg" alt="Contribute a story" width="365" height="170"> </p>
-                       <!--<img src=<%=storyNew.getImagePath()%>>-->
+                        <p style="text-align:center;">  <img  src="images/pexels-stas-knop-1340588.jpg" alt="Contribute a story" width="365" height="170"> </p>
+<!--<img src=<%=storyNew.getImagePath()%>>-->
                         <p align="center">
                         <h3 style="color:white"><%=storyNew.getTitle()%></h3>
                         <h5 style="color:white">Author : <%=storyNew.getWriter()%></h5>
                         <p style="color:white"><%=storyNew.getDescription()%></p>
-                        
+
 
                         <form action="StoryServlet" method="get">
                             <input class="buttonMain" name="story_id" type="hidden" value="<%=storyNew.getStoryID()%>">
