@@ -14,14 +14,16 @@
 
     <body>
         <section class="main_content">
-            <a href="ReferFriend.jsp">
-                <input class="button1" name="submit" type="submit" value="Refer a Friend">
-            </a>
-            <form action="StoryServlet" method="get">
-                <input class="button1" name="submit" type="submit" value="Create Story">
-                <input class="button1" name="submit" type="submit" value="View Story Get">
-            </form>
-            <div class="login-form">
+            <div class="side_nav">
+                <nav class="browse">
+                    <ul class="bbh">
+                        <b><lh>Options</lh></b>
+                        <a href="ReferFriend.jsp" name="submit" type="submit" value="Refer a Friend"><li>Refer a Friend</li></a>
+                        <a href="Writer.jsp" name="submit"><li>Become a Writer</li></a>
+                    </ul>
+                </nav>
+            </div>
+            <div class="story-list">
                 <h4 style="color:black">Your Likes</h4>
                 <%
                 List<Story> likedStories = (ArrayList<Story>)request.getAttribute("likedStories");
@@ -47,7 +49,7 @@
                 }
                 %>
             </div>
-            <div class="login-form">
+            <div class="category-list">
                 <h4 style="color:black">Your Preferred Category</h4>
                 <%
                 List<Category> preferredCategories = (ArrayList<Category>)request.getAttribute("preferredCategories");
