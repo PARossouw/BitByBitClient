@@ -2,10 +2,10 @@ package Servlets;
 
 import Category.Model.Category;
 import RestClientRemoteController.RestClientCategory;
+import RestClientRemoteController.RestClientSMS;
 import RestClientRemoteController.RestClientStory;
 import RestClientRemoteController.RestClientUser;
 import Story.Model.Story;
-import User.Model.Editor;
 import User.Model.Reader;
 import User.Model.User;
 import User.Model.Writer;
@@ -29,6 +29,7 @@ public class UserServlet extends HttpServlet {
     private static RestClientUser restClientUser;
     private static RestClientCategory restClientCategory;
     private static RestClientStory restClientStory;
+    private static RestClientSMS restClientSMS;
 
     public static User loggedInUser;
     public static Reader registeredUser;
@@ -38,6 +39,7 @@ public class UserServlet extends HttpServlet {
         this.restClientUser = new RestClientUser("http://localhost:8080/RIP/RIP");
         this.restClientCategory = new RestClientCategory("http://localhost:8080/RIP/RIP");
         this.restClientStory = new RestClientStory("http://localhost:8080/RIP/RIP");
+        this.restClientSMS = new RestClientSMS("http://localhost:8080/RIP/RIP");
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -378,14 +380,16 @@ public class UserServlet extends HttpServlet {
 
                 String phoneNumber = (String) request.getParameter("phoneNumber");
 
-                //User user = loggedInUser;
+                User user = loggedInUser;
                 //String x = loggedInUser.getUsername();
-                User user = (User) session.getAttribute("user");
+                //User user = (User) session.getAttribute("user");
                 String x = user.getUsername();
 
                 //String [] reply = new String [2];
-                //reply = restClientUser.referFriend(user, phoneNumber);
-                request.setAttribute("message", x);
+                String reply = restClientUser.referFriend(user, phoneNumber);
+                restClientSMS.sendMessage(reply);
+                
+                request.setAttribute("message", reply);
 
                 RequestDispatcher rd4 = request.getRequestDispatcher("ReferFriend.jsp");
 

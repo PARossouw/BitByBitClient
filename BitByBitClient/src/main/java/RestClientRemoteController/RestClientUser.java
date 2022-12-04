@@ -163,4 +163,21 @@ public class RestClientUser {
     private String toJsonString(Object o) throws JsonProcessingException {
         return mapper.writeValueAsString(o);
     }
+
+    public String referFriend(User user, String phoneNumber) throws JsonProcessingException {
+        
+        String uri = url + "/referFriend";
+        restClient = ClientBuilder.newClient();
+        webTarget = restClient.target(uri);
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("user", user);
+        jsonObject.put("phoneNumber", phoneNumber);
+        Response response = null;
+        response = webTarget.request().post(Entity.json(toJsonString(jsonObject)));
+        
+        
+        
+        return response.readEntity(String.class);
+    }
 }

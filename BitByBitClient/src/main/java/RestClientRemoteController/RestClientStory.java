@@ -30,7 +30,7 @@ public class RestClientStory {
     private String url;
     private Client restClient;
     private WebTarget webTarget;
-    private ObjectMapper mapper;
+    private ObjectMapper mapper = new ObjectMapper();
     //private Story story;
 
     public RestClientStory(String url) {
