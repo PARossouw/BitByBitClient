@@ -5,6 +5,7 @@ import RestClientRemoteController.RestClientCategory;
 import RestClientRemoteController.RestClientStory;
 import RestClientRemoteController.RestClientUser;
 import Story.Model.Story;
+import User.Model.Editor;
 import User.Model.Reader;
 import User.Model.User;
 import User.Model.Writer;
@@ -27,7 +28,7 @@ public class UserServlet extends HttpServlet {
     private static RestClientCategory restClientCategory;
     private static RestClientStory restClientStory;
 
-    public static User loggedInUser ;
+    public static User loggedInUser;
     private List<Writer> writersSearched;
 
     public UserServlet() {
@@ -97,19 +98,38 @@ public class UserServlet extends HttpServlet {
 
             case "Profile":
 
-                Reader reader = new Reader();
+                if (loggedInUser.getRoleID() < 3) {
 
-                reader.setUserID(loggedInUser.getUserID());
-                reader.setUsername(loggedInUser.getUsername());
-                reader.setEmail(loggedInUser.getEmail());
+                    Reader reader = new Reader();
 
-                List<Category> preferredCategories = new ArrayList<>();
-                preferredCategories = restClientCategory.getPreferredCategories(reader.getUserID());
-                List<Story> likedStories = new ArrayList<>();
-                likedStories = restClientStory.viewLikedStories(reader.getUserID());
+                    reader.setUserID(loggedInUser.getUserID());
+                    reader.setUsername(loggedInUser.getUsername());
+                    reader.setEmail(loggedInUser.getEmail());
 
-                request.setAttribute("preferredCategories", preferredCategories);
-                request.setAttribute("likedStories", likedStories);
+                    List<Category> preferredCategories = restClientCategory.getPreferredCategories(reader.getUserID());
+                    List<Story> likedStories = restClientStory.viewLikedStories(reader.getUserID());
+
+                    request.setAttribute("preferredCategories", preferredCategories);
+                    request.setAttribute("likedStories", likedStories);
+
+                    if (loggedInUser.getRoleID() == 2) {
+                        Writer writer = new Writer();
+
+                        writer.setUserID(reader.getUserID());
+                        writer.setUsername(reader.getUsername());
+                        writer.setEmail(reader.getEmail());
+
+                        List<Story> writerStories = restClientStory.viewStoriesByWriter(writer.getUserID());
+                        
+                        request.setAttribute("writerStories", writerStories);
+                    }
+                } else {
+                    
+                    List<Story> pendingStories = restClientStory.viewPendingStories();
+                    
+                    request.setAttribute("pendingStories", pendingStories);
+                }
+
                 request.setAttribute("user", loggedInUser);
 
                 RequestDispatcher rd1 = request.getRequestDispatcher("User.jsp");
@@ -166,7 +186,7 @@ public class UserServlet extends HttpServlet {
                     RequestDispatcher rd = request.getRequestDispatcher("LoginRegister.jsp");
                     rd.forward(request, response);
 
-                    loggedInUser = (User) session.getAttribute("user");
+                    //loggedInUser = (User) session.getAttribute("user");
                 }
                 break;
 
@@ -292,11 +312,9 @@ public class UserServlet extends HttpServlet {
                 rd.forward(request, response);
                 break;
 
-
-
             case "Block Selected Writers":
                 String[] results = request.getParameterValues("results");
-                
+
                 Writer w = new Writer();
                 String writerResults = "";
 //                for (int i = 0; i < writersSearched.size(); i++) {
