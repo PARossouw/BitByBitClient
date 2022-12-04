@@ -17,7 +17,9 @@ import jakarta.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -204,14 +206,16 @@ public class RestClientStory {
 
     }
 
-    public List<Story> getTop20StoriesForMonth() throws JsonProcessingException {
-        String uri = url + "/getTop20StoriesForMonth";
+    public Map<String, Integer> getTop20StoriesForMonth(String month) throws JsonProcessingException {
+        String uri = url + "/getTop20StoriesForMonth/{month}";
         restClient = ClientBuilder.newClient();
-        webTarget = restClient.target(uri);
-        List<Story> stories = new ArrayList();
-        stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
+        webTarget = restClient.target(uri).resolveTemplate("month", month);
+        Map<String, Integer> topStories = new HashMap<>();
         
-        return stories;
+        topStories = mapper.readValue(
+                webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<HashMap<String, Integer>>() {
+        });
+        return topStories;
     }
     
     private String toJsonString(Object o) throws JsonProcessingException {

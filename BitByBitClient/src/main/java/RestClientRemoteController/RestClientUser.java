@@ -41,7 +41,6 @@ public class RestClientUser {
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
 
-
         Response response = webTarget.request().post(Entity.json(user));
         return response.readEntity(User.class);
 
@@ -97,40 +96,41 @@ public class RestClientUser {
         return response.readEntity(String.class);
     }
 
-    public Map<Writer, Integer> topWriters() throws JsonProcessingException {
+    public Map<String, Integer> topWriters() throws JsonProcessingException {
         String uri = url + "/writer/top";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
 
-        Map<Writer, Integer> writers = null;
+        Map<String, Integer> writers = null;
         writers = mapper.readValue(
-                webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<Map<Writer, Integer>>() {
+                webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<Map<String, Integer>>() {
         });
         return writers;
+
     }
 
-    public Map<Writer, Integer> topRejectedWritersForMonth() throws JsonProcessingException {
+    public Map<String, Integer> topRejectedWritersForMonth() throws JsonProcessingException {
         String uri = url + "/writer/mostRejected";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
 
-        Map<Writer, Integer> writers = null;
+        Map<String, Integer> writers = null;
         writers = mapper.readValue(
-                webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<Map<Writer, Integer>>() {
+                webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<Map<String, Integer>>() {
         });
         return writers;
     }
 
-    public Map<Writer, Integer> topApprovingEditors() throws JsonProcessingException {
+    public Map<String, Integer> topApprovingEditors() throws JsonProcessingException {
         String uri = url + "/editor/mostApproving";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
 
-        Map<Writer, Integer> writers = null;
-        writers = mapper.readValue(
-                webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<Map<Writer, Integer>>() {
+        Map<String, Integer> topApprovingEditors = null;
+        topApprovingEditors = mapper.readValue(
+                webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<Map<String, Integer>>() {
         });
-        return writers;
+        return topApprovingEditors;
     }
 
     public List<Writer> searchWriter(String writerSearch) {
