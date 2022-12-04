@@ -58,6 +58,17 @@ public class RestClientUser {
         response = webTarget.request().post(Entity.json(toJsonString(preferredCategories)));
         return response.readEntity(String.class);
     }
+    
+    
+        public String addPreferredCategoriesToNewUser(Reader reader) throws JsonProcessingException {
+        String uri = url + "/categories/preffered/add";
+        restClient = ClientBuilder.newClient();
+        webTarget = restClient.target(uri);
+        Response response = null;
+        response = webTarget.request().post(Entity.json(toJsonString(reader)));
+        return response.readEntity(String.class);
+    }
+    
 
     public String registerUser(User user) throws JsonProcessingException {
         String uri = url + "/register";
