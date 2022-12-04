@@ -61,16 +61,35 @@ public class RestClientCategory {
         return response.readEntity(String.class);
     }
 
-    public List<Category> topCategoriesForTheMonth() throws JsonProcessingException {
-        String uri = url + "/topForMonth";
+    public HashMap<String, Integer> topCategoriesForTheMonth(String month) throws JsonProcessingException {
+        String uri = url + "/topForMonth/{month}";
         restClient = ClientBuilder.newClient();
-        webTarget = restClient.target(uri);
+        webTarget = restClient.target(uri).resolveTemplate("month", month);
 
-        List<Category> topCategories = null;
+        HashMap<String, Integer> topCategories = null;
         topCategories = mapper.readValue(
-                webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<List<Category>>() {
+                webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<HashMap<String, Integer>>() {
         });
         return topCategories;
+        
+        
+//        //hardcoding
+//        
+//        HashMap<String, Integer> topCategories = new HashMap<>();
+//        String story1 = "story1";
+//        String story2 = "story2";
+//        String story3 = "story3";
+//        
+//        int x = 1;
+//        int y = 2;
+//        int z = 3;
+//        
+//        topCategories.put(story1, x);
+//        topCategories.put(story2, y);
+//        topCategories.put(story3, z);
+//        
+//        return topCategories;
+        
     }
 
     public List<Category> getPreferredCategories(Integer readerID) throws JsonProcessingException {
