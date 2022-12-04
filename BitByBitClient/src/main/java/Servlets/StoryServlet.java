@@ -185,11 +185,15 @@ public class StoryServlet extends HttpServlet {
 
             case ("Review Story"):
 
-                storyReviewList = restClientStory.storyReview();
-                this.storyToReview = storyReviewList.get(0);
+                String storyID = (String) request.getParameter("story_id");
+                
+                this.storyToReview = new Story();
+                this.storyToReview = restClientStory.retrieveStoryGet(storyID);
+//                storyReviewList = restClientStory.storyReview();
+//                this.storyToReview = storyReviewList.get(0);
 
-                request.setAttribute("storyReview", this.storyToReview);
-                RequestDispatcher rdisp = request.getRequestDispatcher("Editor.jsp");
+                request.setAttribute("story", this.storyToReview);
+                RequestDispatcher rdisp = request.getRequestDispatcher("editStory.jsp");
 
                 rdisp.forward(request, response);
 
@@ -251,11 +255,11 @@ public class StoryServlet extends HttpServlet {
             case ("Display Story To Edit"):
 
                 //storyBeingRead = new Story();
-                String storyIDToEdig = (String) request.getParameter("story_id");
+                String storyIDToEdit = (String) request.getParameter("story_id");
                 String storyRoleID = (String) request.getParameter("role_id");
 
-                String storyIDToGet1 = "8";
-                this.storyBeingRead = restClientStory.retrieveStoryGet(storyIDToGet1);
+//                String storyIDToGet1 = "8";
+                this.storyBeingRead = restClientStory.retrieveStoryGet(storyIDToEdit);
 
                 this.categoryList = new ArrayList<>();
                 categoryList = restClientCategory.displayAllCategories();
@@ -270,6 +274,7 @@ public class StoryServlet extends HttpServlet {
                 this.storyBeingRead.setCategoryList(categoryUserList);
                 request.setAttribute("story", this.storyBeingRead);
                 request.setAttribute("categoryList", categoryList);
+                request.setAttribute("user", UserServlet.loggedInUser);
 
                 RequestDispatcher rdCreate = request.getRequestDispatcher("editStory.jsp");
                 rdCreate.forward(request, response);
