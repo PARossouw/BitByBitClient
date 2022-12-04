@@ -217,7 +217,11 @@ for (Story story : searchedStories){
                    userTop.setUsername("Mike");
                    userTop.setRoleID(1);
                    
-                   storiesTopStories = rcsTop.getTop20StoriesForMonth();
+                  // storiesTopStories = rcsTop.getTop20StoriesForMonth();   This is what we originally had and should get back !
+                  
+storiesTopStories = rcsTop.getRandomApprovedStories();
+                  
+
                    
                     
                     
