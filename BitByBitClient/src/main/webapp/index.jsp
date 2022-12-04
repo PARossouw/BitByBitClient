@@ -20,13 +20,15 @@
                 <div>
                     <h1>Welcome to Readers are Innovators</h1>
                     <p style="color:black">Making reading accessible to all.</p><br>
-<!--                    <form action="StoryServlet" method="post">
+<!--                    
+                    <form action="StoryServlet" method="post">
                         <input class="button1" name="submit" type="submit" value="Edit Story">
                         <input class="button1" name="submit" type="submit" value="Story of the Day">
                         <a href=DailyStory.jsp>
                             <button class="button2">View All Stories</button>
                         </a>
--->                    </form>
+                    </form>
+-->
                     <form action="StoryServlet" method="get">
                         <input class="button1" name="submit" type="submit" value="Story of the Day">
 
