@@ -483,42 +483,49 @@ public class StoryServlet extends HttpServlet {
             case ("Like"):
 
                 this.user = UserServlet.loggedInUser;
-                Reader reader = new Reader();
-                reader.setUserID(user.getUserID());
-                reader.setUsername(user.getUsername());
-                reader.setEmail(user.getEmail());
 
-                String storyLike = restClientLike.likeStory(reader, storyBeingRead);
-                request.setAttribute("story", storyBeingRead);
-                request.setAttribute("likes", storyLike);
+                if (this.user != null) {
 
-                Story storyView2 = new Story();
-                int storyID = Integer.parseInt((String) request.getParameter("story_id"));
-                storyView2.setStoryID(storyID);
-                this.storyView = restClientStory.retrieveStory(storyView2);
+                    Reader reader = new Reader();
+                    reader.setUserID(user.getUserID());
+                    reader.setUsername(user.getUsername());
+                    reader.setEmail(user.getEmail());
 
-//                reader = (Reader) session.getAttribute("user");
-
-//                restClientLike.likeStory(reader, this.storyView);
-//                request.setAttribute("story", this.storyBeingRead);
-                request.setAttribute("likes", "You have liked the story ");
-
-                RequestDispatcher rd6 = request.getRequestDispatcher("viewstory.jsp");
-                rd6.forward(request, response);
+                    String storyLike = restClientLike.likeStory(reader, storyBeingRead);
+                    request.setAttribute("story", storyBeingRead);
+                    request.setAttribute("likes", storyLike);
+                    Story storyView2 = new Story();
+                    int storyID = Integer.parseInt((String) request.getParameter("story_id"));
+                    storyView2.setStoryID(storyID);
+                    this.storyView = restClientStory.retrieveStory(storyView2);
+                    request.setAttribute("likes", "You have liked the story ");
+                    RequestDispatcher rd6 = request.getRequestDispatcher("viewstory.jsp");
+                    rd6.forward(request, response);
+                } else {
+                    RequestDispatcher rd6 = request.getRequestDispatcher("LoginRegister.jsp");
+                    rd6.forward(request, response);
+                }
                 break;
 
             case ("Comment"):
 
-                //request.setAttribute("story", storyBeingRead);
-                request.setAttribute("story", this.storyBeingRead);
+                this.user = UserServlet.loggedInUser;
+                if (this.user != null) {
 
-                session.getAttribute("user");
-                request.setAttribute("optsToComment", "add a comment");
+                    request.setAttribute("story", this.storyBeingRead);
 
-                List<Comment> allStoryComments = new ArrayList<>();
+                    session.getAttribute("user");
+                    request.setAttribute("optsToComment", "add a comment");
 
-                RequestDispatcher rdComment = request.getRequestDispatcher("viewstory.jsp");
-                rdComment.forward(request, response);
+                    List<Comment> allStoryComments = new ArrayList<>();
+
+                    RequestDispatcher rdComment = request.getRequestDispatcher("viewstory.jsp");
+                    rdComment.forward(request, response);
+                } else {
+                    RequestDispatcher rd6 = request.getRequestDispatcher("LoginRegister.jsp");
+                    rd6.forward(request, response);
+                }
+
                 break;
 
             case ("SubmitComment"):
@@ -544,6 +551,35 @@ public class StoryServlet extends HttpServlet {
                 rdSubmitComment.forward(request, response);
                 break;
 
+
+            case ("Rate"):
+
+                this.user = UserServlet.loggedInUser;
+                if (this.user != null) {
+
+                    Story storyViewRate = new Story();
+
+                    int userRating = Integer.parseInt((String) request.getParameter("user_Rating"));
+                    int storyIDRate = Integer.parseInt((String) request.getParameter("story_id"));
+                    storyViewRate.setStoryID(storyIDRate);
+                    //  this.storyView = restClientStory.retrieveStory(storyViewRate);
+                    //Reader loggedInReader1 = (Reader) session.getAttribute("user");
+                    Reader readerLikeTest = new Reader();
+                    readerLikeTest.setUserID(627);
+
+                    restClientRating.rateStory(this.storyView, readerLikeTest, userRating);
+                    request.setAttribute("story", this.storyView);
+                    request.setAttribute("likes", "You have rated the story.");
+
+                    RequestDispatcher rdRate = request.getRequestDispatcher("viewstory.jsp");
+                    rdRate.forward(request, response);
+                } else {
+                    RequestDispatcher rd6 = request.getRequestDispatcher("LoginRegister.jsp");
+                    rd6.forward(request, response);
+
+                }
+                break;
+
 //            case ("Rate"):
 //                Story storyViewRate = new Story();
 //
@@ -566,15 +602,19 @@ public class StoryServlet extends HttpServlet {
 //                rdRate.forward(request, response);
 //                break;
 
+
             case ("Read Full Story"):
 
-                request.setAttribute("storyBody", this.storyBeingRead.getBody());
+                this.user = UserServlet.loggedInUser;
 
-//                session.getAttribute("user");
-//                request.setAttribute("optsToComment", "add a comment");
-//                List<Comment> allStoryComments = new ArrayList<>();
-                RequestDispatcher rdFullStory = request.getRequestDispatcher("readFullStory.jsp");
-                rdFullStory.forward(request, response);
+                if (this.user != null) {
+                    request.setAttribute("storyBody", this.storyBeingRead.getBody());
+                    RequestDispatcher rdFullStory = request.getRequestDispatcher("readFullStory.jsp");
+                    rdFullStory.forward(request, response);
+                } else {
+                    RequestDispatcher rd6 = request.getRequestDispatcher("LoginRegister.jsp");
+                    rd6.forward(request, response);
+                }
                 break;
 
             case ("Search for Story"):

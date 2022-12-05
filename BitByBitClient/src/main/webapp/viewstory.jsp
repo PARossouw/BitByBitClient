@@ -3,6 +3,7 @@
 <%@page import="User_Interactions.Comment.Model.Comment;"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
+
 <!DOCTYPE html> 
 <html>
 
@@ -12,6 +13,9 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
         <link rel="stylesheet" href="custom.css">
     </head>
+    
+    
+
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
@@ -124,6 +128,7 @@ String userToComment = (String) request.getAttribute("optsToComment");
         <%
             }
         %>
+
 
 
 
