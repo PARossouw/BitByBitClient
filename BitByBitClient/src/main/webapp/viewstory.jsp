@@ -148,7 +148,7 @@ String userToComment = (String) request.getAttribute("optsToComment");
 
 
 
-        <form action="StoryServlet" method="get">
+        <form action="StoryServlet" method="post">
             <br></br>
             <input class="button1" name="story_id" type="hidden" value="<%=storyID%>">
             <input type="radio"  name="user_Rating" value="1">

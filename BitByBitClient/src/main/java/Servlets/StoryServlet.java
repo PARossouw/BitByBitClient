@@ -91,28 +91,6 @@ public class StoryServlet extends HttpServlet {
 
         switch (request.getParameter("submit")) {
             
-            case ("Rate"):
-                Story storyViewRate = new Story();
-
-                int userRating = Integer.parseInt((String) request.getParameter("user_Rating"));
-                int storyIDRate = Integer.parseInt((String) request.getParameter("story_id"));
-                storyViewRate.setStoryID(storyIDRate);
-                //  this.storyView = restClientStory.retrieveStory(storyViewRate);
-                //Reader loggedInReader1 = (Reader) session.getAttribute("user");
-//                Reader readerLikeTest = new Reader();
-//                readerLikeTest.setUserID(627);
-
-                String sID = ""+this.storyView.getStoryID() + ":" + UserServlet.loggedInUser.getUserID() + ":" + userRating;
-                
-                restClientRating.rateStory(sID);
-
-                request.setAttribute("story", this.storyView);
-                request.setAttribute("likes", "You have rated the story.");
-
-                RequestDispatcher rdRate = request.getRequestDispatcher("viewstory.jsp");
-                rdRate.forward(request, response);
-                break;
-
             case "Top 20 Most Rated Books of the Month":
 
                 month = (String) request.getParameter("Date");
@@ -544,27 +522,30 @@ public class StoryServlet extends HttpServlet {
                 rdSubmitComment.forward(request, response);
                 break;
 
-//            case ("Rate"):
-//                Story storyViewRate = new Story();
-//
-//                int userRating = Integer.parseInt((String) request.getParameter("user_Rating"));
-//                int storyIDRate = Integer.parseInt((String) request.getParameter("story_id"));
-//                storyViewRate.setStoryID(storyIDRate);
-//                //  this.storyView = restClientStory.retrieveStory(storyViewRate);
-//                //Reader loggedInReader1 = (Reader) session.getAttribute("user");
+                case ("Rate"):
+                Story storyViewRate = new Story();
+
+                int userRating = Integer.parseInt((String) request.getParameter("user_Rating"));
+                int storyIDRate = Integer.parseInt((String) request.getParameter("story_id"));
+                storyViewRate.setStoryID(storyIDRate);
+                
+                this.storyView = restClientStory.retrieveStoryGet(""+storyIDRate);
+                //  this.storyView = restClientStory.retrieveStory(storyViewRate);
+                //Reader loggedInReader1 = (Reader) session.getAttribute("user");
 //                Reader readerLikeTest = new Reader();
 //                readerLikeTest.setUserID(627);
-//
-//                String sID = ""+this.storyView.getStoryID() + ":" + UserServlet.loggedInUser.getUserID() + ":" + userRating;
-//                
-//                restClientRating.rateStory(sID);
-//
-//                request.setAttribute("story", this.storyView);
-//                request.setAttribute("likes", "You have rated the story.");
-//
-//                RequestDispatcher rdRate = request.getRequestDispatcher("viewstory.jsp");
-//                rdRate.forward(request, response);
-//                break;
+
+                String sID = storyIDRate + ":" + UserServlet.loggedInUser.getUserID() + ":" + userRating;
+//                String sID = "7:1:4";
+                
+                String resp = restClientRating.rateStory(sID);
+
+                request.setAttribute("story", this.storyView);
+                request.setAttribute("likes", resp);
+
+                RequestDispatcher rdRate = request.getRequestDispatcher("viewstory.jsp");
+                rdRate.forward(request, response);
+                break;
 
             case ("Read Full Story"):
 
