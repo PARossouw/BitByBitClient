@@ -30,7 +30,7 @@ public class RestClientStory {
     private String url;
     private Client restClient;
     private WebTarget webTarget;
-    private ObjectMapper mapper;
+    private ObjectMapper mapper = new ObjectMapper();
     //private Story story;
 
     public RestClientStory(String url) {
@@ -43,7 +43,11 @@ public class RestClientStory {
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri).resolveTemplate("reader", reader.getUserID());
         List<Story> stories = new ArrayList();
-        stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
+        stories = Arrays.asList(
+                mapper.readValue(
+                        webTarget.request().accept(
+                                MediaType.APPLICATION_JSON).get(
+                                        String.class), Story[].class));
         return stories;
     }
     

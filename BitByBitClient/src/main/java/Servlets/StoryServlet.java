@@ -90,6 +90,28 @@ public class StoryServlet extends HttpServlet {
         String month;
 
         switch (request.getParameter("submit")) {
+            
+            case ("Rate"):
+                Story storyViewRate = new Story();
+
+                int userRating = Integer.parseInt((String) request.getParameter("user_Rating"));
+                int storyIDRate = Integer.parseInt((String) request.getParameter("story_id"));
+                storyViewRate.setStoryID(storyIDRate);
+                //  this.storyView = restClientStory.retrieveStory(storyViewRate);
+                //Reader loggedInReader1 = (Reader) session.getAttribute("user");
+//                Reader readerLikeTest = new Reader();
+//                readerLikeTest.setUserID(627);
+
+                String sID = ""+this.storyView.getStoryID() + ":" + UserServlet.loggedInUser.getUserID() + ":" + userRating;
+                
+                restClientRating.rateStory(sID);
+
+                request.setAttribute("story", this.storyView);
+                request.setAttribute("likes", "You have rated the story.");
+
+                RequestDispatcher rdRate = request.getRequestDispatcher("viewstory.jsp");
+                rdRate.forward(request, response);
+                break;
 
             case "Top 20 Most Rated Books of the Month":
 
@@ -185,11 +207,15 @@ public class StoryServlet extends HttpServlet {
 
             case ("Review Story"):
 
-                storyReviewList = restClientStory.storyReview();
-                this.storyToReview = storyReviewList.get(0);
+                String storyID = (String) request.getParameter("story_id");
+                
+                this.storyToReview = new Story();
+                this.storyToReview = restClientStory.retrieveStoryGet(storyID);
+//                storyReviewList = restClientStory.storyReview();
+//                this.storyToReview = storyReviewList.get(0);
 
-                request.setAttribute("storyReview", this.storyToReview);
-                RequestDispatcher rdisp = request.getRequestDispatcher("Editor.jsp");
+                request.setAttribute("story", this.storyToReview);
+                RequestDispatcher rdisp = request.getRequestDispatcher("editStory.jsp");
 
                 rdisp.forward(request, response);
 
@@ -251,11 +277,11 @@ public class StoryServlet extends HttpServlet {
             case ("Display Story To Edit"):
 
                 //storyBeingRead = new Story();
-                String storyIDToEdig = (String) request.getParameter("story_id");
+                String storyIDToEdit = (String) request.getParameter("story_id");
                 String storyRoleID = (String) request.getParameter("role_id");
 
-                String storyIDToGet1 = "8";
-                this.storyBeingRead = restClientStory.retrieveStoryGet(storyIDToGet1);
+//                String storyIDToGet1 = "8";
+                this.storyBeingRead = restClientStory.retrieveStoryGet(storyIDToEdit);
 
                 this.categoryList = new ArrayList<>();
                 categoryList = restClientCategory.displayAllCategories();
@@ -270,15 +296,16 @@ public class StoryServlet extends HttpServlet {
                 this.storyBeingRead.setCategoryList(categoryUserList);
                 request.setAttribute("story", this.storyBeingRead);
                 request.setAttribute("categoryList", categoryList);
+                request.setAttribute("user", UserServlet.loggedInUser);
 
                 RequestDispatcher rdCreate = request.getRequestDispatcher("editStory.jsp");
                 rdCreate.forward(request, response);
                 break;
 
             case ("Create Story"):
-                storyBeingRead = new Story();
-                String storyIDToGet2 = "4";
-                this.storyBeingRead = restClientStory.retrieveStoryGet(storyIDToGet2);
+                String storyIDToGetCreateStory = (String) request.getParameter("story_id");
+                
+                this.storyBeingRead = restClientStory.retrieveStoryGet(storyIDToGetCreateStory);
 
                 this.categoryList = new ArrayList<>();
                 categoryList = restClientCategory.displayAllCategories();
@@ -436,12 +463,13 @@ public class StoryServlet extends HttpServlet {
                 }
 
                 storyToSubmit.setCategoryList(chosenCategoriesByUserSubmit);
-
+                storyToSubmit.setStoryID(-1);
                 storyToSubmit.setIsDraft(false);
                 storyToSubmit.setIsApproved(false);
                 storyToSubmit.setViews(0);
                 storyToSubmit.setLikes(0);
                 storyToSubmit.setAvgRating(0D);
+                storyToSubmit.setWriter(""+UserServlet.loggedInUser.getUserID());
 
                 String saveChangessubmit = restClientStory.saveStory(storyToSubmit);
 
@@ -523,6 +551,7 @@ public class StoryServlet extends HttpServlet {
                 rdSubmitComment.forward(request, response);
                 break;
 
+
             case ("Rate"):
 
                 this.user = UserServlet.loggedInUser;
@@ -550,6 +579,29 @@ public class StoryServlet extends HttpServlet {
 
                 }
                 break;
+
+//            case ("Rate"):
+//                Story storyViewRate = new Story();
+//
+//                int userRating = Integer.parseInt((String) request.getParameter("user_Rating"));
+//                int storyIDRate = Integer.parseInt((String) request.getParameter("story_id"));
+//                storyViewRate.setStoryID(storyIDRate);
+//                //  this.storyView = restClientStory.retrieveStory(storyViewRate);
+//                //Reader loggedInReader1 = (Reader) session.getAttribute("user");
+//                Reader readerLikeTest = new Reader();
+//                readerLikeTest.setUserID(627);
+//
+//                String sID = ""+this.storyView.getStoryID() + ":" + UserServlet.loggedInUser.getUserID() + ":" + userRating;
+//                
+//                restClientRating.rateStory(sID);
+//
+//                request.setAttribute("story", this.storyView);
+//                request.setAttribute("likes", "You have rated the story.");
+//
+//                RequestDispatcher rdRate = request.getRequestDispatcher("viewstory.jsp");
+//                rdRate.forward(request, response);
+//                break;
+
 
             case ("Read Full Story"):
 
@@ -616,7 +668,7 @@ public class StoryServlet extends HttpServlet {
                 this.user = (User) session.getAttribute("user");
                 this.storyToApprove = this.storyToReview;
 
-                //this should send back a string in the form of an xml and then just put that string in as an argument instead of the sw
+                
                 String smsXML = restClientStory_Transaction.approvePendingStory(user, this.storyToReview);
 
                 this.rd = request.getRequestDispatcher("Editor.jsp");
@@ -652,12 +704,10 @@ public class StoryServlet extends HttpServlet {
                 this.user = (User) session.getAttribute("user");
                 this.storyToApprove = this.storyToReview;
 
-                this.sms = restClientStory_Transaction.rejectPendingStory(user, this.storyToReview);
-                //message = sms.getMessage();
-//                request.setAttribute("message", message);
+                String smsXMLReject = restClientStory_Transaction.rejectPendingStory(user, this.storyToReview);
 
-                //this.rd = request.getRequestDispatcher("Editor.jsp");
-                //getting the next story
+                this.rd = request.getRequestDispatcher("Editor.jsp");
+
                 for (int i = 0; i < storyReviewList.size(); i++) {
 
                     if (i == storyReviewList.size() - 1) {
@@ -672,32 +722,18 @@ public class StoryServlet extends HttpServlet {
                         this.storyToReview = storyReviewList.get(i + 1);
                         request.setAttribute("storyReview", this.storyToReview);
                         rd = request.getRequestDispatcher("Editor.jsp");
-                        //rd.forward(request, response);
+
                         break;
                     }
 
                 }
-                try {
-                    JAXBContext jaxBContext = JAXBContext.newInstance(smsreq.class);
+                smsXMLReject = restClientSms.sendMessage(smsXMLReject);
 
-                    Marshaller marshaller = jaxBContext.createMarshaller();
+                //hardcoding
+                request.setAttribute("message", smsXMLReject);
 
-                    marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-                    StringWriter sw = new StringWriter();
-                    marshaller.marshal(sms, sw);
-
-                    smsResponse = restClientSms.sendMessage("");
-
-                    //can comment this out, hardcoding to see response from msg server
-                    String x = "Mrs dgvsbskjnl";
-                    request.setAttribute("message", x);
-                    //
-
-                    rd = request.getRequestDispatcher("Editor.jsp");
-                    rd.forward(request, response);
-                } catch (JAXBException ex) {
-                    Logger.getLogger(StoryServlet.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                rd = request.getRequestDispatcher("Editor.jsp");
+                rd.forward(request, response);
 
                 break;
             case ("Make Story of the Day"):
@@ -715,16 +751,18 @@ public class StoryServlet extends HttpServlet {
             case ("Turn Off Comments"):
 
                 Story story = new Story();
-                story.setAllowComments(true);
-                story.setStoryID(1);
-                story.setTitle("test title");
-
+                String ID = (String) request.getParameter("story_id");
+                story.setStoryID(Integer.parseInt(ID));
+                
+                story = restClientStory.retrieveStory(story);
+                
+                
                 message = restClientStory.turnOffComments(story);
                 //message = "test";
 
-                request.setAttribute("message", message);
+                request.setAttribute("commentMessage", message);
 
-                RequestDispatcher rdisp1 = request.getRequestDispatcher("TESTturnOffComments.jsp");
+                RequestDispatcher rdisp1 = request.getRequestDispatcher("Writer.jsp");
 
                 rdisp1.forward(request, response);
 
