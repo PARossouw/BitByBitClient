@@ -17,16 +17,34 @@
             User loggedInUser = (User) request.getAttribute("user");
         %>
         <section class="main_content">
-            <div class="side_nav">
+            <div>
                 <nav class="browse">
                     <ul class="bbh">
-                        <b><lh>Options</lh></b>
                         <form action="UserServlet" method="get"><a href="ReferFriend.jsp" name="submit" type="submit" value="Refer a Friend"><li>Block Writer</li></a></form>
-                        <%
-                            if(loggedInUser.getRoleID() == 4) {
-                        %>
+                                    <%
+                                        if(loggedInUser.getRoleID() == 4) {
+                                    %>
                         <form action="UserServlet" method="get"><a href="LoginRegister.jsp" name="submit" type="submit" value="Add Editor"><li>Add Editor</li></a></form>
-                        <%}%>
+                                    <%}%>
+                        <a href=Top10MostViewedBookesInACertainPeriod.jsp><li class="li3">Most Viewed Books</li></a>
+                    </ul>
+                </nav>
+            </div>
+            <div>
+                <nav class="browse">
+                    <ul class="bbh">
+                        <a href=Top20MostRatedBooksOfTheMonth.jsp><li class="li3">Highest Rated Books</li></a>
+                        <a href=Top20LikedBooksInAMonth.jsp><li class="li3">Most Liked Books</li></a>
+                        <a href=Top3CategoriesInAMonth.jsp><li class="li3">Top Liked Categories</li></a>
+                    </ul>
+                </nav>
+            </div>
+            <div>
+                <nav class="browse">
+                    <ul class="bbh">
+                        <a href=Top30Writers.jsp><li class="li3">Top Writers</li></a>
+                        <a href=Top5WritersWithHighestRejections.jsp><li class="li3">Top Rejected Writers</li></a>
+                        <a href=Top3HighestApprovingEditors.jsp><li class="li3">Top Approving Editors</li></a>
                     </ul>
                 </nav>
             </div>
@@ -75,8 +93,8 @@
                     <%}%>
                     <td>
                         <form action="StoryServlet" method="get">
-                            <input name="submit" type="submit" value="Review Story">
-                            <input name="submit" type="submit" value="Display Story To Edit">
+                            <input class="buttonMain" name="story_id" type="hidden" value="<%=story.getStoryID()%>">
+                            <input class="buttonMain" name="submit" type="submit" value="Display Story To Edit">
                         </form>
                     </td>
                 </tr>

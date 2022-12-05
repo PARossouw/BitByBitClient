@@ -3,6 +3,7 @@ package RestClientRemoteController;
 import Story.Model.Story;
 import User.Model.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
@@ -29,7 +30,7 @@ public class RestClientStory {
     private String url;
     private Client restClient;
     private WebTarget webTarget;
-    private ObjectMapper mapper;
+    private ObjectMapper mapper = new ObjectMapper();
     //private Story story;
 
     public RestClientStory(String url) {
@@ -42,7 +43,11 @@ public class RestClientStory {
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri).resolveTemplate("reader", reader.getUserID());
         List<Story> stories = new ArrayList();
-        stories = Arrays.asList(mapper.readValue(webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), Story[].class));
+        stories = Arrays.asList(
+                mapper.readValue(
+                        webTarget.request().accept(
+                                MediaType.APPLICATION_JSON).get(
+                                        String.class), Story[].class));
         return stories;
     }
     
@@ -243,6 +248,18 @@ public class RestClientStory {
         
         topStories = mapper.readValue(
                 webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<HashMap<String, Integer>>() {
+        });
+        return topStories;
+    }
+    
+    public List<Story> getTop20StoriesForMonth() throws JsonProcessingException {
+        String uri = url + "/getTop20StoriesForMonth";
+        restClient = ClientBuilder.newClient();
+        webTarget = restClient.target(uri)  ;
+        List<Story> topStories = new ArrayList<>();
+        
+        topStories = mapper.readValue(
+                webTarget.request().accept(MediaType.APPLICATION_JSON).get(String.class), new TypeReference<List<Story>>() {
         });
         return topStories;
     }

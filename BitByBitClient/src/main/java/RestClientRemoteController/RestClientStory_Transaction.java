@@ -42,19 +42,11 @@ public class RestClientStory_Transaction {
         Response response = null;
         response = webTarget.request().post(Entity.json(toJsonString(jsonObject)));
         
-        
-        
         return response.readEntity(String.class);
-        
-        
-
-
-        
-        
-    }
+     }
 
        //@FormParam must be put in the aruguments on the rest controller side
-    public smsreq rejectPendingStory(User editor, Story story) throws JsonProcessingException {
+    public String rejectPendingStory(User editor, Story story) throws JsonProcessingException {
         String uri = url + "/reject";
         restClient = ClientBuilder.newClient();
         webTarget = restClient.target(uri);
@@ -65,16 +57,9 @@ public class RestClientStory_Transaction {
         jsonObject.put("story", story);
         Response response = null;
         response = webTarget.request().post(Entity.json(toJsonString(jsonObject)));
-        return response.readEntity(smsreq.class);
-        
-//        HashMap<User, Story> pendingStoriesReject = new HashMap();
-//        pendingStoriesReject.put(editor, story);
-//        Response response = null;
-//        response = webTarget.request().post(Entity.json(toJsonString(pendingStoriesReject)));
-//        return response.readEntity(String.class);
+        return response.readEntity(String.class);
 
-       
-    }
+}
 
  
       //@FormParam must be put in the aruguments on the rest controller side
