@@ -21,9 +21,7 @@
                 <nav class="browse">
                     <ul class="bbh">
                         <form action="UserServlet" method="get">
-                            <a href="BlockWriter.jsp" name="submit" type="submit" value="Block Writer">
-                                <li>Block Writer</li>
-                            </a></form>
+                            <a href="BlockWriter.jsp" name="submit" type="submit" value="Block Writer"><li>Block Writer</li></a></form>
                                     <%
                                         if(loggedInUser.getRoleID() == 4) {
                                     %>
@@ -33,7 +31,7 @@
                         <form action="StoryServlet" method="get">
                             <input type ="submit"  name="submit" value="Choose Story of the Day">
                         </form>
-                                    <%}%>
+                        <%}%>
                         <a href=Top10MostViewedBookesInACertainPeriod.jsp><li class="li3">Most Viewed Books</li></a>
                     </ul>
                 </nav>

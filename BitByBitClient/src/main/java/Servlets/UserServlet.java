@@ -318,9 +318,9 @@ public class UserServlet extends HttpServlet {
                         userCheck2.setEmail(emailRegister);
                         userCheck2.setPhoneNumber(phoneRegister);
                         userCheck2.setPassword(passwordRegister);
-                        if(loggedInUser == null){
+                        if (loggedInUser == null) {
                             userCheck2.setRoleID(1);
-                        }else{
+                        } else {
                             userCheck2.setRoleID(3);
                         }
 
@@ -337,14 +337,14 @@ public class UserServlet extends HttpServlet {
                         int registeredUserID = restClientUser.login(userCheck2).getUserID();
                         this.registeredUser.setUserID(registeredUserID);
 
-                        if(loggedInUser != null){
+                        if (loggedInUser != null) {
                             String youveAddedAnEditor = "Editor successfully added";
                             request.setAttribute("createStory", youveAddedAnEditor);
                             RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
                             rd.forward(request, response);
                             break;
                         }
-                        
+
                         RequestDispatcher rd = request.getRequestDispatcher("prefferedCategories.jsp");
 //                    prefferedCategories.jsp
                         rd.forward(request, response);
@@ -357,8 +357,7 @@ public class UserServlet extends HttpServlet {
                 break;
 
             case "submitCategories":
-                List<Category> myList = new ArrayList<>();
-                myList = restClientCategory.displayAllCategories();
+                List<Category> myList = restClientCategory.displayAllCategories();
 
                 List<String> userPrefferedCategories = new ArrayList<>();
                 List<Category> prefferedCategories = new ArrayList<>();
@@ -378,9 +377,6 @@ public class UserServlet extends HttpServlet {
                 }
                 String chosenCategories = "";
 
-//                Reader readerTest = new Reader();
-//                readerTest.setUserID(887);
-//                readerTest.setPreferredCategories(prefferedCategories);
                 this.registeredUser.setPreferredCategories(prefferedCategories);
 
                 restClientUser.addPreferredCategoriesToNewUser(this.registeredUser);

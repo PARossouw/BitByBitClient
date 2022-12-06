@@ -5,8 +5,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Full Story</title>
     </head>
-    <body>
 
+    <body>
+        <jsp:include page="header.jsp"></jsp:include>
         <%
             String storyBody = (String) request.getAttribute("storyBody");
                           
@@ -14,6 +15,6 @@
         %>
 
         <h1><%=storyBody%></h1>
-         
+        <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>

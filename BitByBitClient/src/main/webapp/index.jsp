@@ -50,9 +50,9 @@ int userLoggedInRoleID = userLoggedInRole.getRoleID();
                 %>
                 <form action="StoryServlet" method="post">
                     <input class="button1" name="role_id" type="hidden" value="3">
-                
-                   <input class="buttonMain" name="story_id" type="hidden" value="<%=storyOfTheDay.getStoryID()%>">
-                    <input class="buttonMain" name="submit" type="submit" value="Read Story Of The Day">
+
+                    <input class="buttonMain" name="story_id" type="hidden" value="<%=storyOfTheDay.getStoryID()%>">
+                    <input class="buttonMainBig" name="submit" type="submit" value="Read Story Of The Day">
                 </form>
 
 

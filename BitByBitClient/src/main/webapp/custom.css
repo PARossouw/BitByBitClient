@@ -47,21 +47,21 @@ body{
 }
 
 #outer_wrapper {
-            overflow: scroll;
-            width:100%;
-        }
-        #outer_wrapper #inner_wrapper {
-            width:20000px; /* If you have more elements, increase the width accordingly */
-        }
-        #outer_wrapper #inner_wrapper div.box { /* Define the properties of inner block */
-            width: 400px;
-            height:400px;
-            float: left;
-            margin: 0 4px 0 0;
-            background-color: #1c1c1c;
-            
-            border:1px transparent;
-        }
+    overflow: scroll;
+    width:100%;
+}
+#outer_wrapper #inner_wrapper {
+    width:20000px; /* If you have more elements, increase the width accordingly */
+}
+#outer_wrapper #inner_wrapper div.box { /* Define the properties of inner block */
+    width: 400px;
+    height:400px;
+    float: left;
+    margin: 0 4px 0 0;
+    background-color: #1c1c1c;
+
+    border:1px transparent;
+}
 
 .nav_logo{
     width: 30px;
@@ -278,7 +278,6 @@ body{
     border-radius: 3px;
 }
 
-
 .buttonMainBig{
     background-color: red;
     color:white;
@@ -470,22 +469,22 @@ body{
 }
 
 .bbh a:link {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 /* visited link */
 .bbh a:visited {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 /* mouse over link */
 .bbh a:hover {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 /* selected link */
 .bbh a:active {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 .btn {
