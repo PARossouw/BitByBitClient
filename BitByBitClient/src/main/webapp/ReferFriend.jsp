@@ -12,7 +12,7 @@
         <title>Refer a Friend</title>
     </head>
     <body>
-        <h1><%=message%></h1>
+
         <h1>Refer a Friend</h1>
 
         <form action="UserServlet" method="post">

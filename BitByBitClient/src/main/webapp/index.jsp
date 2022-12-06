@@ -6,6 +6,14 @@
 <%@page import="java.util.List"%>
 <%@page import="RestClientRemoteController.RestClientStory"%>
 <html>
+    <%
+        
+        RestClientStory rcsStoryOfTheDay = new RestClientStory("http://localhost:8080/RIP/RIP");
+    
+        Story storyOfTheDay = new Story();
+        storyOfTheDay = rcsStoryOfTheDay.getStoryOfTheDay();
+    
+    %>
     <head>
         <title>Readers Are Innovators</title>
         <link rel="stylesheet" href="normalized.css">
@@ -40,10 +48,11 @@ int userLoggedInRoleID = userLoggedInRole.getRoleID();
 
 
                 %>
-                <form action="StoryServlet" method="get">
+                <form action="StoryServlet" method="post">
                     <input class="button1" name="role_id" type="hidden" value="3">
-                    <input class="button1" name="story_id" type="hidden" value="4">
-                    <input class="buttonMainBig" name="submit" type="submit" value="Display Story To Edit">
+                
+                   <input class="buttonMain" name="story_id" type="hidden" value="<%=storyOfTheDay.getStoryID()%>">
+                    <input class="buttonMain" name="submit" type="submit" value="Read Story Of The Day">
                 </form>
 
 
@@ -160,9 +169,10 @@ for (Story story : searchedStories){
                 
                 //storiesMostRated = rcs.getTop20StoriesForMonth();
                 
-                if(1<2){
-                stories = rcs.searchStoriesByCategories(userLoggedIn);
+                if(userLoggedIn.getRoleID() < 3){
+                    stories = rcs.searchStoriesByCategories(userLoggedIn);
                 }
+                
             
             
                     if(stories.size()<1){

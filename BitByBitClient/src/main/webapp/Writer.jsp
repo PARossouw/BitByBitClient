@@ -126,8 +126,9 @@
 
                     <td>
                         <form action="StoryServlet" method="post">
-                            <input name="submit" type="submit" value="Turn Off Comments">
+                            <input name="submit" type="submit" value="Toggle Comments off/on">
                             <input class="buttonMain"  name="story_id" type="hidden" value="<%=story.getStoryID()%>"> 
+                            <input name="submit" type="submit" value="Remove from public view">
                         </form>
                         <form action="StoryServlet" method="get">
                             <input name="submit" type="submit" value="Story Info">

@@ -20,11 +20,19 @@
             <div>
                 <nav class="browse">
                     <ul class="bbh">
-                        <form action="UserServlet" method="get"><a href="ReferFriend.jsp" name="submit" type="submit" value="Refer a Friend"><li>Block Writer</li></a></form>
+                        <form action="UserServlet" method="get">
+                            <a href="BlockWriter.jsp" name="submit" type="submit" value="Block Writer">
+                                <li>Block Writer</li>
+                            </a></form>
                                     <%
                                         if(loggedInUser.getRoleID() == 4) {
                                     %>
-                        <form action="UserServlet" method="get"><a href="LoginRegister.jsp" name="submit" type="submit" value="Add Editor"><li>Add Editor</li></a></form>
+                        <form action="UserServlet" method="post">
+                            <input type ="submit"  name="submit" value="Add Editor">
+                        </form>
+                        <form action="StoryServlet" method="get">
+                            <input type ="submit"  name="submit" value="Choose Story of the Day">
+                        </form>
                                     <%}%>
                         <a href=Top10MostViewedBookesInACertainPeriod.jsp><li class="li3">Most Viewed Books</li></a>
                     </ul>

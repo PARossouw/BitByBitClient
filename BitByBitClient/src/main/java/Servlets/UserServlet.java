@@ -5,6 +5,7 @@ import RestClientRemoteController.RestClientCategory;
 import RestClientRemoteController.RestClientSMS;
 import RestClientRemoteController.RestClientStory;
 import RestClientRemoteController.RestClientUser;
+import SMS.smsreq;
 import Story.Model.Story;
 import User.Model.Reader;
 import User.Model.User;
@@ -18,10 +19,19 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
+import java.io.StringWriter;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @WebServlet(name = "UserServlet", urlPatterns = {"/UserServlet"})
 public class UserServlet extends HttpServlet {
@@ -39,7 +49,7 @@ public class UserServlet extends HttpServlet {
         this.restClientUser = new RestClientUser("http://localhost:8080/RIP/RIP");
         this.restClientCategory = new RestClientCategory("http://localhost:8080/RIP/RIP");
         this.restClientStory = new RestClientStory("http://localhost:8080/RIP/RIP");
-        this.restClientSMS = new RestClientSMS("http://localhost:8080/RIP/RIP");
+        this.restClientSMS = new RestClientSMS("http://196.41.180.157:8080/sms/sms_request");
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -190,10 +200,22 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        processRequest(request, response);
+
+        //        processRequest(request, response);
         HttpSession session = request.getSession(false);
 
         switch (request.getParameter("submit")) {
+
+            case "Add Editor":
+
+                String message = "adding editor";
+                request.setAttribute("message", message);
+
+                RequestDispatcher rdee = request.getRequestDispatcher("LoginRegister.jsp");
+                rdee.forward(request, response);
+
+                break;
+
             case "Login":
 
                 User userCheck = new User();
@@ -286,7 +308,7 @@ public class UserServlet extends HttpServlet {
                             sendToDatabase = false;
                         }
                     }
-                    // Sending data to the database 
+                    // Sending data to the database
                     User userCheck2 = new User();
                     if (sendToDatabase) {
 
@@ -296,6 +318,11 @@ public class UserServlet extends HttpServlet {
                         userCheck2.setEmail(emailRegister);
                         userCheck2.setPhoneNumber(phoneRegister);
                         userCheck2.setPassword(passwordRegister);
+                        if(loggedInUser == null){
+                            userCheck2.setRoleID(1);
+                        }else{
+                            userCheck2.setRoleID(3);
+                        }
 
                         msg2 = restClientUser.registerUser(userCheck2);
                     }
@@ -310,6 +337,14 @@ public class UserServlet extends HttpServlet {
                         int registeredUserID = restClientUser.login(userCheck2).getUserID();
                         this.registeredUser.setUserID(registeredUserID);
 
+                        if(loggedInUser != null){
+                            String youveAddedAnEditor = "Editor successfully added";
+                            request.setAttribute("createStory", youveAddedAnEditor);
+                            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+                            rd.forward(request, response);
+                            break;
+                        }
+                        
                         RequestDispatcher rd = request.getRequestDispatcher("prefferedCategories.jsp");
 //                    prefferedCategories.jsp
                         rd.forward(request, response);
@@ -381,17 +416,16 @@ public class UserServlet extends HttpServlet {
                 String phoneNumber = (String) request.getParameter("phoneNumber");
 
                 User user = loggedInUser;
-                //String x = loggedInUser.getUsername();
-                //User user = (User) session.getAttribute("user");
+
                 String x = user.getUsername();
 
                 //String [] reply = new String [2];
                 String reply = restClientUser.referFriend(user, phoneNumber);
-                restClientSMS.sendMessage(reply);
-                
-                request.setAttribute("message", reply);
+                x = restClientSMS.sendMessage(reply);
 
-                RequestDispatcher rd4 = request.getRequestDispatcher("ReferFriend.jsp");
+                request.setAttribute("createStory", "referral successful");
+
+                RequestDispatcher rd4 = request.getRequestDispatcher("index.jsp");
 
                 rd4.forward(request, response);
 
