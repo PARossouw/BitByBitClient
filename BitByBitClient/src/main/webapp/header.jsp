@@ -44,12 +44,14 @@
                 <li class="same">
                     <form action="UserServlet" method="get">
                         <input class="buttonMainHeader" name="submit" type="submit" value="Profile">
+                        <input class="buttonMainHeader" name="submit" type="submit" value="Logout">
                     </form>
                 </li>
                 <%} else {%>
                 <li class="same">
                     <form action="UserServlet" method="get">
                         <input class="buttonMainHeader" name="submit" type="submit" value="Profile">
+                        <input class="buttonMainHeader" name="submit" type="submit" value="Logout">
                     </form>
                 </li>
                 <%

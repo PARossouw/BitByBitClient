@@ -11,7 +11,7 @@
 
 
     <head>
-        <title>Login</title>
+        <title>Edit Story</title>
         <link rel="stylesheet" href="normalized.css">
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
         <link rel="stylesheet" href="css/scrollWheel.css">
@@ -30,7 +30,7 @@
 
 
 
-            <form action="StoryServlet" method="post" enctype="multipart/form-data">
+            <form id="sectionForm" action="StoryServlet" method="post" enctype="multipart/form-data">
 
 
 
@@ -69,14 +69,14 @@
 
                 <label for="text" style="color:white">Story Title</label>
                 <br>
-                <textarea id="text" name="StoryTitle" rows="2" cols="80"  ><%=title%></textarea >
+                <textarea id="text" name="StoryTitle" rows="2" cols="80" required><%=title%> </textarea >
                 <br>
             <p style="line-height:3.5em;"></p>
 
             <p align="center">
                 <label for="text" style="color:white">Story Description</label>
                 <br>
-                <textarea id="text" name="StoryDescription" rows="5" cols="80"><%=description%></textarea>
+                <textarea id="text" name="StoryDescription" rows="5" cols="80" required><%=description%> </textarea>
                 <br>
 
             <p style="line-height:3.5em;"></p>
@@ -87,7 +87,7 @@
 
                 <label for="text" style="color:white">Body of Story</label>
                 <br>
-                <textarea id="text" name="StoryBody" rows="60" cols="80" style="color:black"><%=storyBody%></textarea>
+                <textarea id="text" name="StoryBody" rows="60" cols="80" style="color:black" required><%=storyBody%> </textarea>
                 <br>
             <p style="line-height:3.5em;"></p>
             <p align="center">
@@ -196,6 +196,7 @@
             }
         %>
     </form>
+    <script src="CheckBox.js"></script>
 
 
 

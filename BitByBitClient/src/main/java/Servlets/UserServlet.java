@@ -75,6 +75,20 @@ public class UserServlet extends HttpServlet {
 
         switch (request.getParameter("submit")) {
 
+            case "Logout":
+
+                request.getSession().invalidate();
+                this.loggedInUser = null;
+
+                String youveBeenBoggedout = "You've been logged out";
+                request.setAttribute("createStory", youveBeenBoggedout);
+
+                RequestDispatcher rdisp204 = request.getRequestDispatcher("index.jsp");
+
+                rdisp204.forward(request, response);
+
+                break;
+
             case "Top 3 Highest Approving Editors":
 
                 Map<String, Integer> editorsMap = new HashMap<>();
@@ -94,7 +108,7 @@ public class UserServlet extends HttpServlet {
                 Map<String, Integer> rejectedWritersMap = new HashMap<>();
 
                 rejectedWritersMap = restClientUser.topRejectedWritersForMonth();
-
+                
                 request.setAttribute("rejectedWritersMap", rejectedWritersMap);
 
                 RequestDispatcher rdisp103 = request.getRequestDispatcher("Top5WritersWithHighestRejections.jsp");
@@ -209,7 +223,7 @@ public class UserServlet extends HttpServlet {
             case "Add Editor":
 
                 String message = "adding editor";
-                request.setAttribute("message", message);
+                request.setAttribute("addingEditor", message);
 
                 RequestDispatcher rdee = request.getRequestDispatcher("LoginRegister.jsp");
                 rdee.forward(request, response);
@@ -233,7 +247,7 @@ public class UserServlet extends HttpServlet {
                 userCheck.setPassword(password);
                 userFeedback = restClientUser.login(userCheck);
 
-                if (userFeedback != null) {
+                if (userFeedback.getUserID() != -1) {
                     session = request.getSession(true);
                     session.setAttribute("user", userFeedback);
 
@@ -318,9 +332,9 @@ public class UserServlet extends HttpServlet {
                         userCheck2.setEmail(emailRegister);
                         userCheck2.setPhoneNumber(phoneRegister);
                         userCheck2.setPassword(passwordRegister);
-                        if(loggedInUser == null){
+                        if (loggedInUser == null) {
                             userCheck2.setRoleID(1);
-                        }else{
+                        } else {
                             userCheck2.setRoleID(3);
                         }
 
@@ -337,14 +351,14 @@ public class UserServlet extends HttpServlet {
                         int registeredUserID = restClientUser.login(userCheck2).getUserID();
                         this.registeredUser.setUserID(registeredUserID);
 
-                        if(loggedInUser != null){
+                        if (loggedInUser != null) {
                             String youveAddedAnEditor = "Editor successfully added";
                             request.setAttribute("createStory", youveAddedAnEditor);
                             RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
                             rd.forward(request, response);
                             break;
                         }
-                        
+
                         RequestDispatcher rd = request.getRequestDispatcher("prefferedCategories.jsp");
 //                    prefferedCategories.jsp
                         rd.forward(request, response);
@@ -410,10 +424,37 @@ public class UserServlet extends HttpServlet {
                 rd2.forward(request, response);
 
                 break;
+                
+                case "Become a Writer":
+                    
+                
+                String becomeWriter = restClientUser.becomeWriter(this.loggedInUser);
+                
+                request.setAttribute("commentMessage", becomeWriter);
+                RequestDispatcher rd9 = request.getRequestDispatcher("Writer.jsp");
+
+                rd9.forward(request, response);
+
+                    
+                    
+                
+
+                break;
 
             case "ReferFriend":
 
                 String phoneNumber = (String) request.getParameter("phoneNumber");
+
+                if (phoneNumber.isBlank() || phoneNumber.isEmpty() || phoneNumber == null || phoneNumber.length() != 10 || !phoneNumber.matches("[0-9]+")) {
+                    request.setAttribute("message", "please enter a valid phone number");
+
+                    RequestDispatcher rd4 = request.getRequestDispatcher("ReferFriend.jsp");
+
+                    rd4.forward(request, response);
+
+                    break;
+
+                }
 
                 User user = loggedInUser;
 

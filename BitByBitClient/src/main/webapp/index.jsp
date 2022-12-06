@@ -52,7 +52,7 @@ int userLoggedInRoleID = userLoggedInRole.getRoleID();
                     <input class="button1" name="role_id" type="hidden" value="3">
                 
                    <input class="buttonMain" name="story_id" type="hidden" value="<%=storyOfTheDay.getStoryID()%>">
-                    <input class="buttonMain" name="submit" type="submit" value="Read Story Of The Day">
+                    <input class="buttonMainBig" name="submit" type="submit" value="Read Story Of The Day">
                 </form>
 
 
@@ -88,7 +88,7 @@ int userLoggedInRoleID = userLoggedInRole.getRoleID();
             -->
 
             <form action="StoryServlet" method="post" style="inline-block width: 75%">
-                <input type="text" class="form" name ="titleOrAuthor" placeholder="Story Title or Author">
+                <input type="text" class="form" name ="titleOrAuthor" placeholder="Story Title or Author" required>
                 <input class="buttonMainGreen" name="submit" type="submit" value="Search for Story">
             </form>
 
@@ -156,7 +156,7 @@ for (Story story : searchedStories){
        
        if(userLoggedIn != null) {
        username = userLoggedIn.getUsername();
-               
+               if(userLoggedIn.getRoleID()<3){
             %>
             <div id="outer_wrapper">
                 <h3 style="color:white">Stories Based On Your Preferred Categories</h3>
@@ -169,9 +169,9 @@ for (Story story : searchedStories){
                 
                 //storiesMostRated = rcs.getTop20StoriesForMonth();
                 
-                if(userLoggedIn.getRoleID() < 3){
+                
                     stories = rcs.searchStoriesByCategories(userLoggedIn);
-                }
+                
                 
             
             
@@ -206,12 +206,14 @@ for (Story story : searchedStories){
 
 
                     <%
-                        }//end for     
+                        }//end for  
+                    
                     %>
                 </div>
 
 
             </div>
+                <%}%>
             <%}%>
 
             <div id="outer_wrapper">
