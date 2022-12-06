@@ -39,7 +39,7 @@
             <tr>
 
                 <th>Author</th>
-                <th>Views</th>
+                <th>Approvals</th>
             </tr>
 
             <%

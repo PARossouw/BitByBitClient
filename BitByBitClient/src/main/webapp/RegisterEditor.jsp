@@ -4,15 +4,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        
-        <%
-        
-            String message = (String)request.getAttribute("message");
-        
-        %>
-        
-        
-        
         <title>Login</title>
         <link rel="stylesheet" href="normalized.css">
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
@@ -34,35 +25,6 @@
 
 
             <section class="main_content">
-                
-                <%if(message == null){%>
-                
-                <form action="UserServlet" method="post" class="login-form">
-                    <h3 style="color:white">Login</h3>
-                <%
-                    String responseMessage = (String) request.getAttribute("message");
-                    String userLoggedIn = (String) request.getAttribute("user");
-                     session.setAttribute("user", userLoggedIn);
-                %>
-                <%
-                    if(responseMessage != null) {
-                    session.setAttribute("user", userLoggedIn);
-                %>
-                <div>
-                    <h3 style="color:red"><%=responseMessage%></h3>
-                </div>
-                <%
-                    }
-                %>
-                <input type="text" class="form" name="UsernameOrEmail" placeholder="Username or Email">
-                <br></br>
-                <input type="password" class="form" name="Password" placeholder="Password">
-                <br></br>
-                <input class="buttonMain" name="submit" type="submit" value="Login">
-
-            </form>
-                
-                <%}%>
 
             <form action="UserServlet" method="post" class="register-form">
                 <%

@@ -21,6 +21,7 @@
         <jsp:include page="header.jsp"></jsp:include>
         <%
             User userLoggedIn = (User) session.getAttribute("user");
+            String message = (String)request.getAttribute("message");
         %>
 
         <section class="banner_common">
@@ -29,6 +30,17 @@
             </div>
         </section>
 
+         <%
+                if(message != null) {
+            %>
+            <div>
+                <h3 style="color:red" ><%=message%></h3>
+            </div>
+            <%
+                }
+            %>
+        
+        
         <section>
             <%
             if(userLoggedIn.getRoleID() == 1) {
