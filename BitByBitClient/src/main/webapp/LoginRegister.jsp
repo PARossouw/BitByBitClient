@@ -4,16 +4,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-        
+
         <%
         
             String message = (String)request.getAttribute("message");
             String addingEditor = (String)request.getAttribute("addingEditor");
         
         %>
-        
-        
-        
+
+
+
         <title>Login</title>
         <link rel="stylesheet" href="normalized.css">
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
@@ -22,20 +22,19 @@
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-<!--            <section class="banner_common">
-                <div>
-                    <h3>Login to your account to be able to read stories or register if you don't have an account yet.</h3>
-                </div>
+            <!--            <section class="banner_common">
+                            <div>
+                                <h3>Login to your account to be able to read stories or register if you don't have an account yet.</h3>
+                            </div>
+            
+                        </section>-->
 
-            </section>-->
 
-
-<p style="text-align:center;">  <img  src="images/loginj.jpg" alt="Contribute a story" width="100%" height="400"> </p>
-    <body style="background-color:black">
+            <p style="text-align:center;">  <img  src="images/loginj.jpg" alt="Contribute a story" width="100%" height="400"> </p>
+        <body style="background-color:black">
 
 
             <section class="main_content">
-                
                 <%if(addingEditor == null){%>
                 
                 <form action="UserServlet" method="post" class="login-form">
@@ -62,8 +61,8 @@
                 <input class="buttonMain" name="submit" type="submit" value="Login">
 
             </form>
-                
-                <%}%>
+
+            <%}%>
 
             <form action="UserServlet" method="post" class="register-form">
                 <%

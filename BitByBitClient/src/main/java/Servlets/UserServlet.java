@@ -371,8 +371,7 @@ public class UserServlet extends HttpServlet {
                 break;
 
             case "submitCategories":
-                List<Category> myList = new ArrayList<>();
-                myList = restClientCategory.displayAllCategories();
+                List<Category> myList = restClientCategory.displayAllCategories();
 
                 List<String> userPrefferedCategories = new ArrayList<>();
                 List<Category> prefferedCategories = new ArrayList<>();
@@ -392,9 +391,6 @@ public class UserServlet extends HttpServlet {
                 }
                 String chosenCategories = "";
 
-//                Reader readerTest = new Reader();
-//                readerTest.setUserID(887);
-//                readerTest.setPreferredCategories(prefferedCategories);
                 this.registeredUser.setPreferredCategories(prefferedCategories);
 
                 restClientUser.addPreferredCategoriesToNewUser(this.registeredUser);

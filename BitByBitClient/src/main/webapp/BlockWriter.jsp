@@ -3,7 +3,6 @@
 <%@page import="java.util.List;"%>
 <!DOCTYPE html>
 <html>
-
     <%
         List<User> writers = (List)request.getAttribute("writers");
         
@@ -13,12 +12,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Block Writer</title>
     </head>
+
     <body>
-        
+        <jsp:include page="header.jsp"></jsp:include>
         <%if(writerResults != null){%>
         <%=writerResults%>
-        
-        
         <%}%>
 
         <form action="UserServlet" method="get">
@@ -38,38 +36,36 @@
                     <tr bgcolor="00FF7F">
 
 
-                    </tr>
-                    <%    
-                        for(int i = 0; i < writers.size(); i++){
-                    %>
+                </tr>
+                <%    
+                    for(int i = 0; i < writers.size(); i++){
+                %>
 
-                    <tr>
-                        <td>
+                <tr>
+                    <td>
 
-                            <%
-                                String variableName = ""+i;
-                            %>
-
+                        <%
+                            String variableName = ""+i;
+                        %>
                             <input type="radio" value ="<%=variableName%>" name ="results" checked>
                             <label for="vehicle3" style="color:black"><%=writers.get(i).getUsername()%></label><br>
 
-                        </td>
+                    </td>
 
 
-                    </tr>
-                        <%}%>
+                </tr>
+                <%}%>
 
 
-                </table> 
+            </table> 
             <form action="UserServlet" method="get">
-                    <input class="button1" name="submit" type="submit" value="Block Selected Writers">
+                <input class="button1" name="submit" type="submit" value="Block Selected Writers">
             </form>
-                <hr/>
-                    <%}%>
-<!--            <br></br>
-            <input class="button1" name="submit" type="submit" value="Display all writers">-->
+            <hr/>
+            <%}%>
+            <!--            <br></br>
+                        <input class="button1" name="submit" type="submit" value="Display all writers">-->
         </form>
-
-
+        <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>
