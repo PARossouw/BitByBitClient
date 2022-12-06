@@ -7,6 +7,7 @@
     
         HashMap <Story, Integer> ratedBooksMap = (HashMap<Story, Integer>)request.getAttribute("ratedBooksMap");
         String month = (String)request.getAttribute("month");
+        String responseMessage = (String)request.getAttribute("responseMessage");
         
 %>
 <html>
@@ -18,15 +19,16 @@
     <body>
 
         <h4>Top 20 Rated Books of the Month</h4>
+        <%if(responseMessage == null){%>
 
         <!--the date picker-->
         <form action="StoryServlet" method="get">
             <a>
-                <input class="button1" name="Date" type="month" value="Top 20 Most Rated Books of the Month">
+                <input class="button1" name="Date" type="month" value="Top 20 Most Rated Books of the Month" required>
 
 
             </a>
-            <input class="button1" name="submit" type="submit" value="Top 20 Most Rated Books of the Month">
+            <input class="button1" name="submit" type="submit" value="Top 20 Most Rated Books of the Month" required>
         </form>
         
         <%
@@ -165,8 +167,12 @@
         <%
 
                 }
-
+}else{
         %>
+        <h4><%=responseMessage%></h4>
+        
+        
+        <%}%>
 
 
     </body>

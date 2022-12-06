@@ -16,16 +16,16 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
         <link rel="stylesheet" href="custom.css">
     </head>
-    
-   
+
+
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-         <p style="text-align:center;">  <img  src="images/pexels-steve-johnson-1843716.jpg" alt="Create a story" width="100%" height="400"> </p>
+            <p style="text-align:center;">  <img  src="images/pexels-steve-johnson-1843716.jpg" alt="Create a story" width="100%" height="400"> </p>
 
-    <body style="background-color:#1c1c1c">
-            <form action="StoryServlet" method="post" enctype="multipart/form-data">
-                
+        <body style="background-color:#1c1c1c">
+            <form id="sectionForm" action="StoryServlet" method="post" enctype="multipart/form-data">
+
 
             <%
 String createStoryOutcome = (String) request.getAttribute("createStory");
@@ -40,38 +40,38 @@ String createStoryOutcome = (String) request.getAttribute("createStory");
                 }
             %>
 
-<p align="center">
-            <label for="text" style="color:white">Story Title</label>
-            <br>
-            <textarea id="text" name="StoryTitle" rows="2" cols="80" ></textarea >
-            <br/>
+            <p align="center">
+                <label for="text" style="color:white">Story Title</label>
+                <br>
+                <textarea id="text" name="StoryTitle" rows="2" cols="80" required></textarea >
+                <br/>
 
             <p align="center">
-            <label for="text"style="color:white" >Story Description</label>
-            <br>
-            <textarea id="text" name="StoryDescription" rows="5" cols="80"></textarea>
-            <br/>
+                <label for="text"style="color:white" >Story Description</label>
+                <br>
+                <textarea id="text" name="StoryDescription" rows="5" cols="80" required></textarea>
+                <br/>
 
-<p align="center">
-            <label for="photo" style="color:white" >Choose a photo!</label>
+            <p align="center">
+                <label for="photo" style="color:white" >Choose a photo!</label>
 
-            <input 
-                type="file"
-                id="photo" 
-                name="file"
-                accept ="image/*"
-                 class = "buttonMainGreen">
-           
+                <input 
+                    type="file"
+                    id="photo" 
+                    name="file"
+                    accept ="image/*"
+                    class = "buttonMainGreen">
 
-            <br>
 
-<p align="center">
-            <label for="text" style="color:white" >Body of Story</label>
-            <br>
-            <textarea id="text" name="StoryBody" rows="60" cols="80"></textarea>
-            <br/>
+                <br>
 
-<p align="center">
+            <p align="center">
+                <label for="text" style="color:white" >Body of Story</label>
+                <br>
+                <textarea id="text" name="StoryBody" rows="60" cols="80" required></textarea>
+                <br/>
+
+            <p align="center">
             <h4 style="color:white">Please select the categories of which the story falls under.</h4>
             <table border ="1" width="500" align="center">
                 <tr bgcolor="00FF7F">
@@ -96,37 +96,39 @@ String createStoryOutcome = (String) request.getAttribute("createStory");
                             String variableName = ""+i;
                         %>
 
-    
-      
 
-                        <input type="checkbox" value ="<%=variableName%>" name ="category">
-                        <label for="vehicle3" style="color:white"><%=std.get(i).getName()%></label><br>
+
+                        
+                            <input type="checkbox" value ="<%=variableName%>" name ="category">
+                            <label for="vehicle3" style="color:white"><%=std.get(i).getName()%></label><br>
+                        
                         <%
                             }%>
                     </td>
 
 
                 </tr>
-                <%}%>
                 
+                <%}%>
+
 
 
 
 
             </table> 
             <hr/>
-            
 
 
 
 
-             <input class="buttonMain" name="submit" type="submit" value="Save Changes For New Story" >
-            
+
+            <input class="buttonMain" name="submit" type="submit" value="Save Changes For New Story" >
+
 
             <input class="buttonMainGreen" name="submit" type="submit" value="Submit For Review">
             <br></br>
         </form>
-
+<script src="CheckBox.js"></script>
 
 
         <div>

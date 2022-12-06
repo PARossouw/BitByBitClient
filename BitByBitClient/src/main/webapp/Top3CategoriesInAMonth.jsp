@@ -6,6 +6,7 @@
     
         HashMap <String, Integer> categoriesMap = (HashMap<String, Integer>)request.getAttribute("categoriesMap");
         String month = (String)request.getAttribute("month");
+        String responseMessage = (String)request.getAttribute("responseMessage");
         
 %>
 <html>
@@ -17,10 +18,11 @@
     </head>
     <body>
         <h4>Top 3 Categories of the Month</h4>
+        <%if(responseMessage == null){%>
         <!--date picker-->
         <form action="StoryServlet" method="get">
             <a>
-                <input class="button1" name="Date" type="month" value="Top 3 Categories of the Month">
+                <input class="button1" name="Date" type="month" value="Top 3 Categories of the Month" required>
             </a>
             <input class="button1" name="submit" type="submit" value="Top 3 Categories of the Month">
         </form>
@@ -163,7 +165,12 @@
     <%
         
         }
+}else{
         
     %>
+    <h4><%=responseMessage%></h4>
+        
+        
+        <%}%>
 </body>
 </html>

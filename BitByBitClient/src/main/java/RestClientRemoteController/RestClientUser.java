@@ -180,4 +180,15 @@ public class RestClientUser {
         
         return response.readEntity(String.class);
     }
+
+    public String becomeWriter(User loggedInUser) throws JsonProcessingException {
+        String uri = url + "/writer/become";
+        restClient = ClientBuilder.newClient();
+        webTarget = restClient.target(uri);
+        Response response = null;
+
+        response = webTarget.request().post(Entity.json(toJsonString(loggedInUser)));
+
+        return response.readEntity(String.class);
+    }
 }

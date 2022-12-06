@@ -9,6 +9,7 @@
         String startDate = (String)request.getAttribute("startDate");
         String endDate = (String)request.getAttribute("endDate");
         HashMap <Story, Integer> storyViewsMap = (HashMap<Story, Integer>)request.getAttribute("storyViewsMap");
+        String responseMessage = (String)request.getAttribute("responseMessage");
     
 %>
 <html>
@@ -20,15 +21,17 @@
     <body>
 
         <h4>Top 10 Most Viewed Books in a Certain Period</h4>
+        <%if(responseMessage == null){%>
         <!--the date picker-->
         <form action="StoryServlet" method="get">
             <a>
-                <input class="button1" name="startDate" type="date" value="top 10">
-                <input class="button1" name="endDate" type="date" value="top 10">
+                <input class="button1" name="startDate" type="date" value="top 10" required>
+                <input class="button1" name="endDate" type="date" value="top 10" required>
 
             </a>
             <input class="button1" name="submit" type="submit" value="top 10">
         </form>
+        
         <%
         
         if(storyViewsMap != null){
@@ -165,8 +168,14 @@
             <%
 
                 }
+}else{
 
             %>
+            
+            <h4><%=responseMessage%></h4>
+        
+        
+        <%}%>
 
     </section>
 </body>

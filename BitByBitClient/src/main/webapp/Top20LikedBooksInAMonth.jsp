@@ -7,21 +7,11 @@
     
         HashMap <String, Integer> storyLikesMap = (HashMap<String, Integer>)request.getAttribute("storyLikesMap");
         String month = (String)request.getAttribute("month");
+        String responseMessage = (String)request.getAttribute("responseMessage");
         
     %>
 <html>
     <head>
-        
-        <%
-        
-        if(storyLikesMap != null){
-                       
-                for(Map.Entry<String,Integer> entry: storyLikesMap.entrySet()){
-                    %><%=entry.getKey()%><%=entry.getValue()%><%
-                   
-                }
-        }
-        %>
         
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Top 20 Books</title>
@@ -33,12 +23,13 @@
         
         
         <h4>Top20LikedBooksInAMonth</h4>
+        <%if(responseMessage == null){%>
 
 
         <!--the date picker-->
         <form action="StoryServlet" method="get">
             <a>
-                <input class="button1" name="Date" type="month" value="top 10">
+                <input class="button1" name="Date" type="month" value="top 10" required>
                 
 
             </a>
@@ -188,8 +179,14 @@
         <%
 
                 }
+}else{
 
         %>
+        
+        <h4><%=responseMessage%></h4>
+        
+        
+        <%}%>
         
     </body>
     

@@ -99,13 +99,41 @@ public class StoryServlet extends HttpServlet {
 
         switch (request.getParameter("submit")) {
 
+            case ("Search"):
+
+                List<Category> allCategories = new ArrayList<>();
+                allCategories = restClientCategory.displayAllCategories();
+
+                List<Category> searchByCategories = new ArrayList<>();
+
+                String[] checkedBoxes = request.getParameterValues("category");
+
+                String chosenCat = "";
+                if (checkedBoxes.length > 0) {
+                    for (int i = 0; i < checkedBoxes.length; i++) {
+                        searchByCategories.add(allCategories.get(Integer.parseInt((String) checkedBoxes[i])));
+                        chosenCat += allCategories.get(Integer.parseInt((String) checkedBoxes[i])).getCategoryID() + ";";
+                    }
+
+                    List<Story> retrievedStoriesCat = new ArrayList<>();
+                    chosenCat = chosenCat.substring(0, chosenCat.length() - 1);
+                    retrievedStoriesCat = restClientStory.searchStoriesByRandomCategoriesChosen(chosenCat);
+
+                    request.setAttribute("categories", allCategories);
+                    request.setAttribute("storiesCat", retrievedStoriesCat);
+
+                    RequestDispatcher rd2 = request.getRequestDispatcher("storiesByCategory.jsp");
+                    rd2.forward(request, response);
+                }
+                break;
+
             case ("Read Story of the Day"):
                 this.storyBeingRead = new Story();
                 String storyOfTheDayID = (String) request.getParameter("story_id");
 
                 this.storyBeingRead = restClientStory.retrieveStoryGet(storyOfTheDayID);
                 request.setAttribute("story", this.storyBeingRead);
-                RequestDispatcher rdViewStoryGet2 = request.getRequestDispatcher("viewstory.jsp");
+                RequestDispatcher rdViewStoryGet2 = request.getRequestDispatcher("Story Info.jsp");
                 rdViewStoryGet2.forward(request, response);
                 break;
 
@@ -114,6 +142,22 @@ public class StoryServlet extends HttpServlet {
                 month = (String) request.getParameter("Date");
 
                 HashMap<String, Integer> ratedBooksMap = (HashMap<String, Integer>) restClientStory.getTop20StoriesForMonth(month);
+
+                int feedbackTop20 = 0;
+                String responseMessageTop20 = "";
+                for (Map.Entry<String, Integer> entry : ratedBooksMap.entrySet()) {
+
+                    responseMessageTop20 = entry.getKey();
+                    feedbackTop20 = entry.getValue();
+                }
+
+                if (feedbackTop20 == -1) {
+                    request.setAttribute("responseMessage", responseMessageTop20);
+                    RequestDispatcher rdisp150 = request.getRequestDispatcher("Top20MostRatedBooksOfTheMonth.jsp");
+
+                    rdisp150.forward(request, response);
+                    break;
+                }
 
                 HashMap<Story, Integer> ratedBooksStoryMap = new HashMap<Story, Integer>();
                 for (Map.Entry<String, Integer> entry : ratedBooksMap.entrySet()) {
@@ -145,6 +189,23 @@ public class StoryServlet extends HttpServlet {
                 month = (String) request.getParameter("Date");
 
                 HashMap<String, Integer> categoriesMap = (HashMap<String, Integer>) restClientCategory.topCategoriesForTheMonth(month);
+
+                int feedbackTop3 = 0;
+                String responseMessageTop3 = "";
+                for (Map.Entry<String, Integer> entry : categoriesMap.entrySet()) {
+
+                    responseMessageTop3 = entry.getKey();
+                    feedbackTop3 = entry.getValue();
+                }
+
+                if (feedbackTop3 == -1) {
+                    request.setAttribute("responseMessage", responseMessageTop3);
+                    RequestDispatcher rdisp100 = request.getRequestDispatcher("Top3CategoriesInAMonth.jsp");
+
+                    rdisp100.forward(request, response);
+                    break;
+                }
+
                 request.setAttribute("categoriesMap", categoriesMap);
                 request.setAttribute("month", month);
 
@@ -161,21 +222,24 @@ public class StoryServlet extends HttpServlet {
 
                 HashMap<String, Integer> storyLikessMap = (HashMap<String, Integer>) restClientLike.getAllLikesInPeriod(month);
 
+                int feedback = 0;
+                String responseMessage = "";
+                for (Map.Entry<String, Integer> entry : storyLikessMap.entrySet()) {
+
+                    responseMessage = entry.getKey();
+                    feedback = entry.getValue();
+                }
+
+                if (feedback == -1) {
+                    request.setAttribute("responseMessage", responseMessage);
+                    RequestDispatcher rdisp100 = request.getRequestDispatcher("Top20LikedBooksInAMonth.jsp");
+
+                    rdisp100.forward(request, response);
+                    break;
+                }
+
                 HashMap<Story, Integer> likeMap = new HashMap<>();
-//                for(Map.Entry<String,Integer> entry: storyLikessMap.entrySet()){
-//                    
-//                    String details = entry.getKey();
-//                    String [] sDetails = details.split(",");
-//                    Story story = new Story();
-//                    story.setWriter(sDetails[0]);
-//                    story.setTitle(sDetails[1]);
-//                    
-//                    story.setStoryID(Integer.parseInt(sDetails[0]));
-//                    
-//                    Integer views = entry.getValue();
-//                    story = restClientStory.retrieveStory(story); //the method in the dao is hardcoded so i'm commenting this out for now
-//                    likeMap.put(story, views);
-//                }
+
                 request.setAttribute("storyLikesMap", storyLikessMap);
                 request.setAttribute("month", month);
 
@@ -191,6 +255,22 @@ public class StoryServlet extends HttpServlet {
                 String startDate = (String) request.getParameter("startDate");
                 String endDate = (String) request.getParameter("endDate");
                 HashMap<String, Integer> storyViewsMap = (HashMap<String, Integer>) restClientView.getAllStoryViewsInPeriod(startDate, endDate);
+
+                int feedbackTop10 = 0;
+                String responseMessageTop10 = "";
+                for (Map.Entry<String, Integer> entry : storyViewsMap.entrySet()) {
+
+                    responseMessageTop10 = entry.getKey();
+                    feedbackTop10 = entry.getValue();
+                }
+
+                if (feedbackTop10 == -1) {
+                    request.setAttribute("responseMessage", responseMessageTop10);
+                    RequestDispatcher rdisp110 = request.getRequestDispatcher("Top10MostViewedBookesInACertainPeriod.jsp");
+
+                    rdisp110.forward(request, response);
+                    break;
+                }
 
                 HashMap<Story, Integer> storyMap = new HashMap<>();
                 for (Map.Entry<String, Integer> entry : storyViewsMap.entrySet()) {
@@ -450,6 +530,17 @@ public class StoryServlet extends HttpServlet {
                 //adds user chosen categories to a list. 
                 String[] checkedBoxesNew = request.getParameterValues("category");
 
+                if (checkedBoxesNew == null) {
+
+                    request.setAttribute("message", "please fill out all fields");
+
+                    // For Editor edits, this should direct to the Editor Approvval page again
+                    RequestDispatcher rdSaveNewChanges = request.getRequestDispatcher("createNewStory.jsp");
+                    rdSaveNewChanges.forward(request, response);
+                    break;
+
+                }
+
                 if (checkedBoxesNew.length > 0) {
                     for (int i = 0; i < checkedBoxesNew.length; i++) {
                         String chosenName = this.categoryList.get(Integer.parseInt((String) checkedBoxesNew[i])).getName();
@@ -593,6 +684,14 @@ public class StoryServlet extends HttpServlet {
                 break;
 
             case ("Rate"):
+                
+                if (UserServlet.loggedInUser == null) {
+                    
+                    RequestDispatcher rdRate = request.getRequestDispatcher("LoginRegister.jsp");
+                    rdRate.forward(request, response);
+                    break;
+                    
+                }
                 Story storyViewRate = new Story();
 
                 int userRating = Integer.parseInt((String) request.getParameter("user_Rating"));
@@ -638,11 +737,6 @@ public class StoryServlet extends HttpServlet {
 
             case "Read Full Story":
 
-                Story storyIncrementView = new Story();
-                storyIncrementView = this.storyBeingRead;
-                storyIncrementView.setWriter("" + UserServlet.loggedInUser.getUserID());
-                restClientStory.incrementViews(storyIncrementView);
-
                 this.user = UserServlet.loggedInUser;
 
                 Story storyOfTheDay = new Story();
@@ -650,6 +744,10 @@ public class StoryServlet extends HttpServlet {
 
                 if (this.user != null) {
                     request.setAttribute("storyBody", this.storyBeingRead.getBody());
+                    Story storyIncrementView = new Story();
+                    storyIncrementView = this.storyBeingRead;
+                    storyIncrementView.setWriter("" + UserServlet.loggedInUser.getUserID());
+                    restClientStory.incrementViews(storyIncrementView);
                     RequestDispatcher rdFullStory = request.getRequestDispatcher("readFullStory.jsp");
                     rdFullStory.forward(request, response);
                 } else {
@@ -659,50 +757,22 @@ public class StoryServlet extends HttpServlet {
 
                 break;
 
-            case ("Search for Story"):
-
-                List<Story> stories = new ArrayList<>();
-                //String searchText = request.getParameter("Search for Story");
-
+            case "Search for Story":
                 String searchText = (String) request.getParameter("titleOrAuthor");
-
-                stories = restClientStory.searchStoriesByTitleorAuthor(searchText);
-
-                request.setAttribute("storiesSearchedFor", stories);
+                searchText = searchText.replace(":", "");
                 RequestDispatcher rdSearch = request.getRequestDispatcher("index.jsp");
-                rdSearch.forward(request, response);
+                List<Story> stories = restClientStory.searchStoriesByTitleorAuthor(searchText);
 
-                break;
+                if (searchText.isBlank() || searchText.isEmpty() || searchText == null || stories.isEmpty()) {
+                    request.setAttribute("createStory", "no stories found for search");
+                    rdSearch = request.getRequestDispatcher("index.jsp");
+                    rdSearch.forward(request, response);
 
-            case ("Search"):
-
-                List<Category> allCategories = new ArrayList<>();
-                allCategories = restClientCategory.displayAllCategories();
-
-                List<Category> searchByCategories = new ArrayList<>();
-
-                String[] checkedBoxes = request.getParameterValues("category");
-
-                String chosenCat = "";
-                if (checkedBoxes.length > 0) {
-                    for (int i = 0; i < checkedBoxes.length; i++) {
-                        searchByCategories.add(allCategories.get(Integer.parseInt((String) checkedBoxes[i])));
-                        chosenCat += allCategories.get(Integer.parseInt((String) checkedBoxes[i])).getCategoryID() + ":";
-                    }
-
-                    Reader reader1 = new Reader();
-                    reader1.setUserID(8778);  // To remove
-                    reader1.setPreferredCategories(searchByCategories);
-
-                    List<Story> retrievedStoriesCat = new ArrayList<>();
-                    chosenCat = chosenCat.substring(0, chosenCat.length() - 1);
-                    retrievedStoriesCat = restClientStory.searchStoriesByRandomCategoriesChosen(chosenCat);
-                    request.setAttribute("categories", allCategories);
-                    request.setAttribute("storiesCat", retrievedStoriesCat);
-
-                    RequestDispatcher rd2 = request.getRequestDispatcher("storiesByCategory.jsp");
-                    rd2.forward(request, response);
+                } else {
+                    request.setAttribute("storiesSearchedFor", stories);
+                    rdSearch.forward(request, response);
                 }
+
                 break;
 
             case "Approve":
