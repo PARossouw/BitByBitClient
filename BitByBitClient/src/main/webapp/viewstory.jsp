@@ -13,8 +13,8 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
         <link rel="stylesheet" href="custom.css">
     </head>
-    
-    
+
+
 
 
     <body>
@@ -111,6 +111,14 @@ String userToComment = (String) request.getAttribute("optsToComment");
         <%
             if(userToComment != null) {
         %>
+
+
+
+
+
+
+
+
         <div>
             <p align="center">
 
@@ -171,12 +179,19 @@ String userToComment = (String) request.getAttribute("optsToComment");
         </form> 
 
 
+        <%
+        String isStoryOfTheDay = "";
+        isStoryOfTheDay = (String) request.getAttribute("isStoryOfTheDay");
+        
+        
+        %>
         <form action="StoryServlet" method="post">
 
             <input class="buttonMain" name="submit" type="submit" value="Read Full Story">
         </form>     
-
-
+        
+        
+        
 
 
 

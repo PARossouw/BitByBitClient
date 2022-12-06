@@ -182,8 +182,11 @@
             if(loggedInUser.getRoleID() > 2) {
         %>
 
-        <input class="buttonMainGreen" name="submit" type="submit" value="Approve Story" >
-        <input class="buttonMainYellow" name="submit" type="submit" value="Reject Story" >
+        <input class="buttonMainGreen" name="submit" type="submit" value="Approve" >
+        
+        <input class="buttonMainYellow" name="submit" type="submit" value="Reject" >
+        <input class="buttonMain"  name="story_id" type="hidden" value="<%=story.getStoryID()%>">
+
         <%
             } else {
         %>

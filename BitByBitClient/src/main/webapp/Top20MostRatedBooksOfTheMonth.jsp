@@ -1,10 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.HashMap"%>
+<%@page import="Story.Model.Story"%>
 <%@page import="java.util.Map"%>
 <!DOCTYPE html>
 <%
     
-        HashMap <String, Integer> ratedBooksMap = (HashMap<String, Integer>)request.getAttribute("ratedBooksMap");
+        HashMap <Story, Integer> ratedBooksMap = (HashMap<Story, Integer>)request.getAttribute("ratedBooksMap");
         String month = (String)request.getAttribute("month");
         
 %>
@@ -47,13 +48,13 @@
 
             <%
                     if(ratedBooksMap != null){
-                            for(Map.Entry<String,Integer> entry: ratedBooksMap.entrySet()){
+                            for(Map.Entry<Story,Integer> entry: ratedBooksMap.entrySet()){
                             
-                            //Story story = entry.getKey();
+                            Story story = entry.getKey();
             %>
             <tr>
-                <td><%=entry.getKey()%></td>
-                <td><%=entry.getKey()%></td>
+                <td><%=story.getTitle()%></td>
+                <td><%=story.getWriter()%></td>
                 <td><%=entry.getValue()%></td>
             </tr>
             <%
@@ -97,7 +98,7 @@
         
                 if(ratedBooksMap != null){
                         
-                        for(Map.Entry<String,Integer> entry: ratedBooksMap.entrySet()){
+                        for(Map.Entry<Story,Integer> entry: ratedBooksMap.entrySet()){
             %>
                         ['<%=entry.getKey()%>', <%=entry.getValue()%>],<%
                         
@@ -137,7 +138,7 @@
                 <%
                             if(ratedBooksMap != null){
                         
-                                for(Map.Entry<String,Integer> entry: ratedBooksMap.entrySet()){
+                                for(Map.Entry<Story,Integer> entry: ratedBooksMap.entrySet()){
                 %>
 
 
