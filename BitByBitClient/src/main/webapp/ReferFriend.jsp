@@ -16,10 +16,17 @@
         <h1>Refer a Friend</h1>
 
         <form action="UserServlet" method="post">
-        <input type="text" class="form" name="phoneNumber" placeholder="Your friend's phone number">
+        <input type="text" class="form" name="phoneNumber" placeholder="Your friend's phone number" required>
         <br></br>
         <input class="button1" name="submit" type="submit" value="ReferFriend">
         </form>
+        <%
+            if(message != null){
+        %>
+        <h4><%=message%></h4>
+        <%
+            }
+        %>
         
     </body>
 </html>

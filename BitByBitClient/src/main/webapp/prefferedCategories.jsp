@@ -36,13 +36,11 @@
         <%
             }
         %>
-
-
-        <form action="UserServlet" method="post">
-            <h3 style="color:white">Displaying Category List</h3>
-            <h4 style="color:white">Please select your preferred categories</h4>
-            <table border ="1" width="500" align="center">
-                <tr bgcolor="00FF7F">
+            <form id="sectionForm" action="UserServlet" method="post">
+                <h3 style="color:white">Displaying Category List</h3>
+                <h4 style="color:white">Please select your preferred categories</h4>
+                <table border ="1" width="500" align="center">
+                    <tr bgcolor="00FF7F">
 
 
                 </tr>
@@ -70,11 +68,11 @@
 
                 </tr>
                 <%}}%>
-
-            </table> 
-            <hr/>
-            <input class="buttonMain" name="submit" type="submit" value="submitCategories">
-        </form>
+                </table> 
+                <hr/>
+                <input class="buttonMain" name="submit" type="submit" value="submitCategories">
+            </form>
+            <script src="CheckBox.js"></script>
 
         <%
                String responseMessage = (String) request.getAttribute("categoryStuff");

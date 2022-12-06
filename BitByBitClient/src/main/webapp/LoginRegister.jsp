@@ -8,6 +8,7 @@
         <%
         
             String message = (String)request.getAttribute("message");
+            String addingEditor = (String)request.getAttribute("addingEditor");
         
         %>
 
@@ -34,11 +35,10 @@
 
 
             <section class="main_content">
-
-            <%if(message == null){%>
-
-            <form action="UserServlet" method="post" class="login-form">
-                <h3 style="color:white">Login</h3>
+                <%if(addingEditor == null){%>
+                
+                <form action="UserServlet" method="post" class="login-form">
+                    <h3 style="color:white">Login</h3>
                 <%
                     String responseMessage = (String) request.getAttribute("message");
                     String userLoggedIn = (String) request.getAttribute("user");
@@ -54,9 +54,9 @@
                 <%
                     }
                 %>
-                <input type="text" class="form" name="UsernameOrEmail" placeholder="Username or Email">
+                <input type="text" class="form" name="UsernameOrEmail" placeholder="Username" required>
                 <br></br>
-                <input type="password" class="form" name="Password" placeholder="Password">
+                <input type="password" class="form" name="Password" placeholder="Password" required>
                 <br></br>
                 <input class="buttonMain" name="submit" type="submit" value="Login">
 
@@ -77,15 +77,15 @@
                 %>
 
                 <h3 style="color:white">Register</h3>
-                <input type="text" class="form" name ="Username" placeholder="Username">
+                <input type="text" class="form" name ="Username" placeholder="Username" required>
                 <br></br>
 
-                <input type="text" class="form" name ="Email" placeholder="Email">
+                <input type="text" class="form" name ="Email" placeholder="Email" required>
                 <br></br>
-                <input type="text" class="form" name ="PhoneNumber" placeholder="Phone Number">
+                <input type="text" class="form" name ="PhoneNumber" placeholder="Phone Number" required>
                 <br></br>
-                <input type="text" class="form" name ="Password" placeholder="Password">
-                <input type="text" class="form" name ="ConfirmPassword" placeholder="Confirm Password">
+                <input type="text" class="form" name ="Password" placeholder="Password" required>
+                <input type="text" class="form" name ="ConfirmPassword" placeholder="Confirm Password" required>
                 <br></br>
 
                 <input class="buttonMainGreen" name="submit" type="submit" value="Register">

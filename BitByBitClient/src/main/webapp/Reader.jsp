@@ -19,7 +19,11 @@
                     <ul class="bbh">
                         <b><lh>Options</lh></b>
                         <a href="ReferFriend.jsp" name="submit" type="submit" value="Refer a Friend"><li>Refer a Friend</li></a>
-                        <a href="Writer.jsp" name="submit"><li>Become a Writer</li></a>
+                       
+                        <form action="UserServlet" method="post">
+                            <input class="button" name="submit" type="submit" value="Become a Writer">
+                        </form>
+                        <!--<a href="Writer.jsp" name="submit"><li>Become a Writer</li></a>-->
                     </ul>
                 </nav>
             </div>

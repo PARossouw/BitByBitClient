@@ -22,18 +22,18 @@
         <form action="UserServlet" method="get">
             <h3 style="color:black">Block Writer</h3>
 
-            <input type="text" class="form" name="writer" placeholder="Search Writer">
+            <input type="text" class="form" name="writer" placeholder="Search Writer" required>
             <input class="button1" name="submit" type="submit" value="Search Writer">
-        </form>
-        <br></br>
-        <%
-            if(writers != null && writers.size()>0){
-        %>
-        <form action="UserServlet" method="post">
-            <h3 style="color:black">Displaying List of Writers: </h3>
-            <h4 style="color:black">Please select writers to block</h4>
-            <table border ="1" width="500">
-                <tr bgcolor="00FF7F">
+            </form>
+            <br></br>
+            <%
+                if(writers != null && writers.size()>0){
+            %>
+            <form action="UserServlet" method="post">
+                <h3 style="color:black">Displaying List of Writers: </h3>
+                <h4 style="color:black">Please select a writer to block</h4>
+                <table border ="1" width="500">
+                    <tr bgcolor="00FF7F">
 
 
                 </tr>
@@ -47,9 +47,8 @@
                         <%
                             String variableName = ""+i;
                         %>
-
-                        <input type="radio" value ="<%=variableName%>" name ="results" >
-                        <label for="vehicle3" style="color:black"><%=writers.get(i).getUsername()%></label><br>
+                            <input type="radio" value ="<%=variableName%>" name ="results" checked>
+                            <label for="vehicle3" style="color:black"><%=writers.get(i).getUsername()%></label><br>
 
                     </td>
 

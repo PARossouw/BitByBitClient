@@ -172,7 +172,7 @@ String userToComment = (String) request.getAttribute("optsToComment");
             <label for="3">3 Star</label>
             <input type="radio"  name="user_Rating" value="4">
             <label for="4">4 Star</label>
-            <input type="radio"  name="user_Rating" value="5">
+            <input type="radio"  name="user_Rating" value="5" checked>
             <label for="5">5 Star</label>
             <input name="submit" type="submit" value="Rate">
             <br></br>
