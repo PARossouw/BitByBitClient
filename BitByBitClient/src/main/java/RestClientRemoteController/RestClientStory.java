@@ -2,6 +2,7 @@ package RestClientRemoteController;
 
 import Story.Model.Story;
 import User.Model.User;
+import User.Model.Writer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -304,6 +305,17 @@ public class RestClientStory {
         Response response = null;
 
         response = webTarget.request().post(Entity.json(toJsonString(toBlock)));
+
+        return response.readEntity(String.class);
+    }
+
+    public String incrementViews(Story story) throws JsonProcessingException {
+        String uri = url + "/story/incrementViews";
+        restClient = ClientBuilder.newClient();
+        webTarget = restClient.target(uri);
+        Response response = null;
+
+        response = webTarget.request().post(Entity.json(toJsonString(story)));
 
         return response.readEntity(String.class);
     }

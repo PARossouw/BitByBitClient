@@ -183,18 +183,15 @@ String userToComment = (String) request.getAttribute("optsToComment");
         String isStoryOfTheDay = "";
         isStoryOfTheDay = (String) request.getAttribute("isStoryOfTheDay");
         
-        if(isStoryOfTheDay != null) {
+        
         %>
         <form action="StoryServlet" method="post">
 
             <input class="buttonMain" name="submit" type="submit" value="Read Full Story">
         </form>     
-        <%}else{%>
-        <form action="StoryServlet" method="post">
-
-            <input class="buttonMain" name="submit" type="submit" value="Read Story Of The Day">
-        </form> 
-        <%}%>
+        
+        
+        
 
 
 

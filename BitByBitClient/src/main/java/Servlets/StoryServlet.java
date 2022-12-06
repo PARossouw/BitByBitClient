@@ -19,6 +19,7 @@ import RestClientRemoteController.RestClientSMS;
 import RestClientRemoteController.RestClientStory_Transaction;
 import RestClientRemoteController.RestClientView;
 import SMS.smsreq;
+import static Servlets.UserServlet.loggedInUser;
 import User.Model.Reader;
 import User.Model.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -38,6 +39,7 @@ import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import java.util.HashMap;
 import java.util.Map;
+import User.Model.Writer;
 
 @WebServlet(name = "StoryServlet", urlPatterns = {"/StoryServlet"})
 @ManagedBean
@@ -67,6 +69,10 @@ public class StoryServlet extends HttpServlet {
     private smsreq sms;
     public static Story storyOfTheDay = new Story();
     private List<Category> categoryList;
+    private List<Category> profilePreferredCats;
+    private List<Story> profileLikedStories;
+    private List<Story> profileWriterStories;
+    private List<Story> profilePendingStories;
 
     public StoryServlet() throws JsonProcessingException {
         this.restClientStory = new RestClientStory("http://localhost:8080/RIP/RIP");
@@ -108,8 +114,7 @@ public class StoryServlet extends HttpServlet {
                 month = (String) request.getParameter("Date");
 
                 HashMap<String, Integer> ratedBooksMap = (HashMap<String, Integer>) restClientStory.getTop20StoriesForMonth(month);
-                
-                
+
                 HashMap<Story, Integer> ratedBooksStoryMap = new HashMap<Story, Integer>();
                 for (Map.Entry<String, Integer> entry : ratedBooksMap.entrySet()) {
 
@@ -126,7 +131,7 @@ public class StoryServlet extends HttpServlet {
                     ratedBooksStoryMap.put(story, views);
                 }
                 request.setAttribute("ratedBooksMap", ratedBooksStoryMap);
-                
+
                 request.setAttribute("month", month);
 
                 RequestDispatcher rdisp102 = request.getRequestDispatcher("Top20MostRatedBooksOfTheMonth.jsp");
@@ -360,22 +365,33 @@ public class StoryServlet extends HttpServlet {
         Calendar cal = Calendar.getInstance();
 
         switch (request.getParameter("submit")) {
-            
+
             case "Remove from public view":
-                
+
                 String storyIDToBlock = (String) request.getParameter("story_id");
                 Story toBlock = new Story();
                 toBlock = restClientStory.retrieveStoryGet(storyIDToBlock);
-                
-                
+
                 String isItBlocked = restClientStory.blockStory(toBlock);
-                    
-                request.setAttribute("createStory", isItBlocked);
-                RequestDispatcher rd77 = request.getRequestDispatcher("index.jsp");
-                    
-                    rd77.forward(request, response);
-                    
-                    break;
+
+//                request.setAttribute("createStory", isItBlocked);
+//                RequestDispatcher rd77 = request.getRequestDispatcher("index.jsp");
+//                    
+//                    rd77.forward(request, response);
+                profile();
+
+                request.setAttribute("preferredCategories", profilePreferredCats);
+                request.setAttribute("likedStories", profileLikedStories);
+                request.setAttribute("writerStories", profileWriterStories);
+                request.setAttribute("pendingStories", profilePendingStories);
+                request.setAttribute("user", UserServlet.loggedInUser);
+
+                request.setAttribute("message", isItBlocked);
+
+                RequestDispatcher rd77 = request.getRequestDispatcher("User.jsp");
+                rd77.forward(request, response);
+
+                break;
 
             case "Save Changes":
                 Story storyToSave = new Story();
@@ -424,7 +440,7 @@ public class StoryServlet extends HttpServlet {
                 Story newStoryToSave = new Story();
                 newStoryToSave.setStoryID(-1);  // Default for new stories
                 newStoryToSave.setTitle((String) request.getParameter("StoryTitle"));
-                newStoryToSave.setWriter(""+UserServlet.loggedInUser.getUserID()); // this should be the logged in writer. 
+                newStoryToSave.setWriter("" + UserServlet.loggedInUser.getUserID()); // this should be the logged in writer. 
                 newStoryToSave.setDescription((String) request.getParameter("StoryDescription"));
                 newStoryToSave.setImagePath((String) request.getParameter("ImagePath"));
                 newStoryToSave.setBody((String) request.getParameter("StoryBody"));
@@ -603,9 +619,16 @@ public class StoryServlet extends HttpServlet {
 
             case ("Read Story Of The Day"):
 
-// 
                 Story storyOfTheDayMain = new Story();
                 storyOfTheDayMain = restClientStory.getStoryOfTheDay();
+
+                Story storyIncrementViewDay = new Story();
+                storyIncrementViewDay = storyOfTheDayMain;
+
+                if (UserServlet.loggedInUser != null) {
+                    storyIncrementViewDay.setWriter("" + UserServlet.loggedInUser.getUserID());
+                    restClientStory.incrementViews(storyIncrementViewDay);
+                }
 
                 request.setAttribute("storyBody", storyOfTheDayMain.getTitle() + storyOfTheDayMain.getBody());
                 RequestDispatcher rdFullStoryDay = request.getRequestDispatcher("readFullStory.jsp");
@@ -613,7 +636,12 @@ public class StoryServlet extends HttpServlet {
 
                 break;
 
-            case ("Read Full Story"):
+            case "Read Full Story":
+
+                Story storyIncrementView = new Story();
+                storyIncrementView = this.storyBeingRead;
+                storyIncrementView.setWriter("" + UserServlet.loggedInUser.getUserID());
+                restClientStory.incrementViews(storyIncrementView);
 
                 this.user = UserServlet.loggedInUser;
 
@@ -628,6 +656,7 @@ public class StoryServlet extends HttpServlet {
                     RequestDispatcher rd6 = request.getRequestDispatcher("LoginRegister.jsp");
                     rd6.forward(request, response);
                 }
+
                 break;
 
             case ("Search for Story"):
@@ -795,12 +824,23 @@ public class StoryServlet extends HttpServlet {
                 story = restClientStory.retrieveStory(story);
 
                 message = restClientStory.turnOffComments(story);
-                //message = "test";
 
-                request.setAttribute("createStory", message);
+//                request.setAttribute("createStory", message);
+//
+//                RequestDispatcher rdisp1 = request.getRequestDispatcher("index.jsp");
+//
+//                rdisp1.forward(request, response);
+                profile();
 
-                RequestDispatcher rdisp1 = request.getRequestDispatcher("index.jsp");
+                request.setAttribute("preferredCategories", profilePreferredCats);
+                request.setAttribute("likedStories", profileLikedStories);
+                request.setAttribute("writerStories", profileWriterStories);
+                request.setAttribute("pendingStories", profilePendingStories);
+                request.setAttribute("user", UserServlet.loggedInUser);
 
+                request.setAttribute("message", message);
+
+                RequestDispatcher rdisp1 = request.getRequestDispatcher("User.jsp");
                 rdisp1.forward(request, response);
 
                 break;
@@ -841,6 +881,45 @@ public class StoryServlet extends HttpServlet {
         }
 
         return test;
+    }
+
+    private void profile() throws JsonProcessingException {
+        if (UserServlet.loggedInUser.getRoleID() < 3) {
+
+            Reader reader = new Reader();
+
+            loggedInUser = UserServlet.loggedInUser;
+
+            reader.setUserID(loggedInUser.getUserID());
+            reader.setUsername(loggedInUser.getUsername());
+            reader.setEmail(loggedInUser.getEmail());
+
+            profilePreferredCats = restClientCategory.getPreferredCategories(reader.getUserID());
+            profileLikedStories = restClientStory.viewLikedStories(reader.getUserID());
+
+//                    request.setAttribute("preferredCategories", preferredCategories);
+//                    request.setAttribute("likedStories", likedStories);
+            if (loggedInUser.getRoleID() == 2) {
+                Writer writer = new Writer();
+
+                writer.setUserID(reader.getUserID());
+                writer.setUsername(reader.getUsername());
+                writer.setEmail(reader.getEmail());
+
+                profileWriterStories = restClientStory.viewStoriesByWriter(writer.getUserID());
+
+                //request.setAttribute("writerStories", writerStories);
+            }
+        } else {
+
+            profilePendingStories = restClientStory.viewPendingStories();
+
+            //request.setAttribute("pendingStories", pendingStories);
+        }
+
+        //request.setAttribute("user", loggedInUser);
+//                RequestDispatcher rd1 = request.getRequestDispatcher("User.jsp");
+//                rd1.forward(request, response);
     }
 
 }
